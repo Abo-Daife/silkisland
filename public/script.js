@@ -23,7 +23,7 @@ async function loadProducts() {
   } catch (e) {
     console.error('Failed to load products:', e);
     products = [
-      { id: 1, name: "Isis Silk Robe", price: 289.99, category: "Lingerie", image: "/images/product1.jpg","/images/product5.jpg", "/images/product3.jpg", sizes: ["S", "M", "L", "XL"], colors: ["Black", "Gold", "Midnight Blue", "Rose"] },
+      { id: 1, name: "Isis Silk Robe", price: 289.99, category: "Lingerie", image: ["/images/product1.jpg","/images/product5.jpg", "/images/product3.jpg"], sizes: ["S", "M", "L", "XL"], colors: ["Black", "Gold", "Midnight Blue", "Rose"] },
       { id: 2, name: "Cleopatra's Milk Bath", price: 149.99, category: "Bath Stuff", image: "/images/product2.jpg", sizes: ["250ml", "500ml", "1000ml"], colors: ["Original", "Rose"] },
       { id: 3, name: "Roman Bath Salts", price: 89.99, category: "Bath Stuff", image: "/images/product3.jpg", sizes: ["200g", "500g", "1kg"], colors: ["Rose", "Lavender", "Gold"] },
       { id: 4, name: "Golden Anointing Oil", price: 129.99, category: "Bath Stuff", image: "/images/product4.jpg", sizes: ["30ml", "50ml", "100ml"], colors: ["Gold", "Midnight Blue"] },
