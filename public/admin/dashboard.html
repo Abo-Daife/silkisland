@@ -118,12 +118,13 @@
   </div>
 
   <script>
+    const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
     let products = [];
     let currentUser = null;
 
     // Check admin login
     async function init() {
-      const res = await fetch('/api/user');
+      const res = await fetch(API_URL + '/api/admin/products', { method: 'POST', ... });
       const data = await res.json();
       
       if (!data.user || !data.user.isAdmin) {
@@ -138,7 +139,7 @@
     // Load products from server
     async function loadProducts() {
       try {
-        const res = await fetch('/api/admin/products');
+        const res = await fetch('/api/admin/products', { method: 'POST', ... });
         const data = await res.json();
         products = data;
         renderTable();
@@ -217,7 +218,7 @@
       
       console.log('Saving product:', product, 'to', url);
       
-      const res = await fetch('http://localhost:3000' + url, {
+      const res = await fetch(API_URL + '/api/admin/products', { method: 'POST', ... }) + url, {
         method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(product)
