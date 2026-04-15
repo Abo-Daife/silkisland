@@ -14,7 +14,10 @@ const translations = {
 // Load products from server
 async function loadProducts() {
   try {
-    const res = await fetch('/api/products');
+    const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+
+// Then use it for all fetch calls:
+const res = await fetch(API_URL + '/api/products');
     products = await res.json();
     console.log('Loaded', products.length, 'products');
     renderProducts();
