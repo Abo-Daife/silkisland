@@ -73,7 +73,7 @@
   <div class="admin-container">
     <div style="display:flex; justify-content:space-between; align-items:center;">
       <h1>Product Management</h1>
-      <button class="btn btn-danger" onclick="logout()">Logout</button>
+      <a href="/" style="color:#FFD700;">← Back to Site</a>
     </div>
     
     <button class="btn" onclick="openModal('add')">+ Add New Product</button>
@@ -120,32 +120,26 @@
   <script>
     const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
     let products = [];
-    let currentUser = null;
 
-    // Check admin login
-    async function init() {
-      const res = await fetch(API_URL + '/api/admin/products', { method: 'POST', ... });
-      const data = await res.json();
-      
-      if (!data.user || !data.user.isAdmin) {
+    // Check if user is admin (from localStorage)
+    function checkAdmin() {
+      const user = JSON.parse(localStorage.getItem('silkisland_user') || '{}');
+      if (!user.is_admin) {
+        alert('Admin access required');
         window.location.href = '/account.html';
-        return;
+        return false;
       }
-      
-      currentUser = data.user;
-      loadProducts();
+      return true;
     }
 
-    // Load products from server
+    // Load products
     async function loadProducts() {
       try {
-        const res = await fetch('/api/admin/products', { method: 'POST', ... });
-        const data = await res.json();
-        products = data;
+        const res = await fetch(API_URL + '/api/products');
+        products = await res.json();
         renderTable();
       } catch (e) {
         console.error('Failed to load products:', e);
-        alert('Could not load products. Check console.');
       }
     }
 
@@ -190,9 +184,9 @@
       document.getElementById('productName').value = product.name;
       document.getElementById('productPrice').value = product.price;
       document.getElementById('productCategory').value = product.category;
-      document.getElementById('productImage').value = product.image.replace('/images/', '');
-      document.getElementById('productSizes').value = product.sizes.join(',');
-      document.getElementById('productColors').value = product.colors.join(',');
+      document.getElementById('productImage').value = product.image ? product.image.replace('/images/', '') : 'product1.jpg';
+      document.getElementById('productSizes').value = product.sizes ? product.sizes.join(',') : 'S,M,L';
+      document.getElementById('productColors').value = product.colors ? product.colors.join(',') : 'Black,Gold';
       
       openModal('edit');
     };
@@ -213,21 +207,18 @@
       
       if (id) product.id = parseInt(id);
       
-      const url = id ? `/api/admin/products/${id}` : '/api/admin/products';
+      const url = id ? `${API_URL}/api/admin/products/${id}` : `${API_URL}/api/admin/products`;
       const method = id ? 'PUT' : 'POST';
       
-      console.log('Saving product:', product, 'to', url);
-      
-      const res = await fetch(API_URL + '/api/admin/products', { method: 'POST', ... }) + url, {
+      const res = await fetch(url, {
         method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(product)
       });
       
       const data = await res.json();
-      console.log('Response:', data);
       
-      if (data.success) {
+      if (data.success || data.id) {
         closeModal();
         loadProducts();
         alert('Product saved!');
@@ -240,7 +231,7 @@
     window.deleteProduct = async function(id) {
       if (!confirm('Delete this product?')) return;
       
-      const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_URL}/api/admin/products/${id}`, { method: 'DELETE' });
       const data = await res.json();
       
       if (data.success) {
@@ -251,14 +242,10 @@
       }
     };
 
-    // Logout
-    window.logout = async function() {
-      await fetch('/api/logout', { method: 'POST' });
-      window.location.href = '/account.html';
-    };
-
-    // Start
-    init();
+    // Initialize
+    if (checkAdmin()) {
+      loadProducts();
+    }
   </script>
 </body>
 </html>
