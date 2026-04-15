@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - SilkIsland</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .admin-container {
+      max-width: 400px;
+      margin: 100px auto;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #FFD700;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .admin-container h1 {
+      color: #FFD700;
+      margin-bottom: 2rem;
+    }
+    .admin-container input {
+      width: 100%;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background: #1a1a2e;
+      border: 1px solid #FFD700;
+      border-radius: 8px;
+      color: #FFD700;
+      font-size: 1rem;
+    }
+    .admin-btn {
+      background: #FFD700;
+      color: #0a0a1a;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1rem;
+      transition: all 0.3s;
+    }
+    .admin-btn:hover {
+      background: #E8A2B4;
+    }
+    .error {
+      color: #ff6b6b;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <h1>𓂀 Admin Access 𓂀</h1>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Username" value="admin" required>
+      <input type="password" id="password" placeholder="Password" value="silkisland2024" required>
+      <button type="submit" class="admin-btn">Enter Sanctuary</button>
+    </form>
+    <div id="error-message" class="error"></div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if (username === 'admin' && password === 'silkisland2024') {
+        localStorage.setItem('admin_logged_in', 'true');
+        window.location.href = '/admin/dashboard.html';
+      } else {
+        document.getElementById('error-message').textContent = 'Invalid credentials';
+      }
+    });
+  </script>
+</body>
+</html>

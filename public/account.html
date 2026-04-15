@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account - SilkIsland</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .account-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 2rem;
+    }
+    .account-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #FFD700;
+      padding-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: #E8A2B4;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.5rem 1.5rem;
+      transition: all 0.3s;
+    }
+    .tab-btn.active {
+      color: #FFD700;
+      border-bottom: 2px solid #FFD700;
+    }
+    .tab-btn.admin-btn {
+      color: #FFD700;
+      border: 1px solid #FFD700;
+      border-radius: 25px;
+    }
+    .tab-content {
+      display: none;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #FFD700;
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      color: #E8A2B4;
+      margin-bottom: 0.5rem;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      background: #1a1a2e;
+      border: 1px solid #FFD700;
+      border-radius: 8px;
+      color: #FFD700;
+    }
+    .save-btn {
+      background: #FFD700;
+      color: #0a0a1a;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .orders-list {
+      color: #E8A2B4;
+    }
+    .order-card {
+      background: #1a1a2e;
+      border: 1px solid #FFD700;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      color: #FFD700;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .order-items {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #333;
+    }
+    .login-message {
+      text-align: center;
+      color: #E8A2B4;
+      padding: 3rem;
+    }
+    .login-message a {
+      color: #FFD700;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="/"><img src="/images/logo.svg" alt="SilkIsland" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"><span style="display:none; color:#FFD700;">𓃀 SilkIsland 𓃀</span></a>
+    </div>
+    <nav>
+      <a href="/" class="home-btn">← Back to Shop</a>
+    </nav>
+    <div class="header-right"></div>
+  </header>
+
+  <div class="account-container">
+    <div id="not-logged-in" style="display:none;">
+      <div class="login-message">
+        <h2 style="color:#FFD700; margin-bottom:2rem;">𓂀 Welcome to SilkIsland 𓂀</h2>
+        <div id="login-form-container"></div>
+      </div>
+    </div>
+
+    <div id="logged-in-view" style="display:none;">
+      <div class="account-tabs">
+        <button class="tab-btn active" onclick="showTab('profile')">My Profile</button>
+        <button class="tab-btn" onclick="showTab('orders')">Order History</button>
+        <button class="tab-btn" onclick="showTab('settings')">Settings</button>
+        <button class="tab-btn admin-btn" id="admin-tab" onclick="goToAdmin()" style="display:none;">⚡ Admin Panel ⚡</button>
+        <button class="tab-btn" onclick="logout()" style="margin-left:auto;">Logout</button>
+      </div>
+
+      <div id="profile-tab" class="tab-content active">
+        <h2 style="color:#FFD700; margin-bottom:2rem;">Profile Information</h2>
+        <form id="profile-form">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="profile-name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="profile-email" disabled style="opacity:0.7;">
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="profile-phone">
+          </div>
+          <div class="form-group">
+            <label>Default Delivery Address</label>
+            <input type="text" id="profile-address">
+          </div>
+          <button type="submit" class="save-btn">Save Changes</button>
+        </form>
+      </div>
+
+      <div id="orders-tab" class="tab-content">
+        <h2 style="color:#FFD700; margin-bottom:2rem;">Order History</h2>
+        <div id="orders-list" class="orders-list"></div>
+      </div>
+
+      <div id="settings-tab" class="tab-content">
+        <h2 style="color:#FFD700; margin-bottom:2rem;">Account Settings</h2>
+        <form id="settings-form">
+          <div class="form-group">
+            <label>Change Password</label>
+            <input type="password" id="new-password" placeholder="New Password">
+          </div>
+          <div class="form-group">
+            <input type="password" id="confirm-password" placeholder="Confirm Password">
+          </div>
+          <button type="submit" class="save-btn">Update Password</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+
+    async function checkLogin() {
+      const res = await fetch('/api/user');
+      const data = await res.json();
+      
+      if (data.user) {
+        currentUser = data.user;
+        document.getElementById('not-logged-in').style.display = 'none';
+        document.getElementById('logged-in-view').style.display = 'block';
+        
+        if (currentUser.isAdmin) {
+          document.getElementById('admin-tab').style.display = 'block';
+        }
+        
+        loadProfile();
+        loadOrders();
+      } else {
+        document.getElementById('not-logged-in').style.display = 'block';
+        document.getElementById('logged-in-view').style.display = 'none';
+        showLoginForm();
+      }
+    }
+
+    function showLoginForm() {
+      const container = document.getElementById('login-form-container');
+      container.innerHTML = `
+        <div style="max-width:400px; margin:0 auto;">
+          <div style="margin-bottom:1rem;">
+            <button onclick="switchMode('login')" style="background:#FFD700; border:none; padding:0.5rem 2rem; border-radius:25px; margin-right:1rem;">Login</button>
+            <button onclick="switchMode('register')" style="background:none; border:1px solid #FFD700; color:#FFD700; padding:0.5rem 2rem; border-radius:25px;">Register</button>
+          </div>
+          <div id="auth-form"></div>
+        </div>
+      `;
+      switchMode('login');
+    }
+
+    window.switchMode = function(mode) {
+      const formDiv = document.getElementById('auth-form');
+      if (mode === 'login') {
+        formDiv.innerHTML = `
+          <h3 style="color:#FFD700; margin-bottom:1.5rem;">Login</h3>
+          <form id="login-form">
+            <div class="form-group">
+              <input type="email" id="login-email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+              <input type="password" id="login-password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="save-btn" style="width:100%;">Login</button>
+          </form>
+        `;
+        document.getElementById('login-form').addEventListener('submit', login);
+      } else {
+        formDiv.innerHTML = `
+          <h3 style="color:#FFD700; margin-bottom:1.5rem;">Register</h3>
+          <form id="register-form">
+            <div class="form-group">
+              <input type="text" id="reg-name" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+              <input type="email" id="reg-email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+              <input type="password" id="reg-password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+              <input type="tel" id="reg-phone" placeholder="Phone (optional)">
+            </div>
+            <div class="form-group">
+              <input type="text" id="reg-address" placeholder="Address (optional)">
+            </div>
+            <button type="submit" class="save-btn" style="width:100%;">Register</button>
+          </form>
+        `;
+        document.getElementById('register-form').addEventListener('submit', register);
+      }
+    };
+
+    window.login = async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      
+      const data = await res.json();
+      if (data.success) {
+        window.location.reload();
+      } else {
+        alert(data.error || 'Login failed');
+      }
+    };
+
+    window.register = async function(e) {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value;
+      const email = document.getElementById('reg-email').value;
+      const password = document.getElementById('reg-password').value;
+      const phone = document.getElementById('reg-phone').value;
+      const address = document.getElementById('reg-address').value;
+      
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, phone, address })
+      });
+      
+      const data = await res.json();
+      if (data.success) {
+        alert('Account created! Please login.');
+        switchMode('login');
+      } else {
+        alert(data.error || 'Registration failed');
+      }
+    };
+
+    function loadProfile() {
+      if (!currentUser) return;
+      document.getElementById('profile-name').value = currentUser.name || '';
+      document.getElementById('profile-email').value = currentUser.email || '';
+      document.getElementById('profile-phone').value = currentUser.phone || '';
+      document.getElementById('profile-address').value = currentUser.address || '';
+    }
+
+    async function loadOrders() {
+  const res = await fetch('/api/orders');
+  const data = await res.json();
+  const container = document.getElementById('orders-list');
+  
+  if (!data.orders || data.orders.length === 0) {
+    container.innerHTML = '<p>No orders yet.</p>';
+    return;
+  }
+  
+     container.innerHTML = data.orders.reverse().map(order => `
+        <div class="order-card">
+            <div class="order-header">
+                <span><strong>Order #${order.id}</strong></span>
+                <span>${new Date(order.createdAt).toLocaleDateString('ro-RO')}</span>
+                <span style="color: ${order.status === 'pending' ? '#FFD700' : '#00ff00'};">${order.status}</span>
+                <span><strong>${order.total.toFixed(2)} RON</strong></span>
+            </div>
+      
+            <!-- Shipping Address -->
+            <div style="background: #0a0a1a; padding: 10px; margin: 10px 0; border-radius: 8px; border-left: 3px solid #FFD700;">
+                <p style="color: #FFD700; margin-bottom: 5px;">📦 Adresă de livrare:</p>
+                <p style="color: #E8A2B4;">${order.customerInfo.name}</p>
+                <p style="color: #E8A2B4;">${order.customerInfo.phone}</p>
+                <p style="color: #E8A2B4;">${order.customerInfo.email}</p>
+                <p style="color: #E8A2B4;">${order.customerInfo.address}</p>
+            </div>
+      
+            <!-- Payment Method -->
+            <p style="margin: 10px 0; color: #FFD700;">
+                 💳 Metodă plată: ${order.paymentMethod === 'cash' ? 'Ramburs' : 'Transfer Bancar'}
+            </p>
+      
+            <!-- Order Items -->
+            <div class="order-items">
+                <p style="color: #FFD700; margin-bottom: 10px;">🛍️ Produse:</p>
+                ${order.cart.map(item => `
+                    <div style="display:flex; justify-content:space-between; margin:0.5rem 0; padding:5px 0; border-bottom:1px dashed #333;">
+                        <span>${item.name} - ${item.size}/${item.color} x${item.quantity}</span>
+                        <span>${(item.price * item.quantity).toFixed(2)} RON</span>
+                    </div>
+                `).join('')}
+            </div>
+      
+            <!-- Total -->
+            <div style="text-align:right; margin-top:15px; padding-top:10px; border-top:1px solid #FFD700; color:#FFD700; font-size:1.1rem;">
+                Total: ${order.total.toFixed(2)} RON
+            </div>
+        </div>
+    `).join('');
+    }
+
+    document.getElementById('profile-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('profile-name').value;
+      const phone = document.getElementById('profile-phone').value;
+      const address = document.getElementById('profile-address').value;
+      
+      const res = await fetch('/api/user', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, address })
+      });
+      
+      const data = await res.json();
+      if (data.success) {
+        alert('Profile updated!');
+      }
+    });
+
+    document.getElementById('settings-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const newPass = document.getElementById('new-password').value;
+      const confirmPass = document.getElementById('confirm-password').value;
+      
+      if (!newPass) {
+        alert('Please enter a new password');
+        return;
+      }
+      
+      if (newPass !== confirmPass) {
+        alert('Passwords do not match');
+        return;
+      }
+      
+      alert('Password change coming soon!');
+    });
+
+    window.showTab = function(tabName) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabName + '-tab').classList.add('active');
+      event.target.classList.add('active');
+    };
+
+    window.goToAdmin = function() {
+      window.location.href = '/admin/dashboard.html';
+    };
+
+    window.logout = async function() {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location.href = '/';
+    };
+
+    // Start
+    checkLogin();
+  </script>
+</body>
+</html>

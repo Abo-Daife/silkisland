@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - SilkIsland</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body { background: #0a0a1a; }
+    .admin-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    h1 { color: #FFD700; text-align: center; margin-bottom: 30px; }
+    .btn {
+      background: #FFD700;
+      color: #0a0a1a;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .btn:hover { background: #E8A2B4; }
+    .btn-danger { background: #ff6b6b; color: white; }
+    table {
+      width: 100%;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid #FFD700;
+      border-radius: 8px;
+      color: #E8A2B4;
+    }
+    th { background: #1a1a2e; color: #FFD700; padding: 12px; }
+    td { padding: 10px; border-bottom: 1px solid #333; }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal.show { display: flex; }
+    .modal-box {
+      background: #1a1a2e;
+      border: 2px solid #FFD700;
+      border-radius: 16px;
+      padding: 25px;
+      width: 450px;
+    }
+    .modal-box h2 { color: #FFD700; margin-bottom: 20px; }
+    .modal-box input, .modal-box select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      background: #0a0a1a;
+      border: 1px solid #FFD700;
+      border-radius: 6px;
+      color: #FFD700;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .modal-actions button { flex: 1; }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h1>Product Management</h1>
+      <button class="btn btn-danger" onclick="logout()">Logout</button>
+    </div>
+    
+    <button class="btn" onclick="openModal('add')">+ Add New Product</button>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="product-list"></tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="productModal">
+    <div class="modal-box">
+      <h2 id="modalTitle">Add Product</h2>
+      <form id="productForm" onsubmit="saveProduct(event)">
+        <input type="hidden" id="productId">
+        <input type="text" id="productName" placeholder="Product Name" required>
+        <input type="number" id="productPrice" placeholder="Price (RON)" step="0.01" required>
+        <select id="productCategory" required>
+          <option value="">Select Category</option>
+          <option value="Lingerie">Lingerie</option>
+          <option value="Bath Stuff">Bath Stuff</option>
+          <option value="Towels">Towels</option>
+        </select>
+        <input type="text" id="productImage" placeholder="Image filename (e.g., product1.jpg)" value="product1.jpg" required>
+        <input type="text" id="productSizes" placeholder="Sizes (S,M,L,XL)" value="S,M,L" required>
+        <input type="text" id="productColors" placeholder="Colors (Black,Gold,Rose)" value="Black,Gold" required>
+        <div class="modal-actions">
+          <button type="submit" class="btn">Save</button>
+          <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let products = [];
+    let currentUser = null;
+
+    // Check admin login
+    async function init() {
+      const res = await fetch('/api/user');
+      const data = await res.json();
+      
+      if (!data.user || !data.user.isAdmin) {
+        window.location.href = '/account.html';
+        return;
+      }
+      
+      currentUser = data.user;
+      loadProducts();
+    }
+
+    // Load products from server
+    async function loadProducts() {
+      try {
+        const res = await fetch('/api/admin/products');
+        const data = await res.json();
+        products = data;
+        renderTable();
+      } catch (e) {
+        console.error('Failed to load products:', e);
+        alert('Could not load products. Check console.');
+      }
+    }
+
+    // Render table
+    function renderTable() {
+      const tbody = document.getElementById('product-list');
+      tbody.innerHTML = products.map(p => `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.name}</td>
+          <td>${p.price} RON</td>
+          <td>${p.category}</td>
+          <td>
+            <button class="btn" onclick="editProduct(${p.id})" style="padding:5px 10px; margin:2px;">Edit</button>
+            <button class="btn btn-danger" onclick="deleteProduct(${p.id})" style="padding:5px 10px; margin:2px;">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Open modal
+    window.openModal = function(mode) {
+      document.getElementById('modalTitle').textContent = mode === 'add' ? 'Add Product' : 'Edit Product';
+      if (mode === 'add') {
+        document.getElementById('productForm').reset();
+        document.getElementById('productId').value = '';
+      }
+      document.getElementById('productModal').classList.add('show');
+    };
+
+    // Close modal
+    window.closeModal = function() {
+      document.getElementById('productModal').classList.remove('show');
+    };
+
+    // Edit product
+    window.editProduct = function(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      
+      document.getElementById('productId').value = product.id;
+      document.getElementById('productName').value = product.name;
+      document.getElementById('productPrice').value = product.price;
+      document.getElementById('productCategory').value = product.category;
+      document.getElementById('productImage').value = product.image.replace('/images/', '');
+      document.getElementById('productSizes').value = product.sizes.join(',');
+      document.getElementById('productColors').value = product.colors.join(',');
+      
+      openModal('edit');
+    };
+
+    // Save product
+    window.saveProduct = async function(e) {
+      e.preventDefault();
+      
+      const id = document.getElementById('productId').value;
+      const product = {
+        name: document.getElementById('productName').value,
+        price: parseFloat(document.getElementById('productPrice').value),
+        category: document.getElementById('productCategory').value,
+        image: '/images/' + document.getElementById('productImage').value,
+        sizes: document.getElementById('productSizes').value.split(',').map(s => s.trim()),
+        colors: document.getElementById('productColors').value.split(',').map(c => c.trim())
+      };
+      
+      if (id) product.id = parseInt(id);
+      
+      const url = id ? `/api/admin/products/${id}` : '/api/admin/products';
+      const method = id ? 'PUT' : 'POST';
+      
+      console.log('Saving product:', product, 'to', url);
+      
+      const res = await fetch('http://localhost:3000' + url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(product)
+      });
+      
+      const data = await res.json();
+      console.log('Response:', data);
+      
+      if (data.success) {
+        closeModal();
+        loadProducts();
+        alert('Product saved!');
+      } else {
+        alert('Error: ' + (data.error || 'Unknown error'));
+      }
+    };
+
+    // Delete product
+    window.deleteProduct = async function(id) {
+      if (!confirm('Delete this product?')) return;
+      
+      const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      
+      if (data.success) {
+        loadProducts();
+        alert('Product deleted!');
+      } else {
+        alert('Delete failed');
+      }
+    };
+
+    // Logout
+    window.logout = async function() {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location.href = '/account.html';
+    };
+
+    // Start
+    init();
+  </script>
+</body>
+</html>

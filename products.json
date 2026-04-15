@@ -1,0 +1,97 @@
+[
+  {
+    "id": 2,
+    "name": "test1",
+    "price": 50,
+    "category": "Lingerie",
+    "image": "/images/product2.jpg",
+    "sizes": [
+      "250ml",
+      "500ml",
+      "1000ml"
+    ],
+    "colors": [
+      "Original",
+      "Rose"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Roman Bath Salts",
+    "price": 3444,
+    "category": "Bath Stuff",
+    "image": "/images/product3.jpg",
+    "sizes": [
+      "200g",
+      "500g",
+      "1kg"
+    ],
+    "colors": [
+      "Rose",
+      "Lavender",
+      "Gold"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Golden Anointing Oil",
+    "price": 65,
+    "category": "Bath Stuff",
+    "image": "/images/product4.jpg",
+    "sizes": [
+      "30ml",
+      "50ml",
+      "100ml"
+    ],
+    "colors": [
+      "Gold",
+      "Midnight Blue"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "test",
+    "price": 677,
+    "category": "Lingerie",
+    "image": "/images/product5.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      "Black",
+      "Gold"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "CONSOLE TEST",
+    "price": 99.99,
+    "category": "Bath Stuff",
+    "image": "/images/product1.jpg",
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "colors": [
+      "Red"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "test12",
+    "price": 344,
+    "category": "Bath Stuff",
+    "image": "/images/test12.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      "Black",
+      "Gold"
+    ]
+  }
+]

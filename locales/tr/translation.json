@@ -1,0 +1,19 @@
+{
+  "home": "Ana Sayfa",
+  "categories": "Kategoriler",
+  "lingerie": "İç Giyim",
+  "bath_stuff": "Banyo Ürünleri",
+  "add_to_cart": "Sepete Ekle",
+  "checkout": "Ödeme",
+  "total": "Toplam",
+  "cash_on_delivery": "Kapıda Ödeme",
+  "card_payment": "Banka Havalesi",
+  "name": "Ad Soyad",
+  "email": "E-posta",
+  "phone": "Telefon Numarası",
+  "address": "Teslimat Adresi",
+  "place_order": "Siparişi Tamamla",
+  "order_confirmed": "Sipariş Onaylandı!",
+  "cart_empty": "Sepet boş",
+  "free_shipping": "300 RON üzeri ücretsiz kargo"
+}

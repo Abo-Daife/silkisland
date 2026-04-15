@@ -1,0 +1,165 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "email": "admin@silkisland.ro",
+      "password": "admin123",
+      "isAdmin": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-1776208630854",
+      "userId": 1,
+      "customerInfo": {
+        "name": "dsadasd",
+        "email": "amr.mokhtar301@gmail.com",
+        "phone": "0775304973",
+        "address": "Europa, Ștefăneșt De Jos"
+      },
+      "cart": [
+        {
+          "id": 5,
+          "name": "Nefertiti Lace Set",
+          "price": 349.99,
+          "size": "S",
+          "color": "Black",
+          "quantity": 1
+        },
+        {
+          "id": 3,
+          "name": "Roman Bath Salts",
+          "price": 89.99,
+          "size": "200g",
+          "color": "Rose",
+          "quantity": 1
+        }
+      ],
+      "paymentMethod": "transfer",
+      "total": 439.98,
+      "status": "pending",
+      "createdAt": "2026-04-14T23:17:10.854Z"
+    },
+    {
+      "id": "ORD-1776220210035",
+      "userId": 1,
+      "customerInfo": {
+        "name": "MOHAMED AMR MOKHTAR FAROUK",
+        "email": "amr.mokhtar301@gmail.com",
+        "phone": "0775304973",
+        "address": "Europa, Ștefăneșt De Jos"
+      },
+      "cart": [
+        {
+          "id": 4,
+          "name": "Golden Anointing Oil",
+          "price": 65,
+          "size": "30ml",
+          "color": "Gold",
+          "quantity": 1
+        }
+      ],
+      "paymentMethod": "cash",
+      "total": 65,
+      "status": "pending",
+      "createdAt": "2026-04-15T02:30:10.035Z"
+    },
+    {
+      "id": "ORD-1776249891201",
+      "userId": 1,
+      "customerInfo": {
+        "name": "MOHAMED AMR MOKHTAR FAROUK",
+        "email": "amr.mokhtar301@gmail.com",
+        "phone": "0775304973",
+        "address": "Europa, Ștefăneșt De Jos"
+      },
+      "cart": [
+        {
+          "id": 6,
+          "name": "test",
+          "price": 677,
+          "size": "S",
+          "color": "Black",
+          "quantity": 1
+        },
+        {
+          "id": 4,
+          "name": "Golden Anointing Oil",
+          "price": 65,
+          "size": "30ml",
+          "color": "Gold",
+          "quantity": 1
+        }
+      ],
+      "paymentMethod": "cash",
+      "total": 742,
+      "status": "pending",
+      "createdAt": "2026-04-15T10:44:51.201Z"
+    },
+    {
+      "id": "ORD-1776250009977",
+      "userId": 1,
+      "customerInfo": {
+        "name": "MOHAMED AMR MOKHTAR FAROUK",
+        "email": "amr.mokhtar301@gmail.com",
+        "phone": "0775304973",
+        "address": "Europa, Ștefăneșt De Jos"
+      },
+      "cart": [
+        {
+          "id": 3,
+          "name": "Roman Bath Salts",
+          "price": 3444,
+          "size": "200g",
+          "color": "Rose",
+          "quantity": 1
+        }
+      ],
+      "paymentMethod": "transfer",
+      "total": 3444,
+      "status": "pending",
+      "createdAt": "2026-04-15T10:46:49.977Z"
+    },
+    {
+      "id": "ORD-1776259747615",
+      "userId": null,
+      "customerInfo": {
+        "name": "MOHAMED AMR MOKHTAR FAROUK",
+        "email": "amr.mokhtar301@gmail.com",
+        "phone": "0775304973",
+        "address": "Europa, Ștefăneșt De Jos"
+      },
+      "cart": [
+        {
+          "id": 4,
+          "name": "Golden Anointing Oil",
+          "price": 65,
+          "size": "30ml",
+          "color": "Gold",
+          "quantity": 1
+        },
+        {
+          "id": 4,
+          "name": "Golden Anointing Oil",
+          "price": 65,
+          "size": "30ml",
+          "color": "Gold",
+          "quantity": 1
+        },
+        {
+          "id": 3,
+          "name": "Roman Bath Salts",
+          "price": 3444,
+          "size": "200g",
+          "color": "Rose",
+          "quantity": 1
+        }
+      ],
+      "paymentMethod": "cash",
+      "total": 3574,
+      "status": "pending",
+      "createdAt": "2026-04-15T13:29:07.616Z"
+    }
+  ]
+}

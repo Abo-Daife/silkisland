@@ -1,0 +1,19 @@
+{
+  "home": "Acasă",
+  "categories": "Categorii",
+  "lingerie": "Lingerie",
+  "bath_stuff": "Produse Baie",
+  "add_to_cart": "Adaugă în Coș",
+  "checkout": "Finalizare",
+  "total": "Total",
+  "cash_on_delivery": "Plată Ramburs",
+  "card_payment": "Transfer Bancar",
+  "name": "Nume Complet",
+  "email": "Email",
+  "phone": "Număr de Telefon",
+  "address": "Adresă de Livrare",
+  "place_order": "Plasează Comanda",
+  "order_confirmed": "Comandă Confirmată!",
+  "cart_empty": "Coșul este gol",
+  "free_shipping": "Transport gratuit peste 300 RON"
+}
