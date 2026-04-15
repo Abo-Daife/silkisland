@@ -1,3 +1,5 @@
+const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+
 // Products data
 let products = [];
 let cart = [];
@@ -14,18 +16,18 @@ const translations = {
 // Load products from server
 async function loadProducts() {
   try {
-    const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
-
-// Then use it for all fetch calls:
-const res = await fetch(API_URL + '/api/products');
+    const res = await fetch(API_URL + '/api/products');
     products = await res.json();
-    console.log('Loaded', products.length, 'products');
+    console.log('Loaded', products.length, 'products from server');
     renderProducts();
   } catch (e) {
     console.error('Failed to load products:', e);
     products = [
       { id: 1, name: "Isis Silk Robe", price: 289.99, category: "Lingerie", image: "/images/product1.jpg", sizes: ["S", "M", "L", "XL"], colors: ["Black", "Gold", "Midnight Blue", "Rose"] },
-      { id: 2, name: "Cleopatra's Milk Bath", price: 149.99, category: "Bath Stuff", image: "/images/product2.jpg", sizes: ["250ml", "500ml", "1000ml"], colors: ["Original", "Rose"] }
+      { id: 2, name: "Cleopatra's Milk Bath", price: 149.99, category: "Bath Stuff", image: "/images/product2.jpg", sizes: ["250ml", "500ml", "1000ml"], colors: ["Original", "Rose"] },
+      { id: 3, name: "Roman Bath Salts", price: 89.99, category: "Bath Stuff", image: "/images/product3.jpg", sizes: ["200g", "500g", "1kg"], colors: ["Rose", "Lavender", "Gold"] },
+      { id: 4, name: "Golden Anointing Oil", price: 129.99, category: "Bath Stuff", image: "/images/product4.jpg", sizes: ["30ml", "50ml", "100ml"], colors: ["Gold", "Midnight Blue"] },
+      { id: 5, name: "Nefertiti Lace Set", price: 349.99, category: "Lingerie", image: "/images/product5.jpg", sizes: ["S", "M", "L"], colors: ["Black", "Rose", "Gold"] }
     ];
     renderProducts();
   }
@@ -125,38 +127,24 @@ function addProductToCart(productId) {
     return;
   }
   
-  // Get all inputs from the variant group
   const sizeSelect = variantGroup.querySelector('.variant-size');
   const colorSelect = variantGroup.querySelector('.variant-color');
   const qtyInput = variantGroup.querySelector('.variant-qty');
-  
-  // Get additional variant rows
   const variantRows = variantGroup.getElementsByClassName('variant-item');
   
   let added = 0;
   
-  // First, add the main variant
   if (sizeSelect && colorSelect && qtyInput) {
     const size = sizeSelect.value;
     const color = colorSelect.value;
     const qty = parseInt(qtyInput.value) || 0;
     
-    console.log('Main variant:', size, color, qty);
-    
     if (qty > 0) {
-      cart.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        size: size,
-        color: color,
-        quantity: qty
-      });
+      cart.push({ id: product.id, name: product.name, price: product.price, size, color, quantity: qty });
       added++;
     }
   }
   
-  // Then add any extra variant rows
   for (let row of variantRows) {
     const rowSize = row.querySelector('.variant-size');
     const rowColor = row.querySelector('.variant-color');
@@ -167,17 +155,8 @@ function addProductToCart(productId) {
       const color = rowColor.value;
       const qty = parseInt(rowQty.value) || 0;
       
-      console.log('Extra variant:', size, color, qty);
-      
       if (qty > 0) {
-        cart.push({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          size: size,
-          color: color,
-          quantity: qty
-        });
+        cart.push({ id: product.id, name: product.name, price: product.price, size, color, quantity: qty });
         added++;
       }
     }
@@ -186,7 +165,7 @@ function addProductToCart(productId) {
   if (added > 0) {
     updateCartDisplay();
     localStorage.setItem('silkisland_cart', JSON.stringify(cart));
-    alert(`${product.name} added to cart! (${added} item${added > 1 ? 's' : ''})`);
+    alert(`${product.name} added to cart!`);
   } else {
     alert('Please set quantity to at least 1');
   }
@@ -314,6 +293,22 @@ function selectSearchResult(productId) {
     const el = document.getElementById(`product-${productId}`);
     if (el) { el.scrollIntoView({ behavior: 'smooth' }); el.style.boxShadow = '0 0 30px #FFD700'; setTimeout(() => el.style.boxShadow = '', 2000); }
   }, 100);
+}
+
+// Cart sync
+async function syncCartToBackend() {
+  await fetch(API_URL + '/api/cart/save', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cart })
+  });
+}
+
+async function loadCartFromBackend() {
+  const response = await fetch(API_URL + '/api/cart/load');
+  const data = await response.json();
+  cart = data.cart || [];
+  updateCartDisplay();
 }
 
 // Initialize
