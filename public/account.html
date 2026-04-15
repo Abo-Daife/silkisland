@@ -181,37 +181,59 @@
     const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
     let currentUser = null;
 
-    async function checkLogin() {
-      try {
-        const res = await fetch(API_URL + '/api/user');
-        const text = await res.text();
-        
-        if (!text) {
-          showLoginForm();
-          return;
+        async function checkLogin() {
+                // First check localStorage for saved user
+                const savedUser = localStorage.getItem('silkisland_user');
+                 if (savedUser) {
+                  try {
+                    currentUser = JSON.parse(savedUser);
+                 document.getElementById('not-logged-in').style.display = 'none';
+                 document.getElementById('logged-in-view').style.display = 'block';
+      
+             if (currentUser.is_admin) {
+                 document.getElementById('admin-tab').style.display = 'block';}
+
+
+                loadProfile();
+            loadOrders();
+                 return;
+             } catch (e) {
+              localStorage.removeItem('silkisland_user');
+             }
+             }
+  
+                // If no saved user, check API
+             try {
+                    const res = await fetch(API_URL + '/api/user');
+                    const text = await res.text();
+    
+                    if (!text) {
+                 showLoginForm();
+                    return;
+                    }
+    
+                const data = JSON.parse(text);
+    
+                if (data.user) {
+                currentUser = data.user;
+                 localStorage.setItem('silkisland_user', JSON.stringify(data.user));
+                 document.getElementById('not-logged-in').style.display = 'none';
+                  document.getElementById('logged-in-view').style.display = 'block';
+      
+                    if (currentUser.is_admin) {
+                     document.getElementById('admin-tab').style.display = 'block';
+                    }
+      
+                 loadProfile();
+                 loadOrders();
+                 } else {
+                  showLoginForm();
+                }
+                 } catch (e) {
+                 console.log('Not logged in');
+                 showLoginForm();
+             }
         }
-        
-        const data = JSON.parse(text);
-        
-        if (data.user) {
-          currentUser = data.user;
-          document.getElementById('not-logged-in').style.display = 'none';
-          document.getElementById('logged-in-view').style.display = 'block';
-          
-          if (currentUser.is_admin) {
-            document.getElementById('admin-tab').style.display = 'block';
-          }
-          
-          loadProfile();
-          loadOrders();
-        } else {
-          showLoginForm();
-        }
-      } catch (e) {
-        console.log('Not logged in');
-        showLoginForm();
-      }
-    }
 
     function showLoginForm() {
       document.getElementById('not-logged-in').style.display = 'block';
@@ -385,8 +407,10 @@
     };
 
     window.logout = async function() {
-      await fetch(API_URL + '/api/logout', { method: 'POST' });
-      window.location.href = '/';
+        localStorage.removeItem('silkisland_user');
+        localStorage.removeItem('silkisland_cart');
+        await fetch(API_URL + '/api/logout', { method: 'POST' });
+        window.location.href = '/';
     };
 
     // Start
