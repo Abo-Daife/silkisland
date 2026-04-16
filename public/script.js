@@ -6,6 +6,46 @@ let cart = [];
 let currentCategory = 'All';
 let currentLang = 'en';
 
+// Gallery state
+let currentImageIndex = {};
+
+// Gallery functions
+window.nextImage = function(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product || !product.images || product.images.length <= 1) return;
+  
+  const current = currentImageIndex[productId] || 0;
+  const next = (current + 1) % product.images.length;
+  setImage(productId, next);
+};
+
+window.prevImage = function(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product || !product.images || product.images.length <= 1) return;
+  
+  const current = currentImageIndex[productId] || 0;
+  const prev = (current - 1 + product.images.length) % product.images.length;
+  setImage(productId, prev);
+};
+
+window.setImage = function(productId, index) {
+  const product = products.find(p => p.id === productId);
+  if (!product || !product.images) return;
+  
+  const gallery = document.getElementById(`gallery-${productId}`);
+  if (!gallery) return;
+  
+  const mainImg = gallery.querySelector('.main-image');
+  const dots = gallery.querySelectorAll('.dot');
+  
+  if (mainImg) mainImg.src = product.images[index];
+  currentImageIndex[productId] = index;
+  
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+};
+
 // Translations
 const translations = {
   en: { 
@@ -110,7 +150,16 @@ function renderProducts() {
     if (product.colors) product.colors.forEach(c => colorsOptions += `<option>${c}</option>`);
     
     card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'">
+      <div class="product-gallery" id="gallery-${product.id}">
+  <img src="${product.images?.[0] || product.image}" alt="${product.name}" class="main-image" onclick="nextImage(${product.id})">
+  ${product.images && product.images.length > 1 ? `
+    <div class="gallery-nav gallery-prev" onclick="event.stopPropagation(); prevImage(${product.id})">❮</div>
+    <div class="gallery-nav gallery-next" onclick="event.stopPropagation(); nextImage(${product.id})">❯</div>
+    <div class="gallery-dots">
+      ${product.images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); setImage(${product.id}, ${i})"></span>`).join('')}
+    </div>
+  ` : ''}
+</div>
       <h3>${product.name}</h3>
       <div class="price">${product.price} RON</div>
       <div class="variant-group" id="variants-${product.id}">

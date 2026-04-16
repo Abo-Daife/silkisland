@@ -49,18 +49,22 @@
       border: 2px solid #FFD700;
       border-radius: 16px;
       padding: 25px;
-      width: 450px;
+      width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
     }
     .modal-box h2 { color: #FFD700; margin-bottom: 20px; }
-    .modal-box input, .modal-box select {
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; color: #E8A2B4; margin-bottom: 5px; }
+    .form-group input, .form-group select {
       width: 100%;
       padding: 10px;
-      margin: 8px 0;
       background: #0a0a1a;
       border: 1px solid #FFD700;
       border-radius: 6px;
       color: #FFD700;
     }
+    .form-group small { color: #E8A2B4; font-size: 0.8rem; }
     .modal-actions {
       display: flex;
       gap: 10px;
@@ -98,17 +102,48 @@
       <h2 id="modalTitle">Add Product</h2>
       <form id="productForm" onsubmit="saveProduct(event)">
         <input type="hidden" id="productId">
-        <input type="text" id="productName" placeholder="Product Name" required>
-        <input type="number" id="productPrice" placeholder="Price (RON)" step="0.01" required>
-        <select id="productCategory" required>
-          <option value="">Select Category</option>
-          <option value="Lingerie">Lingerie</option>
-          <option value="Bath Stuff">Bath Stuff</option>
-          <option value="Towels">Towels</option>
-        </select>
-        <input type="text" id="productImage" placeholder="Image filename (e.g., product1.jpg)" value="product1.jpg" required>
-        <input type="text" id="productSizes" placeholder="Sizes (S,M,L,XL)" value="S,M,L" required>
-        <input type="text" id="productColors" placeholder="Colors (Black,Gold,Rose)" value="Black,Gold" required>
+        
+        <div class="form-group">
+          <label>Product Name *</label>
+          <input type="text" id="productName" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Price (RON) *</label>
+          <input type="number" id="productPrice" step="0.01" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="productCategory" required>
+            <option value="">Select Category</option>
+            <option value="Lingerie">Lingerie</option>
+            <option value="Bath Stuff">Bath Stuff</option>
+            <option value="Towels">Towels</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Main Image Filename *</label>
+          <input type="text" id="productImage" placeholder="e.g., product1.jpg" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Additional Images (comma separated)</label>
+          <input type="text" id="productImages" placeholder="e.g., img2.jpg, img3.jpg">
+          <small>First image is main, others are gallery. Click image to cycle through.</small>
+        </div>
+        
+        <div class="form-group">
+          <label>Sizes (comma separated) *</label>
+          <input type="text" id="productSizes" placeholder="S,M,L,XL" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Colors (comma separated) *</label>
+          <input type="text" id="productColors" placeholder="Black,Gold,Rose" required>
+        </div>
+        
         <div class="modal-actions">
           <button type="submit" class="btn">Save</button>
           <button type="button" class="btn" onclick="closeModal()">Cancel</button>
@@ -121,7 +156,6 @@
     const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
     let products = [];
 
-    // Check if user is admin (from localStorage)
     function checkAdmin() {
       const user = JSON.parse(localStorage.getItem('silkisland_user') || '{}');
       if (!user.is_admin) {
@@ -132,7 +166,6 @@
       return true;
     }
 
-    // Load products
     async function loadProducts() {
       try {
         const res = await fetch(API_URL + '/api/products');
@@ -143,7 +176,6 @@
       }
     }
 
-    // Render table
     function renderTable() {
       const tbody = document.getElementById('product-list');
       tbody.innerHTML = products.map(p => `
@@ -160,22 +192,20 @@
       `).join('');
     }
 
-    // Open modal
     window.openModal = function(mode) {
       document.getElementById('modalTitle').textContent = mode === 'add' ? 'Add Product' : 'Edit Product';
       if (mode === 'add') {
         document.getElementById('productForm').reset();
         document.getElementById('productId').value = '';
+        document.getElementById('productImages').value = '';
       }
       document.getElementById('productModal').classList.add('show');
     };
 
-    // Close modal
     window.closeModal = function() {
       document.getElementById('productModal').classList.remove('show');
     };
 
-    // Edit product
     window.editProduct = function(id) {
       const product = products.find(p => p.id === id);
       if (!product) return;
@@ -184,23 +214,43 @@
       document.getElementById('productName').value = product.name;
       document.getElementById('productPrice').value = product.price;
       document.getElementById('productCategory').value = product.category;
-      document.getElementById('productImage').value = product.image ? product.image.replace('/images/', '') : 'product1.jpg';
-      document.getElementById('productSizes').value = product.sizes ? product.sizes.join(',') : 'S,M,L';
-      document.getElementById('productColors').value = product.colors ? product.colors.join(',') : 'Black,Gold';
+      
+      // Handle images
+      if (product.images && product.images.length > 0) {
+        document.getElementById('productImage').value = product.images[0].replace('/images/', '');
+        if (product.images.length > 1) {
+          document.getElementById('productImages').value = product.images.slice(1).map(img => img.replace('/images/', '')).join(', ');
+        }
+      } else if (product.image) {
+        document.getElementById('productImage').value = product.image.replace('/images/', '');
+      }
+      
+      document.getElementById('productSizes').value = product.sizes ? product.sizes.join(',') : '';
+      document.getElementById('productColors').value = product.colors ? product.colors.join(',') : '';
       
       openModal('edit');
     };
 
-    // Save product
     window.saveProduct = async function(e) {
       e.preventDefault();
       
       const id = document.getElementById('productId').value;
+      const mainImage = '/images/' + document.getElementById('productImage').value;
+      const extraImages = document.getElementById('productImages').value;
+      
+      // Build images array
+      let images = [mainImage];
+      if (extraImages) {
+        const extras = extraImages.split(',').map(img => '/images/' + img.trim());
+        images = [...images, ...extras];
+      }
+      
       const product = {
         name: document.getElementById('productName').value,
         price: parseFloat(document.getElementById('productPrice').value),
         category: document.getElementById('productCategory').value,
-        image: '/images/' + document.getElementById('productImage').value,
+        image: mainImage,  // Keep for backward compatibility
+        images: images,
         sizes: document.getElementById('productSizes').value.split(',').map(s => s.trim()),
         colors: document.getElementById('productColors').value.split(',').map(c => c.trim())
       };
@@ -210,24 +260,28 @@
       const url = id ? `${API_URL}/api/admin/products/${id}` : `${API_URL}/api/admin/products`;
       const method = id ? 'PUT' : 'POST';
       
-      const res = await fetch(url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(product)
-      });
-      
-      const data = await res.json();
-      
-      if (data.success || data.id) {
-        closeModal();
-        loadProducts();
-        alert('Product saved!');
-      } else {
-        alert('Error: ' + (data.error || 'Unknown error'));
+      try {
+        const res = await fetch(url, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(product)
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          closeModal();
+          await loadProducts();
+          alert('Product saved!');
+        } else {
+          alert('Error: ' + (data.error || 'Unknown error'));
+        }
+      } catch (err) {
+        console.error('Save error:', err);
+        alert('Network error: ' + err.message);
       }
     };
 
-    // Delete product
     window.deleteProduct = async function(id) {
       if (!confirm('Delete this product?')) return;
       
@@ -242,7 +296,6 @@
       }
     };
 
-    // Initialize
     if (checkAdmin()) {
       loadProducts();
     }
