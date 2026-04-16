@@ -1104,3 +1104,11 @@ select {
     right: 15px;
   }
 }
+.product-description {
+  color: #E8A2B4;
+  font-size: 0.9rem;
+  margin: 8px 0;
+  line-height: 1.4;
+  opacity: 0.9;
+  text-align: center;
+}
