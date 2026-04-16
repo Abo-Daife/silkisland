@@ -414,8 +414,6 @@ async function loadCartFromBackend() {
   updateCartDisplay();
 }
 
-// Gallery state
-let currentImageIndex = {};
 
 // Gallery functions
 window.nextImage = function(productId) {
