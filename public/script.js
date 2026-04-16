@@ -215,11 +215,13 @@ function renderProducts() {
     <div class="gallery-dots">
       ${product.images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); openLightbox(${product.id}, ${i})"></span>`).join('')}
      </div>
-     <div class="price">${product.price} RON</div>
-      ` : ''}
+     ` : ''}
 </div>
       <h3>${product.name}</h3>
       <div class="price">${product.price} RON</div>
+      ${product.description ? `
+         <p class="product-description">${product.description.length > 80 ? product.description.substring(0, 80) + '...' : product.description}</p>
+            ` : ''}
       <div class="variant-group" id="variants-${product.id}">
         <div class="variant-item">
           <label>${t.size}:</label>
