@@ -414,6 +414,46 @@ async function loadCartFromBackend() {
   updateCartDisplay();
 }
 
+// Gallery state
+let currentImageIndex = {};
+
+// Gallery functions
+window.nextImage = function(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product || !product.images || product.images.length <= 1) return;
+  
+  const current = currentImageIndex[productId] || 0;
+  const next = (current + 1) % product.images.length;
+  setImage(productId, next);
+};
+
+window.prevImage = function(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product || !product.images || product.images.length <= 1) return;
+  
+  const current = currentImageIndex[productId] || 0;
+  const prev = (current - 1 + product.images.length) % product.images.length;
+  setImage(productId, prev);
+};
+
+window.setImage = function(productId, index) {
+  const product = products.find(p => p.id === productId);
+  if (!product || !product.images) return;
+  
+  const gallery = document.getElementById(`gallery-${productId}`);
+  if (!gallery) return;
+  
+  const mainImg = gallery.querySelector('.main-image');
+  const dots = gallery.querySelectorAll('.dot');
+  
+  if (mainImg) mainImg.src = product.images[index];
+  currentImageIndex[productId] = index;
+  
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+};
+
 // Initialize
 window.onload = function() {
   console.log('Page loaded');
