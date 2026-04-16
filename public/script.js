@@ -213,9 +213,9 @@ function renderProducts() {
     <div class="gallery-nav gallery-prev" onclick="event.stopPropagation(); prevImage(${product.id})">❮</div>
     <div class="gallery-nav gallery-next" onclick="event.stopPropagation(); nextImage(${product.id})">❯</div>
     <div class="gallery-dots">
-      ${product.images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); openLightbox(${product.id}, ${i})"></span>`).join('')},
-      <div class="price">${product.price} RON</div>
+      ${product.images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); openLightbox(${product.id}, ${i})"></span>`).join('')}
      </div>
+     <div class="price">${product.price} RON</div>
       ` : ''}
 </div>
       <h3>${product.name}</h3>
