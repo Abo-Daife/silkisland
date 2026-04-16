@@ -6,75 +6,303 @@
   <title>Admin - SilkIsland</title>
   <link rel="stylesheet" href="/style.css">
   <style>
+    body { background: #0a0a1a; }
     .admin-container {
-      max-width: 400px;
-      margin: 100px auto;
-      background: rgba(0, 0, 0, 0.85);
-      border: 2px solid #FFD700;
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
     }
-    .admin-container h1 {
-      color: #FFD700;
-      margin-bottom: 2rem;
-    }
-    .admin-container input {
-      width: 100%;
-      padding: 1rem;
-      margin: 0.5rem 0;
-      background: #1a1a2e;
-      border: 1px solid #FFD700;
-      border-radius: 8px;
-      color: #FFD700;
-      font-size: 1rem;
-    }
-    .admin-btn {
+    h1 { color: #FFD700; text-align: center; margin-bottom: 30px; }
+    .btn {
       background: #FFD700;
       color: #0a0a1a;
       border: none;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      border-radius: 50px;
+      padding: 10px 20px;
+      border-radius: 25px;
       cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .btn:hover { background: #E8A2B4; }
+    .btn-danger { background: #ff6b6b; color: white; }
+    table {
       width: 100%;
-      margin-top: 1rem;
-      transition: all 0.3s;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid #FFD700;
+      border-radius: 8px;
+      color: #E8A2B4;
     }
-    .admin-btn:hover {
-      background: #E8A2B4;
+    th { background: #1a1a2e; color: #FFD700; padding: 12px; }
+    td { padding: 10px; border-bottom: 1px solid #333; }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
     }
-    .error {
-      color: #ff6b6b;
-      margin-top: 1rem;
+    .modal.show { display: flex; }
+    .modal-box {
+      background: #1a1a2e;
+      border: 2px solid #FFD700;
+      border-radius: 16px;
+      padding: 25px;
+      width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
     }
+    .modal-box h2 { color: #FFD700; margin-bottom: 20px; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; color: #E8A2B4; margin-bottom: 5px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      background: #0a0a1a;
+      border: 1px solid #FFD700;
+      border-radius: 6px;
+      color: #FFD700;
+    }
+    .form-group small { color: #E8A2B4; font-size: 0.8rem; }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .modal-actions button { flex: 1; }
   </style>
 </head>
 <body>
   <div class="admin-container">
-    <h1>𓂀 Admin Access 𓂀</h1>
-    <form id="login-form">
-      <input type="text" id="username" placeholder="Username" value="admin" required>
-      <input type="password" id="password" placeholder="Password" value="silkisland2024" required>
-      <button type="submit" class="admin-btn">Enter Sanctuary</button>
-    </form>
-    <div id="error-message" class="error"></div>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h1>Product Management</h1>
+      <a href="/" style="color:#FFD700;">← Back to Site</a>
+    </div>
+    
+    <button class="btn" onclick="openModal('add')">+ Add New Product</button>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="product-list"></tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="productModal">
+    <div class="modal-box">
+      <h2 id="modalTitle">Add Product</h2>
+      <form id="productForm" onsubmit="saveProduct(event)">
+        <input type="hidden" id="productId">
+        
+        <div class="form-group">
+          <label>Product Name *</label>
+          <input type="text" id="productName" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Price (RON) *</label>
+          <input type="number" id="productPrice" step="0.01" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="productCategory" required>
+            <option value="">Select Category</option>
+            <option value="Lingerie">Lingerie</option>
+            <option value="Bath Stuff">Bath Stuff</option>
+            <option value="Towels">Towels</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Product Description</label>
+          <textarea id="productDescription" rows="3" placeholder="Describe your product..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Main Image Filename *</label>
+          <input type="text" id="productImage" placeholder="e.g., product1.jpg" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Additional Images (comma separated)</label>
+          <input type="text" id="productImages" placeholder="e.g., img2.jpg, img3.jpg">
+          <small>First image is main, others are gallery</small>
+        </div>
+        
+        <div class="form-group">
+          <label>Sizes (comma separated) *</label>
+          <input type="text" id="productSizes" placeholder="S,M,L,XL" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Colors (comma separated) *</label>
+          <input type="text" id="productColors" placeholder="Black,Gold,Rose" required>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="submit" class="btn">Save</button>
+          <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <script>
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      
-      if (username === 'admin' && password === 'silkisland2024') {
-        localStorage.setItem('admin_logged_in', 'true');
-        window.location.href = '/admin/dashboard.html';
-      } else {
-        document.getElementById('error-message').textContent = 'Invalid credentials';
+    const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+    let products = [];
+
+    function checkAdmin() {
+      const user = JSON.parse(localStorage.getItem('silkisland_user') || '{}');
+      if (!user.is_admin) {
+        alert('Admin access required');
+        window.location.href = '/account.html';
+        return false;
       }
-    });
+      return true;
+    }
+
+    async function loadProducts() {
+      try {
+        const res = await fetch(API_URL + '/api/products');
+        products = await res.json();
+        renderTable();
+      } catch (e) {
+        console.error('Failed to load products:', e);
+      }
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('product-list');
+      tbody.innerHTML = products.map(p => `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.name}</td>
+          <td>${p.price} RON</td>
+          <td>${p.category}</td>
+          <td>
+            <button class="btn" onclick="editProduct(${p.id})" style="padding:5px 10px; margin:2px;">Edit</button>
+            <button class="btn btn-danger" onclick="deleteProduct(${p.id})" style="padding:5px 10px; margin:2px;">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    window.openModal = function(mode) {
+      document.getElementById('modalTitle').textContent = mode === 'add' ? 'Add Product' : 'Edit Product';
+      if (mode === 'add') {
+        document.getElementById('productForm').reset();
+        document.getElementById('productId').value = '';
+      }
+      document.getElementById('productModal').classList.add('show');
+    };
+
+    window.closeModal = function() {
+      document.getElementById('productModal').classList.remove('show');
+    };
+
+    window.editProduct = function(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      
+      document.getElementById('productId').value = product.id;
+      document.getElementById('productName').value = product.name;
+      document.getElementById('productPrice').value = product.price;
+      document.getElementById('productCategory').value = product.category;
+      document.getElementById('productDescription').value = product.description || '';
+      
+      if (product.images && product.images.length > 0) {
+        document.getElementById('productImage').value = product.images[0].replace('/images/', '');
+        if (product.images.length > 1) {
+          document.getElementById('productImages').value = product.images.slice(1).map(img => img.replace('/images/', '')).join(', ');
+        }
+      } else if (product.image) {
+        document.getElementById('productImage').value = product.image.replace('/images/', '');
+      }
+      
+      document.getElementById('productSizes').value = product.sizes ? product.sizes.join(',') : '';
+      document.getElementById('productColors').value = product.colors ? product.colors.join(',') : '';
+      
+      openModal('edit');
+    };
+
+    window.saveProduct = async function(e) {
+      e.preventDefault();
+      
+      const id = document.getElementById('productId').value;
+      const mainImage = '/images/' + document.getElementById('productImage').value;
+      const extraImages = document.getElementById('productImages').value;
+      
+      let images = [mainImage];
+      if (extraImages) {
+        const extras = extraImages.split(',').map(img => '/images/' + img.trim());
+        images = [...images, ...extras];
+      }
+      
+      const product = {
+        name: document.getElementById('productName').value,
+        price: parseFloat(document.getElementById('productPrice').value),
+        category: document.getElementById('productCategory').value,
+        description: document.getElementById('productDescription').value,
+        image: mainImage,
+        images: images,
+        sizes: document.getElementById('productSizes').value.split(',').map(s => s.trim()),
+        colors: document.getElementById('productColors').value.split(',').map(c => c.trim())
+      };
+      
+      if (id) product.id = parseInt(id);
+      
+      const url = id ? API_URL + '/api/admin/products/' + id : API_URL + '/api/admin/products';
+      const method = id ? 'PUT' : 'POST';
+      
+      try {
+        const res = await fetch(url, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(product)
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          closeModal();
+          await loadProducts();
+          alert('Product saved!');
+        } else {
+          alert('Error: ' + (data.error || 'Unknown error'));
+        }
+      } catch (err) {
+        console.error('Save error:', err);
+        alert('Network error: ' + err.message);
+      }
+    };
+
+    window.deleteProduct = async function(id) {
+      if (!confirm('Delete this product?')) return;
+      
+      const res = await fetch(API_URL + '/api/admin/products/' + id, { method: 'DELETE' });
+      const data = await res.json();
+      
+      if (data.success) {
+        loadProducts();
+        alert('Product deleted!');
+      } else {
+        alert('Delete failed');
+      }
+    };
+
+    if (checkAdmin()) {
+      loadProducts();
+    }
   </script>
 </body>
 </html>
