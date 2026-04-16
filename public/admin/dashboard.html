@@ -56,7 +56,7 @@
     .modal-box h2 { color: #FFD700; margin-bottom: 20px; }
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; color: #E8A2B4; margin-bottom: 5px; }
-    .form-group input, .form-group select {
+    .form-group input, .form-group select, .form-group textarea {
       width: 100%;
       padding: 10px;
       background: #0a0a1a;
@@ -79,10 +79,6 @@
       <h1>Product Management</h1>
       <a href="/" style="color:#FFD700;">← Back to Site</a>
     </div>
-    <div class="form-group">
-  <label>Product Description</label>
-  <textarea id="productDescription" rows="4" placeholder="Describe your product..."></textarea>
-</div>
     
     <button class="btn" onclick="openModal('add')">+ Add New Product</button>
     
@@ -128,6 +124,11 @@
         </div>
         
         <div class="form-group">
+          <label>Product Description</label>
+          <textarea id="productDescription" rows="3" placeholder="Describe your product..."></textarea>
+        </div>
+        
+        <div class="form-group">
           <label>Main Image Filename *</label>
           <input type="text" id="productImage" placeholder="e.g., product1.jpg" required>
         </div>
@@ -135,7 +136,7 @@
         <div class="form-group">
           <label>Additional Images (comma separated)</label>
           <input type="text" id="productImages" placeholder="e.g., img2.jpg, img3.jpg">
-          <small>First image is main, others are gallery. Click image to cycle through.</small>
+          <small>First image is main, others are gallery</small>
         </div>
         
         <div class="form-group">
@@ -201,7 +202,6 @@
       if (mode === 'add') {
         document.getElementById('productForm').reset();
         document.getElementById('productId').value = '';
-        document.getElementById('productImages').value = '';
       }
       document.getElementById('productModal').classList.add('show');
     };
@@ -220,7 +220,6 @@
       document.getElementById('productCategory').value = product.category;
       document.getElementById('productDescription').value = product.description || '';
       
-      // Handle images
       if (product.images && product.images.length > 0) {
         document.getElementById('productImage').value = product.images[0].replace('/images/', '');
         if (product.images.length > 1) {
@@ -242,9 +241,7 @@
       const id = document.getElementById('productId').value;
       const mainImage = '/images/' + document.getElementById('productImage').value;
       const extraImages = document.getElementById('productImages').value;
-      description: document.getElementById('productDescription').value || '',
       
-      // Build images array
       let images = [mainImage];
       if (extraImages) {
         const extras = extraImages.split(',').map(img => '/images/' + img.trim());
@@ -255,7 +252,8 @@
         name: document.getElementById('productName').value,
         price: parseFloat(document.getElementById('productPrice').value),
         category: document.getElementById('productCategory').value,
-        image: mainImage,  // Keep for backward compatibility
+        description: document.getElementById('productDescription').value || '',
+        image: mainImage,
         images: images,
         sizes: document.getElementById('productSizes').value.split(',').map(s => s.trim()),
         colors: document.getElementById('productColors').value.split(',').map(c => c.trim())
