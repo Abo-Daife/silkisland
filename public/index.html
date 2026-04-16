@@ -7,6 +7,14 @@
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   <link rel="stylesheet" href="/style.css">
 </head>
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <span class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); lightboxPrev()">❮</span>
+  <span class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); lightboxNext()">❯</span>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-counter" id="lightbox-counter">1 / 1</div>
+</div>
 <body>
   <header>
     <div class="logo">

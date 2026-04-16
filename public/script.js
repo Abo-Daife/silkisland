@@ -46,6 +46,63 @@ window.setImage = function(productId, index) {
   });
 };
 
+// ========== LIGHTBOX FUNCTIONS ==========
+let lightboxProduct = null;
+let lightboxIndex = 0;
+
+window.openLightbox = function(productId, imageIndex = 0) {
+  const product = products.find(p => p.id === productId);
+  if (!product || !product.images || product.images.length === 0) return;
+  
+  lightboxProduct = product;
+  lightboxIndex = imageIndex;
+  
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const counter = document.getElementById('lightbox-counter');
+  
+  lightboxImg.src = product.images[lightboxIndex];
+  counter.textContent = `${lightboxIndex + 1} / ${product.images.length}`;
+  lightbox.classList.add('active');
+  
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeLightbox = function() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+  lightboxProduct = null;
+};
+
+window.lightboxNext = function() {
+  if (!lightboxProduct) return;
+  lightboxIndex = (lightboxIndex + 1) % lightboxProduct.images.length;
+  updateLightboxImage();
+};
+
+window.lightboxPrev = function() {
+  if (!lightboxProduct) return;
+  lightboxIndex = (lightboxIndex - 1 + lightboxProduct.images.length) % lightboxProduct.images.length;
+  updateLightboxImage();
+};
+
+function updateLightboxImage() {
+  const lightboxImg = document.getElementById('lightbox-img');
+  const counter = document.getElementById('lightbox-counter');
+  lightboxImg.src = lightboxProduct.images[lightboxIndex];
+  counter.textContent = `${lightboxIndex + 1} / ${lightboxProduct.images.length}`;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  const lightbox = document.getElementById('lightbox');
+  if (!lightbox.classList.contains('active')) return;
+  
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') lightboxPrev();
+  if (e.key === 'ArrowRight') lightboxNext();
+});
+
 // Translations
 const translations = {
   en: { 
@@ -117,11 +174,11 @@ async function loadProducts() {
   } catch (e) {
     console.error('Failed to load products:', e);
     products = [
-      { id: 1, name: "Isis Silk Robe", price: 289.99, category: "Lingerie", image: ["/images/product1.jpg","/images/product5.jpg", "/images/product3.jpg"], sizes: ["S", "M", "L", "XL"], colors: ["Black", "Gold", "Midnight Blue", "Rose"] },
-      { id: 2, name: "Cleopatra's Milk Bath", price: 149.99, category: "Bath Stuff", image: "/images/product2.jpg", sizes: ["250ml", "500ml", "1000ml"], colors: ["Original", "Rose"] },
-      { id: 3, name: "Roman Bath Salts", price: 89.99, category: "Bath Stuff", image: "/images/product3.jpg", sizes: ["200g", "500g", "1kg"], colors: ["Rose", "Lavender", "Gold"] },
-      { id: 4, name: "Golden Anointing Oil", price: 129.99, category: "Bath Stuff", image: "/images/product4.jpg", sizes: ["30ml", "50ml", "100ml"], colors: ["Gold", "Midnight Blue"] },
-      { id: 5, name: "Nefertiti Lace Set", price: 349.99, category: "Lingerie", image: "/images/product5.jpg", sizes: ["S", "M", "L"], colors: ["Black", "Rose", "Gold"] }
+      { id: 1, name: "Isis Silk Robe", price: 289.99, description: "A luxurious silk robe for the ultimate comfort.", category: "Lingerie", image: ["/images/product1.jpg","/images/product5.jpg", "/images/product3.jpg"], sizes: ["S", "M", "L", "XL"], colors: ["Black", "Gold", "Midnight Blue", "Rose"] },
+      { id: 2, name: "Cleopatra's Milk Bath", price: 149.99, description: "Experience the ancient Egyptian luxury.", category: "Bath Stuff", image: "/images/product2.jpg", sizes: ["250ml", "500ml", "1000ml"], colors: ["Original", "Rose"] },
+      { id: 3, name: "Roman Bath Salts", price: 89.99, description: "Revive your senses with these aromatic salts.", category: "Bath Stuff", image: "/images/product3.jpg", sizes: ["200g", "500g", "1kg"], colors: ["Rose", "Lavender", "Gold"] },
+      { id: 4, name: "Golden Anointing Oil", price: 129.99, description: "A premium oil for a luxurious massage experience.", category: "Bath Stuff", image: "/images/product4.jpg", sizes: ["30ml", "50ml", "100ml"], colors: ["Gold", "Midnight Blue"] },
+      { id: 5, name: "Nefertiti Lace Set", price: 349.99, description: "Elegance meets comfort in this stunning lace set.", category: "Lingerie", image: "/images/product5.jpg", sizes: ["S", "M", "L"], colors: ["Black", "Rose", "Gold"] }
     ];
     renderProducts();
   }
@@ -151,12 +208,12 @@ function renderProducts() {
     
     card.innerHTML = `
       <div class="product-gallery" id="gallery-${product.id}">
-  <img src="${product.images?.[0] || product.image}" alt="${product.name}" class="main-image" onclick="nextImage(${product.id})">
+  <img src="${product.images?.[0] || product.image}" alt="${product.name}" class="main-image" onclick="openLightbox(${product.id}, 0)">
   ${product.images && product.images.length > 1 ? `
     <div class="gallery-nav gallery-prev" onclick="event.stopPropagation(); prevImage(${product.id})">❮</div>
     <div class="gallery-nav gallery-next" onclick="event.stopPropagation(); nextImage(${product.id})">❯</div>
     <div class="gallery-dots">
-      ${product.images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); setImage(${product.id}, ${i})"></span>`).join('')}
+      ${product.images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); openLightbox(${product.id}, ${i})"></span>`).join('')}
     </div>
   ` : ''}
 </div>

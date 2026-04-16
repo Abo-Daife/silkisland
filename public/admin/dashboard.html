@@ -79,6 +79,10 @@
       <h1>Product Management</h1>
       <a href="/" style="color:#FFD700;">← Back to Site</a>
     </div>
+    <div class="form-group">
+  <label>Product Description</label>
+  <textarea id="productDescription" rows="4" placeholder="Describe your product..."></textarea>
+</div>
     
     <button class="btn" onclick="openModal('add')">+ Add New Product</button>
     
@@ -214,6 +218,7 @@
       document.getElementById('productName').value = product.name;
       document.getElementById('productPrice').value = product.price;
       document.getElementById('productCategory').value = product.category;
+      document.getElementById('productDescription').value = product.description || '';
       
       // Handle images
       if (product.images && product.images.length > 0) {
@@ -237,6 +242,7 @@
       const id = document.getElementById('productId').value;
       const mainImage = '/images/' + document.getElementById('productImage').value;
       const extraImages = document.getElementById('productImages').value;
+      description: document.getElementById('productDescription').value || '',
       
       // Build images array
       let images = [mainImage];
