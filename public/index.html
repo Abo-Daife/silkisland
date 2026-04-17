@@ -1,139 +1,215 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SilkIsland</title>
+  <title>SilkIsland — The Private Atrium</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  <link rel="stylesheet" href="/style.css">
-</head>
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-  <span class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); lightboxPrev()">❮</span>
-  <span class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); lightboxNext()">❯</span>
-  <img id="lightbox-img" src="" alt="">
-  <div class="lightbox-counter" id="lightbox-counter">1 / 1</div>
-</div>
-<body>
-  <header>
-    <div class="logo">
-      <img src="/images/logo.svg" alt="SilkIsland" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-      <span style="display:none;">𓃀 SilkIsland 𓃀</span>
-    </div>
-    
-    <nav>
-      <a class="home-btn" onclick="showAllProducts()">𓋹 Home 𓋹</a>
-      <div class="categories-dropdown">
-        <button class="categories-btn">▼ Categories</button>
-        <div class="categories-list">
-          <a onclick="filterProducts('Lingerie')">Lingerie</a>
-          <a onclick="filterProducts('Bath Stuff')">Bath Stuff</a>
-          <a onclick="filterProducts('Towels')">Towels</a>
-        </div>
-      </div>
-    </nav>
-    
-    <div class="header-right">
-      <button class="icon-btn" onclick="toggleSearch()">🔍</button>
-     <a href="/account.html" style="text-decoration:none;"><button class="icon-btn">👤</button></a>
-      <button class="icon-btn cart-btn" onclick="toggleCart()">
-        🛒
-        <span id="cart-count">0</span>
-      </button>
-      <select id="language-select">
-        <option value="en">🇬🇧 EN</option>
-        <option value="ro">🇷🇴 RO</option>
-        <option value="tr">🇹🇷 TR</option>
-      </select>
-    </div>
-  </header>
-  <!-- Search Modal -->
-  <div class="search-modal" id="search-modal">
-    <div class="search-header">
-      <input type="text" id="search-input" placeholder="Search products..." autocomplete="off">
-      <button class="close-search" onclick="toggleSearch()">✕</button>
-    </div>
-      <div class="search-results" id="search-results"></div>
-  </div>
   
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@300;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <!-- Your Existing CSS -->
+  <link rel="stylesheet" href="/style.css">
+  
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary-fixed": "#ffe16d",
+            "tertiary-fixed": "#ffd9e1",
+            "primary-fixed-dim": "#e9c400",
+            "surface": "#131313",
+            "primary-container": "#FFD700",
+            "on-surface": "#e5e2e1",
+            "on-surface-variant": "#d0c6ab",
+            "surface-container-low": "#1c1b1b",
+            "surface-container-highest": "#353534",
+            "outline-variant": "#4d4732",
+            "tertiary-fixed-dim": "#fbb3c5",
+            "background": "#131313",
+            "on-primary-container": "#705e00"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            full: "0.75rem"
+          },
+          fontFamily: {
+            headline: ["Noto Serif", "serif"],
+            body: ["Manrope", "sans-serif"],
+            label: ["Manrope", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .text-rose-custom { color: #E8A2B4; }
+    body { background-color: #131313; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
 
-  <!-- Cart Sidebar -->
-  <div class="cart-modal" id="cart-modal">
-    <div class="cart-header">
-      <h2>🛒 Your Cart</h2>
-      <button class="close-cart" onclick="toggleCart()">✕</button>
-    </div>
-    <div class="cart-items" id="cart-items">
-      <p style="color:#E8A2B4;">Cart is empty</p>
-    </div>
-    <div class="cart-total" id="cart-total">Total: 0 RON</div>
-    <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+<!-- Atmospheric Background -->
+<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: url('/images/body.jpg'); background-size: cover; background-position: center; background-attachment: fixed;"></div>
+<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), #131313 95%);"></div>
+
+<!-- ===== FUNCTIONAL HEADER ===== -->
+<header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase" data-i18n="brand">SILKISLAND</a>
+  
+  <nav class="hidden md:flex items-center gap-8">
+    <a href="/" class="font-label text-sm uppercase tracking-wider text-on-surface hover:text-primary-container transition-colors" data-i18n="home">Home</a>
+    <a href="/categories.html" class="font-label text-sm uppercase tracking-wider text-on-surface hover:text-primary-container transition-colors" data-i18n="collections">Collections</a>
+    <a href="/our-legacy.html" class="font-label text-sm uppercase tracking-wider text-on-surface hover:text-primary-container transition-colors" data-i18n="legacy">Our Legacy</a>
+  </nav>
+
+  <div class="flex items-center gap-4">
+    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+    <a href="/favorites.html" class="text-on-surface-variant hover:text-primary-container">
+      <span class="material-symbols-outlined">favorite</span>
+    </a>
+    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container">
+      <span class="material-symbols-outlined">person</span>
+    </a>
+    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+    </button>
+    <select id="language-select" class="bg-transparent text-on-surface-variant border border-outline-variant rounded-sm px-2 py-1 text-sm uppercase tracking-wider">
+      <option value="en" class="bg-surface">EN</option>
+      <option value="ro" class="bg-surface">RO</option>
+      <option value="tr" class="bg-surface">TR</option>
+    </select>
   </div>
+</header>
 
-  <section class="hero">
-    <h1>SILKISLAND</h1>
-    <p>Where Ancient Elegance Meets Modern Desire</p>
-    <button class="shop-btn" onclick="scrollToProducts()">Enter the Sanctuary</button>
-  </section>
-
-  <section class="products-section" id="products">
-    <h2>𓂀 Sacred Collection 𓂀</h2>
-    <div class="active-category" id="active-category">All Products</div>
-    <div class="products-grid" id="products-container"></div>
-  </section>
-
-  </section>  <!-- This closes the products section -->
-
-<!-- Testimonials Section -->
-<section class="testimonials-section">
-  <h2>𓂀 What Our Goddesses Say. 𓂀</h2>
-  <div class="testimonials-grid">
-    <div class="testimonial-card">
-      <p class="testimonial-text">"The Isis Silk Robe is pure luxury. It makes my evenings feel like a sacred ritual."</p>
-      <p class="testimonial-author">— Elena M.</p>
+<!-- ===== SEARCH MODAL ===== -->
+<div class="search-modal fixed inset-0 z-[1000] bg-surface/95 backdrop-blur-md hidden" id="search-modal">
+  <div class="max-w-3xl mx-auto pt-24 px-6">
+    <div class="flex items-center gap-4 mb-8">
+      <input type="text" id="search-input" placeholder="Find your essence..." class="w-full bg-surface-container-highest border-b-2 border-outline-variant focus:border-primary-container px-4 py-3 text-on-surface text-lg outline-none">
+      <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
     </div>
-    <div class="testimonial-card">
-      <p class="testimonial-text">"Absolutely in love with the bath salts. The scent is divine and the quality is unmatched."</p>
-      <p class="testimonial-author">— Andreea P.</p>
+    <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+  </div>
+</div>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="relative w-full min-h-[530px] flex flex-col items-center justify-center text-center z-10 px-6 pt-24">
+  <h1 class="font-headline text-6xl md:text-8xl lg:text-9xl text-primary-container tracking-[0.1em] mb-4 drop-shadow-[0_0_25px_rgba(0,0,0,0.8)]" data-i18n="brand">SILKISLAND</h1>
+  <p class="font-headline italic text-tertiary-fixed text-xl md:text-2xl mb-10 tracking-wide max-w-2xl drop-shadow-lg" data-i18n="hero_tagline">Where Ancient Elegance Meets Modern Desire</p>
+  <button onclick="scrollToProducts()" class="bg-primary-container text-on-primary-container px-12 py-4 font-label font-extrabold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim active:scale-95 transition-all duration-300 shadow-xl" data-i18n="enter_atrium">Enter the Atrium</button>
+</section>
+
+<!-- ===== PRODUCTS SECTION ===== -->
+<main class="relative z-20 pb-32">
+  <div class="pt-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex items-baseline justify-between mb-12">
+        <h2 class="font-headline text-3xl md:text-5xl text-on-surface drop-shadow-md" data-i18n="private_collection">The Private Collection</h2>
+        <span class="font-label text-xs uppercase tracking-[0.3em] text-tertiary-fixed-dim" id="active-category" data-i18n="all_products">All Products</span>
+      </div>
+      
+      <div id="products-container" class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24"></div>
     </div>
-    <div class="testimonial-card">
-      <p class="testimonial-text">"Finally, lingerie that makes me feel both powerful and elegant. The details are stunning."</p>
-      <p class="testimonial-author">— Maria I.</p>
+  </div>
+</main>
+
+<!-- ===== TESTIMONIALS SECTION ===== -->
+<section class="testimonials-section relative z-20 py-20 px-6 border-t border-white/5">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="font-headline text-3xl md:text-5xl text-primary-container text-center mb-16" data-i18n="sanctuary_whispers">Sanctuary Whispers</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="glass-panel p-8 rounded-lg text-center">
+        <div class="flex justify-center gap-1 mb-4 text-primary-container">★★★★★</div>
+        <p class="text-tertiary-fixed-dim italic mb-4">"The Isis Silk Robe is pure luxury. It makes my evenings feel like a sacred ritual."</p>
+        <p class="text-on-surface-variant text-sm uppercase tracking-widest">— Elena M.</p>
+      </div>
+      <div class="glass-panel p-8 rounded-lg text-center">
+        <div class="flex justify-center gap-1 mb-4 text-primary-container">★★★★★</div>
+        <p class="text-tertiary-fixed-dim italic mb-4">"Absolutely in love with the bath salts. The scent is divine and the quality is unmatched."</p>
+        <p class="text-on-surface-variant text-sm uppercase tracking-widest">— Andreea P.</p>
+      </div>
+      <div class="glass-panel p-8 rounded-lg text-center">
+        <div class="flex justify-center gap-1 mb-4 text-primary-container">★★★★★</div>
+        <p class="text-tertiary-fixed-dim italic mb-4">"Finally, lingerie that makes me feel both powerful and elegant. The details are stunning."</p>
+        <p class="text-on-surface-variant text-sm uppercase tracking-widest">— Maria I.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<footer>  <!-- Footer starts here -->
+<!-- ===== CART MODAL ===== -->
+<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
+  <div class="p-6">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="font-headline text-2xl text-primary-container" data-i18n="your_selection">Your Selection</h2>
+      <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+    </div>
+    <div id="cart-items" class="space-y-6"></div>
+    <div class="border-t border-outline-variant/30 pt-6 mt-8">
+      <div class="flex justify-between items-center mb-6">
+        <span class="font-label text-lg uppercase tracking-wider" data-i18n="total">Total</span>
+        <span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span>
+      </div>
+      <button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all" data-i18n="proceed_checkout">Proceed to Checkout</button>
+    </div>
+  </div>
+</div>
 
-  <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>𓃭 About SilkIsland 𓃭</h3>
-        <p id="about-text"></p>
-      </div>
-      
-      <div class="footer-section">
-        <h3>𓂀 Contact the Temple 𓂀</h3>
-        <a href="mailto:contact@Silkisland.ro">✉ contact@Silkisland.ro</a>
-        <a href="tel:+40775304973">📞 0775 304 973</a>
-        <p>📍 Ilfov, Romania</p>
-      </div>
-      
-      <div class="footer-section">
-        <h3>𓋴 Sacred Delivery 𓋴</h3>
-        <div class="delivery-icons">
-          <span>⚡ SameDay</span>
-          <span>📦 Fan Courier</span>
-        </div>
-        <p style="margin-top:1rem;">Free shipping over 300 RON</p>
+<!-- ===== BACK TO TOP ===== -->
+<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-24 right-8 z-40 bg-primary-container text-on-primary-container w-12 h-12 flex items-center justify-center rounded-full shadow-2xl active:scale-90 transition-transform duration-200">
+  <span class="material-symbols-outlined">arrow_upward</span>
+</button>
+
+<!-- ===== FOOTER ===== -->
+<footer class="relative z-20 border-t border-white/5 py-12 px-6">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div>
+      <h3 class="font-headline text-xl text-primary-container mb-4" data-i18n="our_legacy">Our Legacy</h3>
+      <p class="text-on-surface-variant text-sm leading-relaxed">SilkIsland blends the mystique of ancient elegance with modern desire. Our bath rituals and silk lingerie are crafted for the modern goddess.</p>
+    </div>
+    <div>
+      <h3 class="font-headline text-xl text-primary-container mb-4" data-i18n="explore">Explore</h3>
+      <a href="/categories.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2" data-i18n="collections">Collections</a>
+      <a href="/our-legacy.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2" data-i18n="legacy">Our Legacy</a>
+      <a href="/size-guide.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2" data-i18n="size_guide">Size Guide</a>
+    </div>
+    <div>
+      <h3 class="font-headline text-xl text-primary-container mb-4" data-i18n="support">Support</h3>
+      <a href="/track-order.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2" data-i18n="track_order">Track Order</a>
+      <a href="mailto:contact@Silkisland.ro" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2">contact@Silkisland.ro</a>
+      <a href="tel:+40775304973" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors">0775 304 973</a>
+    </div>
+    <div>
+      <h3 class="font-headline text-xl text-primary-container mb-4" data-i18n="follow">Follow</h3>
+      <div class="flex gap-4">
+        <a href="#" class="text-on-surface-variant hover:text-primary-container">Instagram</a>
+        <a href="#" class="text-on-surface-variant hover:text-primary-container">Facebook</a>
       </div>
     </div>
-    <div class="copyright">
-      © 2026 SilkIsland • Temple of Beauty
-    </div>
-  </footer>
+  </div>
+  <div class="max-w-7xl mx-auto mt-12 pt-6 border-t border-white/5 text-center">
+    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">© 2024 SilkIsland · The Private Atrium</p>
+  </div>
+</footer>
 
-  <script src="/script.js"></script>
+<script src="/script.js"></script>
 </body>
 </html>

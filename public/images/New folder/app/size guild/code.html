@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Size Sanctuary | ATRIUM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Manrope:wght@200;300;400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#e5e2e1",
+                      "surface-bright": "#3a3939",
+                      "on-secondary-fixed": "#0a0565",
+                      "secondary-container": "#3d3f93",
+                      "surface-dim": "#131313",
+                      "secondary-fixed-dim": "#c0c1ff",
+                      "error": "#ffb4ab",
+                      "on-surface-variant": "#d0c6ab",
+                      "surface-container-low": "#1c1b1b",
+                      "outline": "#999077",
+                      "surface-container-highest": "#353534",
+                      "outline-variant": "#4d4732",
+                      "tertiary-container": "#ffcdd8",
+                      "surface-variant": "#353534",
+                      "error-container": "#93000a",
+                      "tertiary": "#fff4f5",
+                      "tertiary-fixed-dim": "#fbb3c5",
+                      "primary": "#fff6df",
+                      "background": "#131313",
+                      "surface-container-high": "#2a2a2a",
+                      "on-secondary-container": "#b0b2ff",
+                      "on-error": "#690005",
+                      "surface-tint": "#e9c400",
+                      "primary-container": "#ffd700",
+                      "on-error-container": "#ffdad6",
+                      "on-primary-fixed": "#221b00",
+                      "on-tertiary-fixed-variant": "#6b3646",
+                      "on-primary": "#3a3000",
+                      "on-tertiary": "#502130",
+                      "on-secondary": "#232479",
+                      "tertiary-fixed": "#ffd9e1",
+                      "primary-fixed-dim": "#e9c400",
+                      "primary-fixed": "#ffe16d",
+                      "inverse-primary": "#705d00",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-tertiary-container": "#874e5e",
+                      "secondary": "#c0c1ff",
+                      "surface": "#131313",
+                      "on-tertiary-fixed": "#360c1b",
+                      "on-background": "#e5e2e1",
+                      "on-primary-fixed-variant": "#544600",
+                      "on-primary-container": "#705e00",
+                      "on-secondary-fixed-variant": "#3b3d90",
+                      "secondary-fixed": "#e1e0ff",
+                      "inverse-on-surface": "#313030",
+                      "surface-container": "#201f1f",
+                      "inverse-surface": "#e5e2e1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Noto Serif"],
+                      "body": ["Manrope"],
+                      "label": ["Manrope"]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .chiaroscuro-bg {
+            background: linear-gradient(rgba(19, 19, 19, 0.9), rgba(19, 19, 19, 0.9)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.4);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131313] border-b border-[#FFD700]/15 h-20 flex justify-between items-center px-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#FFD700] cursor-pointer" data-icon="menu">menu</span>
+</div>
+<h1 class="text-2xl font-bold text-[#FFD700] tracking-[0.2em] font-headline uppercase">ATRIUM</h1>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#FFD700] cursor-pointer" data-icon="shopping_bag">shopping_bag</span>
+</div>
+</header>
+<main class="pt-32 pb-40 chiaroscuro-bg min-h-screen">
+<div class="max-w-6xl mx-auto px-8">
+<!-- Hero Section -->
+<section class="mb-24 text-center">
+<span class="label-md font-label uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-4 block">The Art of Fit</span>
+<h2 class="text-6xl md:text-8xl font-headline text-primary-container tracking-tight leading-none mb-8">Size Sanctuary</h2>
+<p class="max-w-2xl mx-auto text-xl font-light text-tertiary-fixed leading-relaxed">
+                    True luxury begins with the perfect silhouette. Navigate our precise EU sizing to find the garment that feels like a second skin.
+                </p>
+</section>
+<!-- Grid Layout for Tables -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Sidebar: How to Measure -->
+<aside class="lg:col-span-4 space-y-12">
+<div class="sticky top-32">
+<h3 class="text-2xl font-headline text-primary-container mb-8 border-l-2 border-primary-container pl-4">How to Measure</h3>
+<div class="space-y-10">
+<div class="flex items-start gap-6 group">
+<span class="material-symbols-outlined text-primary-fixed text-3xl" data-icon="straighten">straighten</span>
+<div>
+<h4 class="font-bold text-on-surface mb-2 tracking-wide">01. CHEST</h4>
+<p class="text-sm text-on-surface-variant font-light leading-6">Measure around the fullest part of your bust while wearing a non-padded bra.</p>
+</div>
+</div>
+<div class="flex items-start gap-6 group">
+<span class="material-symbols-outlined text-primary-fixed text-3xl" data-icon="architecture">architecture</span>
+<div>
+<h4 class="font-bold text-on-surface mb-2 tracking-wide">02. WAIST</h4>
+<p class="text-sm text-on-surface-variant font-light leading-6">Measure the narrowest part of your waistline, usually above the belly button.</p>
+</div>
+</div>
+<div class="flex items-start gap-6 group">
+<span class="material-symbols-outlined text-primary-fixed text-3xl" data-icon="rebase_edit">rebase_edit</span>
+<div>
+<h4 class="font-bold text-on-surface mb-2 tracking-wide">03. HIPS</h4>
+<p class="text-sm text-on-surface-variant font-light leading-6">Stand with feet together and measure around the fullest part of your hips.</p>
+</div>
+</div>
+</div>
+<div class="mt-16 overflow-hidden rounded-lg aspect-[3/4] relative">
+<img alt="Ethereal silk fabric draping" class="w-full h-full object-cover grayscale brightness-75 hover:scale-105 transition-transform duration-1000" data-alt="Close-up of fine silk fabric draping elegantly over a sculptural form in a dark, atmospheric setting with golden highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeX8pXP_xexoG88AC8k0Nse5meD5IZRqK48HNyBYUZnr2gm-ycczGugYKf3Mcuw1I00lVmHnCc4aYYDOX5UYr_BfrDYtd0M2PhyxTCzBZ1u5iOM3YetembT56RM0UX3luIrHuWeoP0mSax7uhd4I6DSmABTqikcvYvJ6FNsjzsNluf8rfoB-iul4WkT8QBEbwqelDezoJC6IIZrJ6JWxN4uCjCECTQglEOhe60l7h6U1qb38qehAPuAH64OonDHc_i9q7QPSxR1lY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+</div>
+</div>
+</aside>
+<!-- Tables Container -->
+<div class="lg:col-span-8 space-y-24">
+<!-- Lingerie: Bra Sizes -->
+<article>
+<header class="flex justify-between items-end mb-8">
+<h3 class="text-3xl font-headline text-primary-container">Lingerie: Bra Sizes</h3>
+<span class="text-[10px] tracking-[0.2em] text-tertiary-fixed-dim uppercase">EU Standards</span>
+</header>
+<div class="overflow-x-auto glass-panel rounded-lg outline outline-1 outline-white/5">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50">
+<th class="p-6 text-xs font-bold tracking-widest text-primary-fixed uppercase border-b border-white/5">EU Underbust (cm)</th>
+<th class="p-6 text-xs font-bold tracking-widest text-primary-fixed uppercase border-b border-white/5">Standard Size</th>
+<th class="p-6 text-xs font-bold tracking-widest text-primary-fixed uppercase border-b border-white/5">Cup A</th>
+<th class="p-6 text-xs font-bold tracking-widest text-primary-fixed uppercase border-b border-white/5">Cup B</th>
+</tr>
+</thead>
+<tbody class="text-sm font-light text-on-surface-variant">
+<tr class="hover:bg-white/5 transition-colors border-b border-white/5">
+<td class="p-6">63 - 67</td>
+<td class="p-6 font-semibold text-on-surface">65</td>
+<td class="p-6 italic">77 - 79</td>
+<td class="p-6 italic">79 - 81</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors border-b border-white/5">
+<td class="p-6">68 - 72</td>
+<td class="p-6 font-semibold text-on-surface">70</td>
+<td class="p-6 italic">82 - 84</td>
+<td class="p-6 italic">84 - 86</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors border-b border-white/5">
+<td class="p-6">73 - 77</td>
+<td class="p-6 font-semibold text-on-surface">75</td>
+<td class="p-6 italic">87 - 89</td>
+<td class="p-6 italic">89 - 91</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-6">78 - 82</td>
+<td class="p-6 font-semibold text-on-surface">80</td>
+<td class="p-6 italic">92 - 94</td>
+<td class="p-6 italic">94 - 96</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article>
+<!-- Lingerie: Briefs -->
+<article>
+<header class="flex justify-between items-end mb-8">
+<h3 class="text-3xl font-headline text-primary-container">Briefs &amp; Knickers</h3>
+<span class="text-[10px] tracking-[0.2em] text-tertiary-fixed-dim uppercase">Standard Alignment</span>
+</header>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="glass-panel p-8 text-center rounded-lg border border-white/5 hover:border-primary-container/30 transition-all group">
+<div class="text-[10px] text-tertiary-fixed-dim uppercase tracking-widest mb-2">EU Size</div>
+<div class="text-3xl font-headline text-on-surface mb-4">36</div>
+<div class="h-px w-8 bg-primary-container/30 mx-auto mb-4"></div>
+<div class="text-sm font-light text-on-surface-variant">Hips: 88-92cm</div>
+</div>
+<div class="glass-panel p-8 text-center rounded-lg border border-white/5 hover:border-primary-container/30 transition-all group">
+<div class="text-[10px] text-tertiary-fixed-dim uppercase tracking-widest mb-2">EU Size</div>
+<div class="text-3xl font-headline text-on-surface mb-4">38</div>
+<div class="h-px w-8 bg-primary-container/30 mx-auto mb-4"></div>
+<div class="text-sm font-light text-on-surface-variant">Hips: 93-97cm</div>
+</div>
+<div class="glass-panel p-8 text-center rounded-lg border border-white/5 hover:border-primary-container/30 transition-all group">
+<div class="text-[10px] text-tertiary-fixed-dim uppercase tracking-widest mb-2">EU Size</div>
+<div class="text-3xl font-headline text-on-surface mb-4">40</div>
+<div class="h-px w-8 bg-primary-container/30 mx-auto mb-4"></div>
+<div class="text-sm font-light text-on-surface-variant">Hips: 98-102cm</div>
+</div>
+<div class="glass-panel p-8 text-center rounded-lg border border-white/5 hover:border-primary-container/30 transition-all group">
+<div class="text-[10px] text-tertiary-fixed-dim uppercase tracking-widest mb-2">EU Size</div>
+<div class="text-3xl font-headline text-on-surface mb-4">42</div>
+<div class="h-px w-8 bg-primary-container/30 mx-auto mb-4"></div>
+<div class="text-sm font-light text-on-surface-variant">Hips: 103-107cm</div>
+</div>
+</div>
+</article>
+<!-- Loungewear & Bathrobes -->
+<article>
+<header class="flex justify-between items-end mb-8">
+<h3 class="text-3xl font-headline text-primary-container">Loungewear &amp; Robes</h3>
+<span class="text-[10px] tracking-[0.2em] text-tertiary-fixed-dim uppercase">Relaxed Fit</span>
+</header>
+<div class="overflow-x-auto glass-panel rounded-lg outline outline-1 outline-white/5">
+<table class="w-full text-left border-collapse">
+<tbody class="text-sm font-light text-on-surface-variant">
+<tr class="border-b border-white/5 bg-surface-container-high/20">
+<td class="p-8 font-bold tracking-widest text-primary-fixed uppercase">International</td>
+<td class="p-8 text-center font-bold tracking-widest text-primary-fixed uppercase">XS</td>
+<td class="p-8 text-center font-bold tracking-widest text-primary-fixed uppercase">S</td>
+<td class="p-8 text-center font-bold tracking-widest text-primary-fixed uppercase">M</td>
+<td class="p-8 text-center font-bold tracking-widest text-primary-fixed uppercase">L</td>
+</tr>
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+<td class="p-8 text-on-surface font-semibold">EU / FR Size</td>
+<td class="p-8 text-center">34</td>
+<td class="p-8 text-center">36-38</td>
+<td class="p-8 text-center">40-42</td>
+<td class="p-8 text-center">44-46</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-8 text-on-surface font-semibold">Chest (cm)</td>
+<td class="p-8 text-center italic">78-82</td>
+<td class="p-8 text-center italic">83-90</td>
+<td class="p-8 text-center italic">91-98</td>
+<td class="p-8 text-center italic">99-106</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article>
+</div>
+</div>
+<!-- Roman Numeral Selection (Contextual Component) -->
+<div class="mt-32 flex flex-col items-center gap-6">
+<span class="text-[10px] tracking-[0.3em] text-tertiary-fixed-dim uppercase">Browse Collections</span>
+<div class="flex gap-12 text-2xl font-headline text-primary-container/40">
+<span class="cursor-pointer hover:text-primary-container transition-colors">I</span>
+<span class="text-primary-container cursor-default">II</span>
+<span class="cursor-pointer hover:text-primary-container transition-colors">III</span>
+<span class="cursor-pointer hover:text-primary-container transition-colors">IV</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 border-t border-[#FFD700]/10 bg-[#131313] relative z-40">
+<div class="flex flex-col items-center justify-center gap-8 w-full max-w-7xl mx-auto px-8">
+<span class="font-headline text-lg text-[#FFD700]">ATRIUM</span>
+<div class="flex gap-12 font-manrope text-[11px] tracking-[0.1em] text-[#FFD9E1]">
+<a class="hover:text-[#FFD700] transition-colors underline-offset-4 hover:underline" href="#">Privacy Policy</a>
+<a class="hover:text-[#FFD700] transition-colors underline-offset-4 hover:underline" href="#">Terms of Service</a>
+<a class="hover:text-[#FFD700] transition-colors underline-offset-4 hover:underline" href="#">Shipping &amp; Returns</a>
+</div>
+<p class="font-manrope text-[11px] tracking-[0.1em] text-[#FFD9E1]/50">© MMXXIV ATRIUM PRIVATE VIEWING. ALL RIGHTS RESERVED.</p>
+</div>
+</footer>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 h-20 bg-[#131313]/90 backdrop-blur-md border-t border-white/5 shadow-[0px_-20px_50px_rgba(0,0,0,0.8)] flex justify-around items-center px-4">
+<div class="flex flex-col items-center justify-center text-[#FFD9E1]/50 hover:text-[#FFD9E1] transition-opacity duration-300">
+<span class="material-symbols-outlined mb-1" data-icon="home_max">home_max</span>
+<span class="font-manrope text-[10px] font-light uppercase tracking-widest">Atrium</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#FFD9E1]/50 hover:text-[#FFD9E1] transition-opacity duration-300">
+<span class="material-symbols-outlined mb-1" data-icon="auto_awesome_motion">auto_awesome_motion</span>
+<span class="font-manrope text-[10px] font-light uppercase tracking-widest">Curation</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#FFD700] font-bold transition-opacity duration-300">
+<span class="material-symbols-outlined mb-1" data-icon="straighten" style="font-variation-settings: 'FILL' 1;">straighten</span>
+<span class="font-manrope text-[10px] uppercase tracking-widest">Size Guide</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#FFD9E1]/50 hover:text-[#FFD9E1] transition-opacity duration-300">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-manrope text-[10px] font-light uppercase tracking-widest">Profile</span>
+</div>
+</nav>
+</body></html>

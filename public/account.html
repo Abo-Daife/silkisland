@@ -1,419 +1,380 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Account - SilkIsland</title>
+  <title>The Private Atrium — SilkIsland</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@300;400;500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <!-- Your Existing CSS -->
   <link rel="stylesheet" href="/style.css">
+  
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary-fixed": "#ffe16d",
+            "tertiary-fixed": "#ffd9e1",
+            "primary-fixed-dim": "#e9c400",
+            "surface": "#131313",
+            "primary-container": "#ffd700",
+            "on-surface": "#e5e2e1",
+            "on-surface-variant": "#d0c6ab",
+            "surface-container": "#201f1f",
+            "surface-container-low": "#1c1b1b",
+            "surface-container-highest": "#353534",
+            "outline-variant": "#4d4732",
+            "tertiary-fixed-dim": "#fbb3c5",
+            "background": "#131313",
+            "on-primary-container": "#705e00",
+            "on-tertiary": "#502130"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            full: "0.75rem"
+          },
+          fontFamily: {
+            headline: ["Noto Serif", "serif"],
+            body: ["Manrope", "sans-serif"],
+            label: ["Manrope", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    .account-container {
-      max-width: 1200px;
-      margin: 50px auto;
-      padding: 2rem;
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
-    .account-tabs {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      border-bottom: 2px solid #FFD700;
-      padding-bottom: 1rem;
-      flex-wrap: wrap;
+    .bg-temple-overlay {
+      background: linear-gradient(to bottom, rgba(19, 19, 19, 0.8), rgba(19, 19, 19, 0.95));
     }
-    .tab-btn {
-      background: none;
-      border: none;
-      color: #E8A2B4;
-      font-size: 1.2rem;
-      cursor: pointer;
-      padding: 0.5rem 1.5rem;
-      transition: all 0.3s;
+    .glass-panel {
+      background: rgba(53, 53, 52, 0.4);
+      backdrop-filter: blur(20px);
     }
-    .tab-btn.active {
-      color: #FFD700;
-      border-bottom: 2px solid #FFD700;
-    }
-    .tab-btn.admin-btn {
-      color: #FFD700;
-      border: 1px solid #FFD700;
-      border-radius: 25px;
-    }
-    .tab-content {
-      display: none;
-      background: rgba(0, 0, 0, 0.7);
-      border: 1px solid #FFD700;
-      border-radius: 16px;
-      padding: 2rem;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    .form-group label {
-      display: block;
-      color: #E8A2B4;
-      margin-bottom: 0.5rem;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 0.8rem;
-      background: #1a1a2e;
-      border: 1px solid #FFD700;
-      border-radius: 8px;
-      color: #FFD700;
-    }
-    .save-btn {
-      background: #FFD700;
-      color: #0a0a1a;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 25px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .orders-list {
-      color: #E8A2B4;
-    }
-    .order-card {
-      background: #1a1a2e;
-      border: 1px solid #FFD700;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    .order-header {
-      display: flex;
-      justify-content: space-between;
-      color: #FFD700;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-    .order-items {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid #333;
-    }
-    .login-message {
-      text-align: center;
-      color: #E8A2B4;
-      padding: 3rem;
-    }
-    .login-message a {
-      color: #FFD700;
+    body {
+      min-height: max(884px, 100dvh);
     }
   </style>
 </head>
-<body>
-  <header>
-    <div class="logo">
-      <a href="/"><img src="/images/logo.svg" alt="SilkIsland"></a>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- ===== FUNCTIONAL HEADER ===== -->
+<header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+    <a href="/account.html" class="text-primary-container">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+    </a>
+    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+    </button>
+    <select id="language-select" class="bg-transparent text-on-surface-variant border border-outline-variant rounded-sm px-2 py-1 text-sm uppercase tracking-wider">
+      <option value="en" class="bg-surface">EN</option>
+      <option value="ro" class="bg-surface">RO</option>
+      <option value="tr" class="bg-surface">TR</option>
+    </select>
+  </div>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="relative min-h-screen pt-16 pb-20 overflow-hidden flex items-center justify-center">
+  
+  <!-- Background Image with Atrium Style -->
+  <div class="absolute inset-0 z-0">
+    <img alt="Dark atmospheric background" class="w-full h-full object-cover" src="/images/account-bg.jpg" onerror="this.src='https://images.pexels.com/photos/1723637/pexels-photo-1723637.jpeg'">
+    <div class="absolute inset-0 bg-temple-overlay"></div>
+  </div>
+  
+  <!-- LOGIN VIEW (Default) -->
+  <div class="relative z-10 w-full max-w-md px-6 py-12" id="login-view">
+    <div class="mb-12 text-center md:text-left">
+      <p class="font-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-2">The Private Atrium</p>
+      <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-4">Welcome Back</h1>
+      <div class="h-[1px] w-12 bg-primary-container/30 mx-auto md:mx-0"></div>
     </div>
-    <nav>
-      <a href="/" class="home-btn">← Back to Shop</a>
-    </nav>
-    <div class="header-right"></div>
-  </header>
-
-  <div class="account-container">
-    <div id="not-logged-in" style="display:none;">
-      <div class="login-message">
-        <h2 style="color:#FFD700; margin-bottom:2rem;">𓂀 Welcome to SilkIsland 𓂀</h2>
-        <div id="login-form-container"></div>
+    
+    <div class="glass-panel p-8 md:p-10 border border-white/5 rounded-lg shadow-2xl">
+      <form id="login-form" class="space-y-8">
+        <div class="relative group">
+          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Identity (Email)</label>
+          <div class="relative">
+            <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface placeholder:text-on-surface-variant/30 py-4 px-4 focus:ring-0 focus:border-primary-fixed transition-all duration-500 outline-none rounded-t-lg" placeholder="archetype@silkisland.com" type="email" id="login-email" required>
+          </div>
+        </div>
+        
+        <div class="relative group">
+          <div class="flex justify-between items-center mb-2 ml-1">
+            <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed">Passage Code</label>
+            <a class="font-label text-[10px] uppercase tracking-tighter text-tertiary-fixed-dim hover:text-primary-container transition-colors" href="#">Forgot?</a>
+          </div>
+          <div class="relative">
+            <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface placeholder:text-on-surface-variant/30 py-4 px-4 focus:ring-0 focus:border-primary-fixed transition-all duration-500 outline-none rounded-t-lg" placeholder="••••••••" type="password" id="login-password" required>
+          </div>
+        </div>
+        
+        <div class="pt-4">
+          <button class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded shadow-[0_0_20px_rgba(255,215,0,0.2)]" type="submit">
+            Enter the Atrium
+          </button>
+        </div>
+      </form>
+      
+      <div class="mt-10 text-center">
+        <p class="font-body text-xs text-on-surface-variant/60 mb-2">New to the sanctuary?</p>
+        <button onclick="showRegister()" class="font-label text-sm font-bold uppercase tracking-widest text-tertiary-fixed hover:text-primary-container transition-colors">Create an Account</button>
       </div>
     </div>
-
-    <div id="logged-in-view" style="display:none;">
-      <div class="account-tabs">
-        <button class="tab-btn active" onclick="showTab('profile')">My Profile</button>
-        <button class="tab-btn" onclick="showTab('orders')">Order History</button>
-        <button class="tab-btn" onclick="showTab('settings')">Settings</button>
-        <button class="tab-btn admin-btn" id="admin-tab" onclick="goToAdmin()" style="display:none;">⚡ Admin Panel ⚡</button>
-        <button class="tab-btn" onclick="logout()" style="margin-left:auto;">Logout</button>
-      </div>
-
-      <div id="profile-tab" class="tab-content active">
-        <h2 style="color:#FFD700; margin-bottom:2rem;">Profile Information</h2>
-        <form id="profile-form">
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="profile-name" required>
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="profile-email" disabled style="opacity:0.7;">
-          </div>
-          <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" id="profile-phone">
-          </div>
-          <div class="form-group">
-            <label>Default Delivery Address</label>
-            <input type="text" id="profile-address">
-          </div>
-          <button type="submit" class="save-btn">Save Changes</button>
-        </form>
-      </div>
-
-      <div id="orders-tab" class="tab-content">
-        <h2 style="color:#FFD700; margin-bottom:2rem;">Order History</h2>
-        <div id="orders-list" class="orders-list"></div>
-      </div>
-
-      <div id="settings-tab" class="tab-content">
-        <h2 style="color:#FFD700; margin-bottom:2rem;">Account Settings</h2>
-        <form id="settings-form">
-          <div class="form-group">
-            <label>Change Password</label>
-            <input type="password" id="new-password" placeholder="New Password">
-          </div>
-          <div class="form-group">
-            <input type="password" id="confirm-password" placeholder="Confirm Password">
-          </div>
-          <button type="submit" class="save-btn">Update Password</button>
-        </form>
+    <div class="mt-12 text-center opacity-40">
+      <span class="material-symbols-outlined text-primary-fixed-dim scale-75">vignette</span>
+    </div>
+  </div>
+  
+  <!-- REGISTER VIEW (Hidden by default) -->
+  <div class="relative z-10 w-full max-w-md px-6 py-12 hidden" id="register-view">
+    <div class="mb-12 text-center md:text-left">
+      <p class="font-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-2">Join the Sanctuary</p>
+      <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-4">Create Account</h1>
+      <div class="h-[1px] w-12 bg-primary-container/30 mx-auto md:mx-0"></div>
+    </div>
+    
+    <div class="glass-panel p-8 md:p-10 border border-white/5 rounded-lg shadow-2xl">
+      <form id="register-form" class="space-y-6">
+        <div class="relative group">
+          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Full Name</label>
+          <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="text" id="reg-name" required>
+        </div>
+        
+        <div class="relative group">
+          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Identity (Email)</label>
+          <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="email" id="reg-email" required>
+        </div>
+        
+        <div class="relative group">
+          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Passage Code</label>
+          <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="password" id="reg-password" required>
+        </div>
+        
+        <div class="relative group">
+          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Phone (Optional)</label>
+          <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="tel" id="reg-phone">
+        </div>
+        
+        <div class="pt-4">
+          <button class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded" type="submit">
+            Join the Atrium
+          </button>
+        </div>
+      </form>
+      
+      <div class="mt-8 text-center">
+        <p class="font-body text-xs text-on-surface-variant/60 mb-2">Already have an account?</p>
+        <button onclick="showLogin()" class="font-label text-sm font-bold uppercase tracking-widest text-tertiary-fixed hover:text-primary-container transition-colors">Sign In</button>
       </div>
     </div>
   </div>
-
-  <script>
-    const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
-    let currentUser = null;
-
-        async function checkLogin() {
-                // First check localStorage for saved user
-                const savedUser = localStorage.getItem('silkisland_user');
-                 if (savedUser) {
-                  try {
-                    currentUser = JSON.parse(savedUser);
-                 document.getElementById('not-logged-in').style.display = 'none';
-                 document.getElementById('logged-in-view').style.display = 'block';
-      
-             if (currentUser.is_admin) {
-                 document.getElementById('admin-tab').style.display = 'block';}
-
-
-                loadProfile();
-            loadOrders();
-                 return;
-             } catch (e) {
-              localStorage.removeItem('silkisland_user');
-             }
-             }
   
-                // If no saved user, check API
-             try {
-                    const res = await fetch(API_URL + '/api/user');
-                    const text = await res.text();
-    
-                    if (!text) {
-                 showLoginForm();
-                    return;
-                    }
-    
-                const data = JSON.parse(text);
-    
-                if (data.user) {
-                currentUser = data.user;
-                 localStorage.setItem('silkisland_user', JSON.stringify(data.user));
-                 document.getElementById('not-logged-in').style.display = 'none';
-                  document.getElementById('logged-in-view').style.display = 'block';
+  <!-- PROFILE VIEW (Shown when logged in) -->
+  <div class="relative z-10 w-full max-w-2xl px-6 py-12 hidden" id="profile-view">
+    <div class="glass-panel p-8 md:p-10 border border-white/5 rounded-lg shadow-2xl">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="font-headline text-3xl text-primary-container">My Atrium</h2>
+        <button onclick="logout()" class="text-tertiary-fixed-dim hover:text-primary-container text-sm uppercase tracking-widest">Leave Sanctuary</button>
+      </div>
       
-                    if (currentUser.is_admin) {
-                     document.getElementById('admin-tab').style.display = 'block';
-                    }
-      
-                 loadProfile();
-                 loadOrders();
-                 } else {
-                  showLoginForm();
-                }
-                 } catch (e) {
-                 console.log('Not logged in');
-                 showLoginForm();
-             }
-        }
-
-    function showLoginForm() {
-      document.getElementById('not-logged-in').style.display = 'block';
-      document.getElementById('logged-in-view').style.display = 'none';
-      
-      const container = document.getElementById('login-form-container');
-      container.innerHTML = `
-        <div style="max-width:400px; margin:0 auto;">
-          <div style="margin-bottom:1rem;">
-            <button onclick="switchMode('login')" style="background:#FFD700; border:none; padding:0.5rem 2rem; border-radius:25px; margin-right:1rem;">Login</button>
-            <button onclick="switchMode('register')" style="background:none; border:1px solid #FFD700; color:#FFD700; padding:0.5rem 2rem; border-radius:25px;">Register</button>
-          </div>
-          <div id="auth-form"></div>
+      <!-- Profile Info -->
+      <div class="space-y-6">
+        <div class="border-b border-white/5 pb-6">
+          <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Identity</p>
+          <p class="text-xl font-headline text-on-surface" id="profile-name"></p>
+          <p class="text-tertiary-fixed-dim" id="profile-email-display"></p>
         </div>
-      `;
-      switchMode('login');
-    }
+        
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Orders</p>
+            <p class="text-2xl font-headline text-primary-container" id="orders-count">0</p>
+          </div>
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Member Since</p>
+            <p class="text-on-surface" id="member-since">—</p>
+          </div>
+        </div>
+        
+        <div class="pt-6">
+          <a href="/account.html?tab=orders" class="block w-full text-center py-3 border border-primary-container/30 text-primary-container hover:bg-primary-container hover:text-on-primary-container transition-all uppercase tracking-widest text-sm font-bold">View Order History</a>
+        </div>
+        
+        <div class="pt-4">
+          <a href="/admin/dashboard.html" class="block w-full text-center py-3 border border-tertiary-fixed-dim/30 text-tertiary-fixed-dim hover:bg-tertiary-fixed-dim hover:text-on-tertiary transition-all uppercase tracking-widest text-sm font-bold" id="admin-link" style="display: none;">Admin Panel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
-    window.switchMode = function(mode) {
-      const formDiv = document.getElementById('auth-form');
-      if (mode === 'login') {
-        formDiv.innerHTML = `
-          <h3 style="color:#FFD700; margin-bottom:1.5rem;">Login</h3>
-          <form id="login-form">
-            <div class="form-group">
-              <input type="email" id="login-email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-              <input type="password" id="login-password" placeholder="Password" required>
-            </div>
-            <button type="submit" class="save-btn" style="width:100%;">Login</button>
-          </form>
-                  `;
-        document.getElementById('login-form').addEventListener('submit', login);
-      } else {
-        formDiv.innerHTML = `
-          <h3 style="color:#FFD700; margin-bottom:1.5rem;">Register</h3>
-          <form id="register-form">
-            <div class="form-group">
-              <input type="text" id="reg-name" placeholder="Full Name" required>
-            </div>
-            <div class="form-group">
-              <input type="email" id="reg-email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-              <input type="password" id="reg-password" placeholder="Password" required>
-            </div>
-            <div class="form-group">
-              <input type="tel" id="reg-phone" placeholder="Phone (optional)">
-            </div>
-            <div class="form-group">
-              <input type="text" id="reg-address" placeholder="Address (optional)">
-            </div>
-            <button type="submit" class="save-btn" style="width:100%;">Register</button>
-          </form>
-        `;
-        document.getElementById('register-form').addEventListener('submit', register);
+<!-- ===== CART MODAL ===== -->
+<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
+  <div class="p-6">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="font-headline text-2xl text-primary-container">Your Selection</h2>
+      <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+    </div>
+    <div id="cart-items" class="space-y-6"></div>
+    <div class="border-t border-outline-variant/30 pt-6 mt-8">
+      <div class="flex justify-between items-center mb-6">
+        <span class="font-label text-lg uppercase tracking-wider">Total</span>
+        <span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span>
+      </div>
+      <button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all">
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEARCH MODAL ===== -->
+<div class="search-modal fixed inset-0 z-[1000] bg-surface/95 backdrop-blur-md hidden" id="search-modal">
+  <div class="max-w-3xl mx-auto pt-24 px-6">
+    <div class="flex items-center gap-4 mb-8">
+      <input type="text" id="search-input" placeholder="Find your essence..." class="w-full bg-surface-container-highest border-b-2 border-outline-variant focus:border-primary-container px-4 py-3 text-on-surface text-lg outline-none">
+      <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+    </div>
+    <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+  </div>
+</div>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+  const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+  let currentUser = null;
+
+  // Check login status on page load
+  async function checkAuth() {
+    const savedUser = localStorage.getItem('silkisland_user');
+    if (savedUser) {
+      try {
+        currentUser = JSON.parse(savedUser);
+        showProfile();
+      } catch(e) {
+        showLogin();
       }
-    };
+    } else {
+      showLogin();
+    }
+  }
 
-    window.login = async function(e) {
-             e.preventDefault();
-                 const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-  
-                 console.log('Attempting login:', email);
-  
-                const res = await fetch(API_URL + '/api/login', {
-                     method: 'POST',
-                 headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-  
-            const data = await res.json();
-                 console.log('Login response:', data);
-  
-            if (data.success) {
-             localStorage.setItem('silkisland_user', JSON.stringify(data.user));
-                    alert('Login successful!');
-            window.location.reload();
-                 } else {
-                alert(data.error || 'Login failed');
-         }
-    };
+  function showLogin() {
+    document.getElementById('login-view').classList.remove('hidden');
+    document.getElementById('register-view').classList.add('hidden');
+    document.getElementById('profile-view').classList.add('hidden');
+  }
 
-    window.register = async function(e) {
-      e.preventDefault();
-      const name = document.getElementById('reg-name').value;
-      const email = document.getElementById('reg-email').value;
-      const password = document.getElementById('reg-password').value;
-      const phone = document.getElementById('reg-phone').value;
-      const address = document.getElementById('reg-address').value;
+  function showRegister() {
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('register-view').classList.remove('hidden');
+    document.getElementById('profile-view').classList.add('hidden');
+  }
+
+  function showProfile() {
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('register-view').classList.add('hidden');
+    document.getElementById('profile-view').classList.remove('hidden');
+    
+    if (currentUser) {
+      document.getElementById('profile-name').textContent = currentUser.name || currentUser.email;
+      document.getElementById('profile-email-display').textContent = currentUser.email;
       
-      const res = await fetch(API_URL + '/api/register', {
+      if (currentUser.is_admin) {
+        document.getElementById('admin-link').style.display = 'block';
+      }
+    }
+  }
+
+  // Login handler
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    
+    try {
+      const res = await fetch(API_URL + '/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, phone, address })
+        body: JSON.stringify({ email, password })
       });
       
       const data = await res.json();
+      
       if (data.success) {
-        alert('Account created! Please login.');
-        switchMode('login');
+        currentUser = data.user;
+        localStorage.setItem('silkisland_user', JSON.stringify(data.user));
+        showProfile();
+      } else {
+        alert(data.error || 'Invalid credentials');
+      }
+    } catch (err) {
+      alert('Login failed. Please try again.');
+    }
+  });
+
+  // Register handler
+  document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    const phone = document.getElementById('reg-phone').value;
+    
+    try {
+      const res = await fetch(API_URL + '/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, phone, address: '' })
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        alert('Account created! Please sign in.');
+        showLogin();
       } else {
         alert(data.error || 'Registration failed');
       }
-    };
-
-    function loadProfile() {
-      if (!currentUser) return;
-      document.getElementById('profile-name').value = currentUser.name || '';
-      document.getElementById('profile-email').value = currentUser.email || '';
-      document.getElementById('profile-phone').value = currentUser.phone || '';
-      document.getElementById('profile-address').value = currentUser.address || '';
+    } catch (err) {
+      alert('Registration failed. Please try again.');
     }
+  });
 
-    async function loadOrders() {
-      try {
-        const res = await fetch(API_URL + '/api/orders');
-        const data = await res.json();
-        const container = document.getElementById('orders-list');
-        
-        if (!data.orders || data.orders.length === 0) {
-          container.innerHTML = '<p>No orders yet.</p>';
-          return;
-        }
-        
-        container.innerHTML = data.orders.reverse().map(order => `
-          <div class="order-card">
-            <div class="order-header">
-              <span><strong>Order #${order.id}</strong></span>
-              <span>${new Date(order.created_at).toLocaleDateString('ro-RO')}</span>
-              <span style="color: #FFD700;">${order.status || 'pending'}</span>
-              <span><strong>${order.total} RON</strong></span>
-            </div>
-            <div style="background: #0a0a1a; padding: 10px; margin: 10px 0; border-radius: 8px;">
-              <p style="color: #FFD700;">📦 Adresă de livrare:</p>
-              <p style="color: #E8A2B4;">${order.customer_name}</p>
-              <p style="color: #E8A2B4;">${order.customer_phone}</p>
-              <p style="color: #E8A2B4;">${order.customer_email}</p>
-              <p style="color: #E8A2B4;">${order.customer_address}</p>
-            </div>
-            <p style="margin: 10px 0; color: #FFD700;">💳 Metodă plată: ${order.payment_method === 'cash' ? 'Cash on Delivery' : 'Card'}</p>
-          </div>
-        `).join('');
-      } catch (e) {
-        console.log('Could not load orders');
-      }
-    }
+  function logout() {
+    localStorage.removeItem('silkisland_user');
+    localStorage.removeItem('silkisland_cart');
+    currentUser = null;
+    showLogin();
+  }
 
-    document.getElementById('profile-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      alert('Profile updated!');
-    });
+  // Initialize
+  checkAuth();
+</script>
 
-    document.getElementById('settings-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      alert('Password change coming soon!');
-    });
-
-    window.showTab = function(tabName) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(tabName + '-tab').classList.add('active');
-      event.target.classList.add('active');
-    };
-
-    window.goToAdmin = function() {
-      window.location.href = '/admin/dashboard.html';
-    };
-
-    window.logout = async function() {
-        localStorage.removeItem('silkisland_user');
-        localStorage.removeItem('silkisland_cart');
-        await fetch(API_URL + '/api/logout', { method: 'POST' });
-        window.location.href = '/';
-    };
-
-    // Start
-    checkLogin();
-  </script>
+<script src="/script.js"></script>
 </body>
 </html>

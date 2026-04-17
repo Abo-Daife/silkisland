@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Manrope:wght@300;400;600;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#ffe16d",
+                    "tertiary-fixed": "#ffd9e1",
+                    "primary-fixed-dim": "#e9c400",
+                    "on-tertiary": "#502130",
+                    "on-secondary": "#232479",
+                    "on-primary-fixed": "#221b00",
+                    "on-error-container": "#ffdad6",
+                    "on-primary": "#3a3000",
+                    "on-tertiary-fixed-variant": "#6b3646",
+                    "surface-container-lowest": "#0e0e0e",
+                    "inverse-primary": "#705d00",
+                    "on-tertiary-container": "#874e5e",
+                    "on-background": "#e5e2e1",
+                    "on-primary-fixed-variant": "#544600",
+                    "on-primary-container": "#705e00",
+                    "secondary": "#c0c1ff",
+                    "on-tertiary-fixed": "#360c1b",
+                    "surface": "#131313",
+                    "secondary-fixed": "#e1e0ff",
+                    "inverse-on-surface": "#313030",
+                    "inverse-surface": "#e5e2e1",
+                    "surface-container": "#201f1f",
+                    "on-secondary-fixed-variant": "#3b3d90",
+                    "secondary-fixed-dim": "#c0c1ff",
+                    "error": "#ffb4ab",
+                    "surface-bright": "#3a3939",
+                    "on-secondary-fixed": "#0a0565",
+                    "on-surface": "#e5e2e1",
+                    "surface-dim": "#131313",
+                    "secondary-container": "#3d3f93",
+                    "outline-variant": "#4d4732",
+                    "surface-container-highest": "#353534",
+                    "outline": "#999077",
+                    "surface-container-low": "#1c1b1b",
+                    "on-surface-variant": "#d0c6ab",
+                    "tertiary-fixed-dim": "#fbb3c5",
+                    "tertiary-container": "#ffcdd8",
+                    "surface-variant": "#353534",
+                    "tertiary": "#fff4f5",
+                    "error-container": "#93000a",
+                    "surface-tint": "#e9c400",
+                    "primary-container": "#ffd700",
+                    "on-secondary-container": "#b0b2ff",
+                    "surface-container-high": "#2a2a2a",
+                    "on-error": "#690005",
+                    "primary": "#fff6df",
+                    "background": "#131313"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrolling-content {
+            scroll-behavior: smooth;
+        }
+        .text-rose-custom { color: #E8A2B4; }
+    </style>
+<style>body {
+    min-height: max(884px, 100dvh)
+    }
+/* Sticky background effect */
+.page-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url(https://lh3.googleusercontent.com/aida/ADBb0uiShcHONlqYb7MYoRdVRwCN3c63O7EnYppUjqmtDYv2gDlpRWDWBd7L1fc8M39tkrfXWrG-j0qnkYhhXSa7lgLZhRsc06h8ZTgeZ7N1ARiQk4e3T3fUpkwr6BHVKM0XRlWj9JJRjwf7rVMXMk8BpElr7knVbFcXSBl90PRO94fyzjvW4rHp-LkILnfOlp9rTm7NhH4HCC6WbtVg5sBWTAaPIAOyXlEK25L5zuqidkrRIJ5l8WEY5auGCCdsbXh5pxn5S5V5_CSsjQ);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed
+    }
+.page-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(19, 19, 19, 0.92) 80%)
+    }</style>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- Atmospheric Background Layers -->
+<div class="page-background"></div>
+<div class="page-overlay"></div>
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-neutral-950/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl shadow-black/80">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform text-amber-400">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+<div class="text-amber-400 font-serif tracking-widest text-xl uppercase">SILKISLAND</div>
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform text-[#FFD700] flex items-center">
+<span class="material-symbols-outlined" data-icon="public">public</span>
+</button><button class="active:scale-95 transition-transform text-amber-400">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+<div class="hidden absolute top-16 right-16 bg-neutral-900 border border-amber-400/20 shadow-2xl rounded-sm py-2 min-w-[140px] z-[60]" id="language-menu">
+<button class="w-full text-left px-4 py-2 text-sm text-amber-100 hover:bg-amber-400/10 transition-colors">English</button>
+<button class="w-full text-left px-4 py-2 text-sm text-amber-100 hover:bg-amber-400/10 transition-colors">Romanian</button>
+<button class="w-full text-left px-4 py-2 text-sm text-amber-100 hover:bg-amber-400/10 transition-colors">Turkish</button>
+</div></header>
+<!-- Hero Section (Now transparent to show fixed background) -->
+<section class="relative w-full h-[530px] flex flex-col items-center justify-center text-center z-10 px-6">
+<h1 class="font-headline text-6xl md:text-8xl lg:text-9xl text-primary-container tracking-[0.1em] mb-4 drop-shadow-[0_0_25px_rgba(0,0,0,0.8)]">SILKISLAND</h1>
+<p class="font-headline italic text-rose-custom text-xl md:text-2xl mb-10 tracking-wide max-w-2xl drop-shadow-lg">Where Ancient Elegance Meets Modern Desire</p>
+<button class="bg-primary-container text-on-primary-container px-12 py-4 font-label font-extrabold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim active:scale-95 transition-all duration-300 shadow-xl">
+            Shop Now
+        </button>
+</section>
+<!-- Scrollable Content Canvas -->
+<main class="relative z-20 pb-32">
+<!-- Product Sanctuary Section -->
+<div class="pt-20 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="flex items-baseline justify-between mb-12">
+<h2 class="font-headline text-3xl md:text-5xl text-on-surface drop-shadow-md">The Sanctuary</h2>
+<span class="font-label text-xs uppercase tracking-[0.3em] text-tertiary-fixed-dim">Collection I / IV</span>
+</div>
+<!-- Product Grid (Asymmetric Layout) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24">
+<!-- Card 1 -->
+<div class="group relative flex flex-col space-y-6">
+<div class="aspect-[3/4] overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="high fashion photography of a model wearing luxury gold silk lingerie in a dark stone architectural setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBznlKcYwZlmnpvgPq7j_cZIqsuUA0CSuO_MGBBVmPr0R_z9T0NJgpgSqC8zyqFHtzOsuYhO9Tz_byRvwhWimwKt9aSEnn_PMsX0DXoWRnPS0G1m9dlfYllTUzDZXjr8bor_OD3hZjFxtGzvgW9R3BLXeXXedKPzOYezklDDFHSx9NsuJfLyY2RSDQYgh1sDnmNXAHqNMN_50d58MvZSQVCn_sHa77PN1h4BYtl44lGf-pgakOxRX30dSNp9YrIi19C5_-un6GoiTI"/>
+<div class="absolute top-4 right-4 bg-surface/40 backdrop-blur-md p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary-container" data-icon="favorite" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</div>
+</div>
+<div class="flex justify-between items-start pt-4 border-t border-outline-variant/30">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">Imperial Chemise</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Pure Silk &amp; Gold Lace</p>
+</div>
+<span class="font-headline text-xl text-primary-container">$450</span>
+</div>
+</div>
+<!-- Card 2 (Offset/Asymmetric) -->
+<div class="group relative flex flex-col space-y-6 md:mt-32">
+<div class="aspect-[3/4] overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="close up of intricate black lace lingerie with gold thread embroidery resting on dark obsidian surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLjzcdqNLtVKuDMjm9NXsgPiuEGS93asLBtpDtUbO-9k4C5CQEC-fP97COsyqIGxoHcdXyqKVzdYwJjHr8-xiDM7PolwNhgM3ra-mmY1hVo-kZkZRxBGHVOtRJtYGRuvUkMC5uoVPz-W9PtmoFZ7dhxMtPDqtL5cPK5QzktH4o0jDruPYvfkUFoSLcaDoO112fH3yfFJsiYrxRJnOdr_GKFMMqTivJ9pU1jncup-dZ09UPZwH-dPRNT4of3r06ylS-vtydHFJfoaM"/>
+<div class="absolute top-4 right-4 bg-surface/40 backdrop-blur-md p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary-container" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="flex justify-between items-start pt-4 border-t border-outline-variant/30">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">Nocturnal Veil</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Obsidian Tulle</p>
+</div>
+<span class="font-headline text-xl text-primary-container">$380</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative flex flex-col space-y-6">
+<div class="aspect-[3/4] overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="elegant rose colored silk robe draped over a stone bench in a shadowed atrium with dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbdjTzfhxU5OTzLBYg7QgUJQsDQOakohj6oq3POw9-cRgVEdlsmHBLrPIqZGYhT0-IpPdXRvUkuc0X1M7SfjZUCmWctf9C9gfLt_F9Fnf7BpEHw9gniYfE7rRHoVzLqouUkjT7ygk5fahaCUJ5vUF2iL4jyznqV5d7n0j30txiZLJn73Jokf4kl4-yjc0KRqB_AMlhVbOhMkGwjnlTVS-0FoputDinNYuXBO6uXt11NHg_uYIWBRHMymQTr6U9iQIHksXHv22DBJc"/>
+<div class="absolute top-4 right-4 bg-surface/40 backdrop-blur-md p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary-container" data-icon="favorite" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</div>
+</div>
+<div class="flex justify-between items-start pt-4 border-t border-outline-variant/30">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">Rose Atrium Gown</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Hand-Dyed Flora Silk</p>
+</div>
+<span class="font-headline text-xl text-primary-container">$620</span>
+</div>
+</div>
+<!-- Card 4 (Offset/Asymmetric) -->
+<div class="group relative flex flex-col space-y-6 md:mt-32">
+<div class="aspect-[3/4] overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="luxury lingerie accessories on a dark granite pedestal with subtle gold veining and warm spotlighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFu2uYC9bmG7pdSPWKF2kEpbm1VNPuyCgjc2MHfe10fJYVAPeRb_YDscPah7Hy_OHRh0zXPXTOJ8mRPTuUS5L2SM_I_qtUyn_0LuvubH6-flvcYsgamEhjkCj7ZgqnFPxxeKhn5sOcbLWRK-TTup23hx-KlQEbr-HMFbQKJ6YZiLmN0N3uLOdQSZYyYria6-HKPS7nQPsliCH4OAQRYrUbx6HhcOlaLG06IMrf9-HV8yki74WvY6TSsI4fnR1gvKireNebXzV8lrA"/>
+<div class="absolute top-4 right-4 bg-surface/40 backdrop-blur-md p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary-container" data-icon="favorite" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</div>
+</div>
+<div class="flex justify-between items-start pt-4 border-t border-outline-variant/30">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">Vesta Set</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Gilded Satin Straps</p>
+</div>
+<span class="font-headline text-xl text-primary-container">$290</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Back to Top -->
+<a class="fixed bottom-24 right-8 z-40 bg-primary-container text-on-primary-container w-12 h-12 flex items-center justify-center rounded-full shadow-2xl active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="arrow_upward">arrow_upward</span>
+</a>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-neutral-950/80 backdrop-blur-lg flex justify-around items-center px-4 py-3 pb-safe border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.9)]">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-amber-400 text-neutral-950 rounded-lg p-2 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+</a>
+<!-- Search -->
+<a class="flex flex-col items-center justify-center text-rose-100/50 p-2 hover:bg-neutral-800 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</a>
+<!-- Cart -->
+<a class="flex flex-col items-center justify-center text-rose-100/50 p-2 hover:bg-neutral-800 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-rose-100/50 p-2 hover:bg-neutral-800 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</a>
+</nav>
+</body></html>

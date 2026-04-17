@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Size Sanctuary — SilkIsland</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@200;300;400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <!-- Your Existing CSS -->
+  <link rel="stylesheet" href="/style.css">
+  
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#131313",
+            "primary-container": "#ffd700",
+            "background": "#131313",
+            "surface-container-highest": "#353534",
+            "primary-fixed": "#ffe16d",
+            "tertiary-fixed": "#ffd9e1",
+            "tertiary-fixed-dim": "#fbb3c5",
+            "surface-container-low": "#1c1b1b",
+            "on-surface": "#e5e2e1",
+            "on-surface-variant": "#d0c6ab",
+            "surface-container": "#201f1f",
+            "outline-variant": "#4d4732"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            full: "0.75rem"
+          },
+          fontFamily: {
+            headline: ["Noto Serif", "serif"],
+            body: ["Manrope", "sans-serif"],
+            label: ["Manrope", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .chiaroscuro-bg {
+      background: linear-gradient(rgba(19, 19, 19, 0.92), rgba(19, 19, 19, 0.95)), url('/images/size-guide-bg.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    .glass-panel {
+      background: rgba(53, 53, 52, 0.4);
+      backdrop-filter: blur(20px);
+    }
+    body { min-height: max(884px, 100dvh); }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- ===== FUNCTIONAL HEADER ===== -->
+<header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container">
+      <span class="material-symbols-outlined">person</span>
+    </a>
+    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="pt-32 pb-40 chiaroscuro-bg min-h-screen">
+  <div class="max-w-6xl mx-auto px-8">
+    
+    <!-- Hero Section -->
+    <section class="mb-20 text-center">
+      <span class="label-md font-label uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-4 block">The Art of Fit</span>
+      <h2 class="text-5xl md:text-7xl font-headline text-primary-container tracking-tight leading-none mb-6">Size Sanctuary</h2>
+      <p class="max-w-2xl mx-auto text-lg font-light text-tertiary-fixed leading-relaxed">
+        True luxury begins with the perfect silhouette. Navigate our precise EU sizing to find the garment that feels like a second skin.
+      </p>
+    </section>
+
+    <!-- Grid Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      
+      <!-- Sidebar: How to Measure -->
+      <aside class="lg:col-span-4 space-y-12">
+        <div class="sticky top-32">
+          <h3 class="text-2xl font-headline text-primary-container mb-8 border-l-2 border-primary-container pl-4">How to Measure</h3>
+          <div class="space-y-10">
+            <div class="flex items-start gap-6">
+              <span class="material-symbols-outlined text-primary-fixed text-3xl">straighten</span>
+              <div>
+                <h4 class="font-bold text-on-surface mb-2 tracking-wide">01. CHEST</h4>
+                <p class="text-sm text-on-surface-variant font-light leading-6">Measure around the fullest part of your bust while wearing a non-padded bra.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-6">
+              <span class="material-symbols-outlined text-primary-fixed text-3xl">architecture</span>
+              <div>
+                <h4 class="font-bold text-on-surface mb-2 tracking-wide">02. WAIST</h4>
+                <p class="text-sm text-on-surface-variant font-light leading-6">Measure the narrowest part of your waistline, usually above the belly button.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-6">
+              <span class="material-symbols-outlined text-primary-fixed text-3xl">rebase_edit</span>
+              <div>
+                <h4 class="font-bold text-on-surface mb-2 tracking-wide">03. HIPS</h4>
+                <p class="text-sm text-on-surface-variant font-light leading-6">Stand with feet together and measure around the fullest part of your hips.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Tables Container -->
+      <div class="lg:col-span-8 space-y-24">
+        
+        <!-- Lingerie: Bra Sizes (EU Standard, Cups A-D) -->
+        <article>
+          <header class="flex justify-between items-end mb-8">
+            <h3 class="text-3xl font-headline text-primary-container">Lingerie: Bra Sizes</h3>
+            <span class="text-[10px] tracking-[0.2em] text-tertiary-fixed-dim uppercase">EU Standards</span>
+          </header>
+          <div class="overflow-x-auto glass-panel rounded-lg">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-surface-container-high/50">
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">Underbust (cm)</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">Band Size</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">Cup A</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">Cup B</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">Cup C</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">Cup D</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm font-light text-on-surface-variant">
+                <tr class="hover:bg-white/5 transition-colors border-b border-white/5"><td class="p-5">63-67</td><td class="p-5 font-semibold text-on-surface">65</td><td class="p-5">77-79</td><td class="p-5">79-81</td><td class="p-5">81-83</td><td class="p-5">83-85</td></tr>
+                <tr class="hover:bg-white/5 transition-colors border-b border-white/5"><td class="p-5">68-72</td><td class="p-5 font-semibold text-on-surface">70</td><td class="p-5">82-84</td><td class="p-5">84-86</td><td class="p-5">86-88</td><td class="p-5">88-90</td></tr>
+                <tr class="hover:bg-white/5 transition-colors border-b border-white/5"><td class="p-5">73-77</td><td class="p-5 font-semibold text-on-surface">75</td><td class="p-5">87-89</td><td class="p-5">89-91</td><td class="p-5">91-93</td><td class="p-5">93-95</td></tr>
+                <tr class="hover:bg-white/5 transition-colors border-b border-white/5"><td class="p-5">78-82</td><td class="p-5 font-semibold text-on-surface">80</td><td class="p-5">92-94</td><td class="p-5">94-96</td><td class="p-5">96-98</td><td class="p-5">98-100</td></tr>
+                <tr class="hover:bg-white/5 transition-colors border-b border-white/5"><td class="p-5">83-87</td><td class="p-5 font-semibold text-on-surface">85</td><td class="p-5">97-99</td><td class="p-5">99-101</td><td class="p-5">101-103</td><td class="p-5">103-105</td></tr>
+                <tr class="hover:bg-white/5 transition-colors"><td class="p-5">88-92</td><td class="p-5 font-semibold text-on-surface">90</td><td class="p-5">102-104</td><td class="p-5">104-106</td><td class="p-5">106-108</td><td class="p-5">108-110</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- Briefs & Knickers (EU 36-48 / XS-XXXXL) -->
+        <article>
+          <header class="flex justify-between items-end mb-8">
+            <h3 class="text-3xl font-headline text-primary-container">Briefs & Knickers</h3>
+            <span class="text-[10px] tracking-[0.2em] text-tertiary-fixed-dim uppercase">Hip Measurement</span>
+          </header>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-panel p-6 text-center rounded-lg"><div class="text-[10px] text-tertiary-fixed-dim uppercase mb-2">XS / EU 36</div><div class="text-sm text-on-surface-variant">Hips: 88-92cm</div></div>
+            <div class="glass-panel p-6 text-center rounded-lg"><div class="text-[10px] text-tertiary-fixed-dim uppercase mb-2">S / EU 38</div><div class="text-sm text-on-surface-variant">Hips: 93-97cm</div></div>
+            <div class="glass-panel p-6 text-center rounded-lg"><div class="text-[10px] text-tertiary-fixed-dim uppercase mb-2">M / EU 40</div><div class="text-sm text-on-surface-variant">Hips: 98-102cm</div></div>
+            <div class="glass-panel p-6 text-center rounded-lg"><div class="text-[10px] text-tertiary-fixed-dim uppercase mb-2">L / EU 42</div><div class="text-sm text-on-surface-variant">Hips: 103-107cm</div></div>
+            <div class="glass-panel p-6 text-center rounded-lg"><div class="text-[10px] text-tertiary-fixed-dim uppercase mb-2">XL / EU 44</div><div class="text-sm text-on-surface-variant">Hips: 108-113cm</div></div>
+            <div class="glass-panel p-6 text-center rounded-lg"><div class="text-[10px] text-tertiary-fixed-dim uppercase mb-2">XXL / EU 46</div><div class="text-sm text-on-surface-variant">Hips: 114-119cm</div></div>
+            <div class="glass-panel p-6 text-center rounded-lg"><div class="text-[10px] text-tertiary-fixed-dim uppercase mb-2">XXXL / EU 48</div><div class="text-sm text-on-surface-variant">Hips: 120-125cm</div></div>
+            <div class="glass-panel p-6 text-center rounded-lg"><div class="text-[10px] text-tertiary-fixed-dim uppercase mb-2">XXXXL / EU 50</div><div class="text-sm text-on-surface-variant">Hips: 126-131cm</div></div>
+          </div>
+        </article>
+
+        <!-- Loungewear & Robes (XS-XXXXL) -->
+        <article>
+          <header class="flex justify-between items-end mb-8">
+            <h3 class="text-3xl font-headline text-primary-container">Loungewear & Robes</h3>
+            <span class="text-[10px] tracking-[0.2em] text-tertiary-fixed-dim uppercase">Relaxed Fit</span>
+          </header>
+          <div class="overflow-x-auto glass-panel rounded-lg">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-surface-container-high/50">
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">Size</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">XS</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">S</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">M</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">L</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">XL</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">XXL</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">XXXL</th>
+                  <th class="p-5 text-xs font-bold tracking-widest text-primary-fixed uppercase">XXXXL</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm font-light text-on-surface-variant">
+                <tr class="border-b border-white/5 hover:bg-white/5"><td class="p-5 font-semibold">EU Size</td><td class="p-5">34</td><td class="p-5">36-38</td><td class="p-5">40-42</td><td class="p-5">44-46</td><td class="p-5">48-50</td><td class="p-5">52-54</td><td class="p-5">56-58</td><td class="p-5">60-62</td></tr>
+                <tr class="hover:bg-white/5"><td class="p-5 font-semibold">Chest (cm)</td><td class="p-5">78-82</td><td class="p-5">83-90</td><td class="p-5">91-98</td><td class="p-5">99-106</td><td class="p-5">107-116</td><td class="p-5">117-126</td><td class="p-5">127-136</td><td class="p-5">137-146</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="relative z-10 border-t border-white/5 py-12 px-6">
+  <div class="max-w-7xl mx-auto text-center">
+    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">© MMXXIV SilkIsland · The Private Atrium</p>
+  </div>
+</footer>
+
+<!-- ===== CART MODAL ===== -->
+<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
+  <div class="p-6">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="font-headline text-2xl text-primary-container">Your Selection</h2>
+      <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+    </div>
+    <div id="cart-items" class="space-y-6"></div>
+    <div class="border-t border-outline-variant/30 pt-6 mt-8">
+      <div class="flex justify-between items-center mb-6">
+        <span class="font-label text-lg uppercase tracking-wider">Total</span>
+        <span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span>
+      </div>
+      <button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm">
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="/script.js"></script>
+</body>
+</html>

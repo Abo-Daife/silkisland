@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;400;700&amp;family=Manrope:wght@200;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#131313",
+                        "primary-container": "#ffd700",
+                        "background": "#131313",
+                        "on-secondary": "#232479",
+                        "on-primary": "#3a3000",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-highest": "#353534",
+                        "on-error": "#690005",
+                        "inverse-primary": "#705d00",
+                        "surface-variant": "#353534",
+                        "primary-fixed": "#ffe16d",
+                        "surface-bright": "#3a3939",
+                        "surface-dim": "#131313",
+                        "on-tertiary-container": "#874e5e",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary-fixed": "#0a0565",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#544600",
+                        "tertiary-fixed": "#ffd9e1",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed": "#360c1b",
+                        "secondary-fixed": "#e1e0ff",
+                        "on-primary-container": "#705e00",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-container": "#3d3f93",
+                        "primary": "#fff6df",
+                        "secondary": "#c0c1ff",
+                        "outline-variant": "#4d4732",
+                        "surface-tint": "#e9c400",
+                        "tertiary-fixed-dim": "#fbb3c5",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "outline": "#999077",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#b0b2ff",
+                        "on-surface-variant": "#d0c6ab",
+                        "on-secondary-fixed-variant": "#3b3d90",
+                        "surface-container": "#201f1f",
+                        "tertiary-container": "#ffcdd8",
+                        "on-tertiary-fixed-variant": "#6b3646",
+                        "on-primary-fixed": "#221b00",
+                        "on-tertiary": "#502130",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#e9c400",
+                        "inverse-on-surface": "#313030",
+                        "tertiary": "#fff4f5",
+                        "secondary-fixed-dim": "#c0c1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(19, 19, 19, 0.75);
+            backdrop-filter: blur(24px);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Hero Background with Overlay -->
+<div class="fixed inset-0 z-0">
+<img alt="Atmospheric artistic background" class="w-full h-full object-cover grayscale-[0.2] brightness-[0.35]" src="https://lh3.googleusercontent.com/aida/ADBb0uhAVeLiVdMorneZZRLpz49xYMQXBJT7YRhWpln8pWWNOqjWixLThn74CqKhP-DVogdZOuaa5b85jsSZiP2D00etb9ftINGX375qZKHXEiKVfbo3gFoLf2GLbUkdh5M3QAqyqBwKlzFlw-3PtMj-kQpyzlYJb-zWmqeg2mMV9bZ37MiKg1DAW4bJuWphYgtvU9puTKBomhWo2blWoVqa0IXs7TfVETX6bUCywvRwFgoRaE9OTtqEhQGrTrLn8grz55jH1vHr1EMpJA"/>
+<div class="absolute inset-0 bg-gradient-to-tr from-surface via-surface/85 to-transparent"></div>
+</div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-gradient-to-b from-[#1c1c1c] to-[#131313] shadow-[0px_10px_30px_rgba(0,0,0,0.5)]">
+<div class="flex items-center justify-between px-6 h-20 w-full">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#FFD700] cursor-pointer">menu</span>
+</div>
+<h1 class="font-['Noto_Serif'] text-2xl tracking-[0.2em] font-light text-[#FFD700] uppercase">SILKISLAND</h1>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#FFD700] cursor-pointer" onclick="document.getElementById('language-dropdown').classList.toggle('hidden')">language</span><span class="material-symbols-outlined text-[#FFD700] cursor-pointer">shopping_bag</span>
+</div>
+<div class="hidden absolute right-6 top-16 bg-surface-container-high/95 backdrop-blur-xl border border-primary-container/20 rounded-lg shadow-2xl z-[60] py-2 min-w-[140px]" id="language-dropdown">
+<button class="w-full text-left px-4 py-2 text-xs font-bold tracking-widest uppercase text-on-surface hover:bg-primary-container hover:text-on-primary transition-colors">
+    English
+  </button>
+<button class="w-full text-left px-4 py-2 text-xs font-bold tracking-widest uppercase text-on-surface hover:bg-primary-container hover:text-on-primary transition-colors">
+    Romanian
+  </button>
+<button class="w-full text-left px-4 py-2 text-xs font-bold tracking-widest uppercase text-on-surface hover:bg-primary-container hover:text-on-primary transition-colors">
+    Turkish
+  </button>
+</div></div>
+</header>
+<main class="relative z-10 pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+<!-- Progress Indicator (Modified) -->
+<nav class="mb-16 max-w-md mx-auto">
+<div class="flex justify-between items-center relative">
+<div class="absolute top-1/2 left-0 w-full h-[1px] bg-outline-variant opacity-30 -z-10"></div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary shadow-[0_0_15px_rgba(255,215,0,0.4)]">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-[10px] font-bold tracking-[0.2em] text-primary-container font-label uppercase">Shipping</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-primary-container bg-surface flex items-center justify-center text-primary-container">
+<span class="text-xs font-headline">II</span>
+</div>
+<span class="text-[10px] font-bold tracking-[0.2em] text-primary-container font-label uppercase">Payment</span>
+</div>
+</div>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Shipping Form -->
+<section class="lg:col-span-7 space-y-12">
+<div>
+<h2 class="text-4xl font-headline tracking-wider mb-2 text-primary">Shipping Details</h2>
+<p class="text-tertiary-fixed-dim text-sm tracking-wide opacity-80">Ensure your sanctuary receives its new addition.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Name Fields -->
+<div class="space-y-2">
+<label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">First Name</label>
+<input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Aurelius" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">Last Name</label>
+<input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Silicus" type="text"/>
+</div>
+<!-- Address -->
+<div class="md:col-span-2 space-y-2">
+<label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">Address</label>
+<input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Via del Corso, 18" type="text"/>
+</div>
+<!-- City & Postal -->
+<div class="space-y-2">
+<label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">City</label>
+<input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Rome" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">Postal Code</label>
+<input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="00186" type="text"/>
+</div>
+</div>
+<!-- Payment Method Toggle (Modified) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-6 bg-surface-container-high/60 border border-primary-container/20 rounded-lg cursor-pointer hover:bg-surface-container-highest transition-all group">
+<span class="material-symbols-outlined text-primary-container mb-4 block">credit_card</span>
+<p class="text-xs font-bold tracking-widest uppercase">CARD</p>
+</div>
+<div class="p-6 bg-surface-container-low/60 opacity-60 hover:opacity-100 rounded-lg cursor-pointer hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mb-4 block">payments</span>
+<p class="text-xs font-bold tracking-widest uppercase">Cash on Delivery</p>
+</div>
+</div>
+</section>
+<!-- Order Summary -->
+<aside class="lg:col-span-5 glass-panel p-8 rounded-lg shadow-2xl border border-outline-variant/10 sticky top-32">
+<h3 class="text-xl font-headline tracking-widest text-primary mb-8 border-b border-primary-container/10 pb-4">Order Archive</h3>
+<div class="space-y-8 mb-12">
+<div class="flex gap-6 items-center">
+<div class="relative w-24 h-32 bg-surface-container-high flex-shrink-0 overflow-hidden rounded">
+<img alt="Midnight Silk Chemise" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaCIoEtW8RHbVol4rJZa3ocAKxVw6Hl1-3SAF0mSDcUw7CQxcceyRQcuinXzUOUHH4psaHT41tg6M8IvQpICK-naTbtMkhmnZU7ie5X3VRGT1Xxo5aUAoJNqBbEofreH7E7zsQF8I0fjmcXYybxZ8CYu8ugLtX3RI1MZRexZkEK0LRs0lI612WTryrmi9jHB-pbSLyUE6qOI-3wcLNwQORV9oEhTz2OpIW9LmGYkKGSJEsoqpsxNirEKk6QlY-gocMLneWgXaKXkA"/>
+</div>
+<div class="flex-grow">
+<p class="text-sm font-bold tracking-[0.1em] uppercase text-on-surface">Midnight Silk Chemise</p>
+<p class="text-xs text-tertiary-fixed-dim mt-1">Size: M | Color: Obsidian Blue</p>
+<p class="text-primary-container font-headline mt-3 text-lg">$240.00</p>
+</div>
+</div>
+</div>
+<div class="space-y-4 text-sm font-label tracking-wide text-on-surface-variant/80">
+<div class="flex justify-between">
+<span>Subtotal</span>
+<span>$240.00</span>
+</div>
+<div class="flex justify-between">
+<span>Private Courier</span>
+<span>$0.00</span>
+</div>
+<div class="flex justify-between text-primary font-bold pt-4 border-t border-primary-container/10">
+<span class="uppercase tracking-[0.2em]">Total</span>
+<span class="text-xl font-headline">$240.00</span>
+</div>
+</div>
+<button class="w-full mt-12 bg-primary-container text-on-primary py-5 rounded-lg text-xs font-bold tracking-[0.3em] uppercase transition-all hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] active:scale-95 group relative overflow-hidden">
+<span class="relative z-10">Complete Purchase</span>
+<div class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+</button>
+<p class="mt-6 text-center text-[10px] text-tertiary-fixed-dim/40 tracking-widest uppercase">
+                    Encrypted through the Aurelian Security Protocol
+                </p>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center py-4 px-2 bg-[#131313]/95 backdrop-blur-md border-t border-[#FFD700]/15 z-50">
+<div class="flex flex-col items-center justify-center text-[#FFD9E1]/60">
+<span class="material-symbols-outlined">auto_awesome_mosaic</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">COLLECTIONS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#FFD9E1]/60">
+<span class="material-symbols-outlined">museum</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">ATRIUM</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#FFD9E1]/60">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">WISHLIST</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#FFD700] font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">ACCOUNT</span>
+</div>
+</nav>
+</body></html>
