@@ -3,350 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SilkIsland — The Private Atrium</title>
+  <title>SilkIsland — Product</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@300;400;500;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  
-  <!-- Your Existing CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;400;700&family=Manrope:wght@200;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
-  
-  <!-- Tailwind for rapid styling -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary-fixed": "#ffe16d",
-            "tertiary-fixed": "#ffd9e1",
-            "primary-fixed-dim": "#e9c400",
-            "surface": "#131313",
-            "primary-container": "#FFD700",
-            "on-surface": "#e5e2e1",
-            "on-surface-variant": "#d0c6ab",
-            "surface-container-low": "#1c1b1b",
-            "surface-container-highest": "#353534",
-            "outline": "#999077",
-            "outline-variant": "#4d4732",
-            "tertiary-fixed-dim": "#fbb3c5",
-            "background": "#131313"
-          },
-          borderRadius: {
-            DEFAULT: "0.125rem",
-            lg: "0.25rem",
-            xl: "0.5rem",
-            full: "0.75rem"
-          },
-          fontFamily: {
-            headline: ["Noto Serif", "serif"],
-            body: ["Manrope", "sans-serif"],
-            label: ["Manrope", "sans-serif"]
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    .material-symbols-outlined {
-      font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
-    }
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .glass-panel {
-      background: rgba(19, 19, 19, 0.7);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 215, 0, 0.1);
-    }
-    .bg-sanctuary {
-      background-image: linear-gradient(to bottom, rgba(19, 19, 19, 0.85), rgba(19, 19, 19, 0.95)), url('/images/body.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
-  </style>
+  <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary-fixed":"#ffe16d","tertiary-fixed":"#ffd9e1","primary-fixed-dim":"#e9c400","surface":"#131313","primary-container":"#FFD700","on-surface":"#e5e2e1","on-surface-variant":"#d0c6ab","surface-container-low":"#1c1b1b","surface-container-highest":"#353534","outline-variant":"#4d4732","tertiary-fixed-dim":"#fbb3c5","background":"#131313","on-primary-container":"#705e00"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},fontFamily:{headline:["Noto Serif","serif"],body:["Manrope","sans-serif"],label:["Manrope","sans-serif"]}}}}</script>
+  <style>.material-symbols-outlined{font-variation-settings:'FILL'0,'wght'300,'GRAD'0,'opsz'24}.hide-scrollbar::-webkit-scrollbar{display:none}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}.glass-panel{background:rgba(19,19,19,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,215,0,0.1)}body{min-height:max(884px,100dvh);background-color:#131313}</style>
 </head>
-<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed overflow-x-hidden bg-sanctuary">
+<body class="bg-surface text-on-surface font-body">
 
-<!-- ===== FUNCTIONAL HEADER ===== -->
 <header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
-  <a href="/" class="text-primary-container font-serif tracking-widest text-xl uppercase">SILKISLAND</a>
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
   <div class="flex items-center gap-4">
-    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
-      <span class="material-symbols-outlined">search</span>
-    </button>
-    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container">
-      <span class="material-symbols-outlined">person</span>
-    </a>
-    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative">
-      <span class="material-symbols-outlined">shopping_bag</span>
-      <span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-    </button>
+    <button onclick="history.back()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">arrow_back</span></button>
+    <a href="/favorites.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">favorite</span></a>
+    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">person</span></a>
+    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative"><span class="material-symbols-outlined">shopping_bag</span><span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span></button>
   </div>
 </header>
 
-<!-- ===== PRODUCT GALLERY ===== -->
-<section class="relative w-full aspect-[4/5] md:aspect-square overflow-hidden bg-surface-container-lowest pt-16">
-  <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar h-full w-full" id="product-gallery"></div>
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-4" id="gallery-pagination"></div>
-</section>
-
-<!-- ===== PRODUCT INFORMATION ===== -->
-<section class="px-6 -mt-10 relative z-10">
-  <div class="max-w-4xl mx-auto">
-    <div class="glass-panel p-6 md:p-10 rounded-2xl shadow-2xl">
-      
-      <!-- Title & Price -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div class="flex-1">
-          <p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2 font-bold" id="product-collection">Collection I / Limited Edition</p>
-          <h2 class="text-primary-container font-headline text-4xl md:text-6xl tracking-[0.05em] leading-tight" id="product-name">Loading...</h2>
-        </div>
-        <div class="text-left md:text-right mt-2 md:mt-0">
-          <span class="text-primary-container font-headline text-3xl" id="product-price">0.00 RON</span>
-        </div>
-      </div>
-      
-      <!-- Description -->
-      <div class="mt-8 mb-8 max-w-2xl">
-        <p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic font-headline" id="product-description"></p>
-      </div>
-      
-      <!-- Color Selector -->
-      <div class="mb-8">
-        <label class="block text-on-surface-variant text-[10px] uppercase tracking-widest font-extrabold mb-4">Material Tone</label>
-        <div class="flex gap-4" id="color-selector"></div>
-      </div>
-      
-      <!-- Size Selector -->
-      <div class="mb-8">
-        <div class="flex items-center justify-between mb-4">
-          <label class="block text-on-surface-variant text-[10px] uppercase tracking-widest font-extrabold">Architectural Scale</label>
-          <a href="/size-guide.html" class="flex items-center gap-1.5 text-[10px] text-primary-container/70 hover:text-primary-container transition-colors uppercase tracking-widest font-bold">
-            <span class="material-symbols-outlined text-[14px]">straighten</span>
-            Size Guide
-          </a>
-        </div>
-        <div class="flex flex-wrap gap-3" id="size-selector"></div>
-      </div>
-      
-      <!-- Quantity + Add to Cart + Favorite -->
-      <div class="flex flex-col md:flex-row gap-6 items-stretch mb-8">
-        <div class="flex items-center justify-between bg-surface-container-low/60 backdrop-blur-md px-6 py-5 rounded-lg md:w-52 border border-white/5">
-          <button onclick="decrementQuantity()" class="text-on-surface hover:text-primary-container transition-colors active:scale-90">
-            <span class="material-symbols-outlined text-lg">remove</span>
-          </button>
-          <span class="font-headline text-2xl text-primary-container font-bold" id="quantity-display">01</span>
-          <button onclick="incrementQuantity()" class="text-on-surface hover:text-primary-container transition-colors active:scale-90">
-            <span class="material-symbols-outlined text-lg">add</span>
-          </button>
-        </div>
-        
-        <button onclick="addToCart()" class="flex-1 bg-primary-container text-neutral-950 font-extrabold tracking-[0.2em] py-5 rounded-lg flex items-center justify-center gap-4 hover:shadow-[0_0_30px_rgba(255,215,0,0.5)] active:scale-[0.98] transition-all group">
-          ADD TO CART
-          <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
-        </button>
-        
-        <button onclick="toggleFavorite()" class="aspect-square bg-surface-container-highest/30 backdrop-blur-md flex items-center justify-center p-5 rounded-lg border border-white/10 hover:border-primary-container/40 group transition-all" id="favorite-btn">
-          <span class="material-symbols-outlined text-primary-container group-hover:scale-110 transition-transform" id="favorite-icon">favorite</span>
-        </button>
-      </div>
-      
-      <!-- Technical Architecture -->
-      <div class="bg-surface-container-low/40 backdrop-blur-md p-8 rounded-xl border border-white/5">
-        <h3 class="font-headline text-primary-container text-xl mb-6">Technical Architecture</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8" id="technical-details"></div>
-      </div>
-      
-      <!-- Sanctuary Whispers (Reviews) -->
-      <div class="mt-12">
-        <div class="flex items-center justify-between mb-8">
-          <h3 class="font-headline text-primary-container text-2xl tracking-widest">Sanctuary Whispers</h3>
-          <button class="flex items-center justify-center w-10 h-10 rounded-full border border-primary-container/30 text-primary-container hover:bg-primary-container hover:text-neutral-950 transition-all">
-            <span class="material-symbols-outlined text-sm">add</span>
-          </button>
-        </div>
-        <div class="space-y-8" id="reviews-container"></div>
-      </div>
-      
-    </div>
-    <div class="h-24"></div>
+<main class="pt-20 pb-32">
+  <div id="product-container" class="max-w-7xl mx-auto px-6">
+    <!-- Product will be dynamically loaded here -->
+    <div class="text-center py-20"><p class="text-tertiary-fixed-dim">Loading...</p></div>
   </div>
-</section>
+</main>
 
-<!-- ===== FUNCTIONAL CART MODAL ===== -->
 <div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
-  <div class="p-6">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="font-headline text-2xl text-primary-container">Your Selection</h2>
-      <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container">
-        <span class="material-symbols-outlined text-3xl">close</span>
-      </button>
-    </div>
-    <div id="cart-items" class="space-y-6"></div>
-    <div class="border-t border-outline-variant/30 pt-6 mt-8">
-      <div class="flex justify-between items-center mb-6">
-        <span class="font-label text-lg uppercase tracking-wider">Total</span>
-        <span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span>
-      </div>
-      <button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all">
-        Proceed to Checkout
-      </button>
-    </div>
-  </div>
+  <div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><div class="flex justify-between items-center mb-6"><span class="font-label text-lg uppercase tracking-wider">Total</span><span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span></div><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm">Proceed to Checkout</button></div></div>
 </div>
 
-<!-- ===== PRODUCT SCRIPT ===== -->
-<script>
-  // Get product ID from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('id');
-  
-  // State
-  let product = null;
-  let selectedColor = null;
-  let selectedSize = null;
-  let quantity = 1;
-  
-  // Load product data
-  async function loadProduct() {
-    try {
-      const res = await fetch(`${API_URL}/api/products/${productId}`);
-      product = await res.json();
-      renderProduct();
-    } catch (e) {
-      console.error('Failed to load product:', e);
-    }
-  }
-  
-  // Render everything
-  function renderProduct() {
-    document.getElementById('product-name').textContent = product.name;
-    document.getElementById('product-price').textContent = `${product.price} RON`;
-    document.getElementById('product-description').textContent = product.description || 'A timeless piece from the Private Collection.';
-    
-    // Render gallery
-    renderGallery();
-    
-    // Render colors
-    renderColors();
-    
-    // Render sizes
-    renderSizes();
-    
-    // Render technical details
-    renderTechnicalDetails();
-    
-    // Set first color/size as selected
-    if (product.colors?.length) selectedColor = product.colors[0];
-    if (product.sizes?.length) selectedSize = product.sizes[0];
-  }
-  
-  function renderGallery() {
-    const container = document.getElementById('product-gallery');
-    const pagination = document.getElementById('gallery-pagination');
-    const images = product.images || [product.image];
-    
-    container.innerHTML = images.map((img, i) => `
-      <div class="snap-start min-w-full h-full relative">
-        <img src="${img}" alt="${product.name}" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80"></div>
-      </div>
-    `).join('');
-    
-    pagination.innerHTML = images.map((_, i) => `
-      <span class="${i === 0 ? 'text-primary-fixed-dim' : 'text-on-surface/30'} font-headline text-xs tracking-widest">${toRoman(i + 1)}</span>
-    `).join('');
-  }
-  
-  function renderColors() {
-    const container = document.getElementById('color-selector');
-    container.innerHTML = product.colors.map(color => `
-      <button onclick="selectColor('${color}')" 
-        class="w-10 h-10 rounded-full border-2 ${selectedColor === color ? 'border-primary-container bg-primary-container shadow-[0_0_15px_rgba(255,215,0,0.4)]' : 'border-white/20 bg-neutral-800'} transition-all hover:scale-105 active:scale-95"
-        style="background-color: ${getColorHex(color)};">
-      </button>
-    `).join('');
-  }
-  
-  function renderSizes() {
-    const container = document.getElementById('size-selector');
-    container.innerHTML = product.sizes.map(size => `
-      <button onclick="selectSize('${size}')" 
-        class="px-8 py-2.5 rounded-full border ${selectedSize === size ? 'border-primary-container bg-primary-container text-neutral-950' : 'border-outline bg-transparent text-on-surface-variant'} text-xs font-bold tracking-widest hover:border-primary-container hover:text-primary-container transition-all">
-        ${size}
-      </button>
-    `).join('');
-  }
-  
-  function renderTechnicalDetails() {
-    const container = document.getElementById('technical-details');
-    container.innerHTML = `
-      <div><p class="text-[10px] text-on-surface-variant tracking-widest uppercase mb-1">Material</p><p class="text-sm font-medium">${product.material || '100% Raw Mulberry Silk'}</p></div>
-      <div><p class="text-[10px] text-on-surface-variant tracking-widest uppercase mb-1">Origin</p><p class="text-sm font-medium">${product.origin || 'Rome, Italy'}</p></div>
-      <div><p class="text-[10px] text-on-surface-variant tracking-widest uppercase mb-1">Weight</p><p class="text-sm font-medium">${product.weight || '120g / Ultra Light'}</p></div>
-      <div><p class="text-[10px] text-on-surface-variant tracking-widest uppercase mb-1">Care</p><p class="text-sm font-medium">${product.care || 'Hand Wash Only'}</p></div>
-    `;
-  }
-  
-  // Helper functions
-  function toRoman(num) {
-    const romans = ['', 'I', 'II', 'III', 'IV', 'V', 'VI'];
-    return romans[num] || num;
-  }
-  
-  function getColorHex(color) {
-    const map = { 'Black': '#1a1a1a', 'Gold': '#FFD700', 'Midnight Blue': '#3D3F93', 'Rose': '#E8A2B4', 'Red': '#7f1d1d', 'Green': '#064e3b' };
-    return map[color] || '#888';
-  }
-  
-  // Selection handlers
-  window.selectColor = function(color) {
-    selectedColor = color;
-    renderColors();
-  };
-  
-  window.selectSize = function(size) {
-    selectedSize = size;
-    renderSizes();
-  };
-  
-  window.incrementQuantity = function() {
-    quantity = Math.min(10, quantity + 1);
-    document.getElementById('quantity-display').textContent = quantity.toString().padStart(2, '0');
-  };
-  
-  window.decrementQuantity = function() {
-    quantity = Math.max(1, quantity - 1);
-    document.getElementById('quantity-display').textContent = quantity.toString().padStart(2, '0');
-  };
-  
-  window.addToCart = function() {
-    if (!selectedColor || !selectedSize) {
-      alert('Please select both color and size');
-      return;
-    }
-    
-    // Call your existing cart function (from script.js)
-    addProductToCart(product.id, selectedSize, selectedColor, quantity);
-    alert(`${product.name} added to your selection.`);
-  };
-  
-  window.toggleFavorite = function() {
-    const icon = document.getElementById('favorite-icon');
-    icon.style.fontVariationSettings = icon.style.fontVariationSettings === "'FILL' 1" ? "'FILL' 0" : "'FILL' 1";
-  };
-  
-  // Load on page ready
-  if (productId) {
-    loadProduct();
-  } else {
-    window.location.href = '/';
-  }
-</script>
-
 <script src="/script.js"></script>
+<script>
+const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get('id');
+
+let product = null;
+let selectedColor = null;
+let selectedSize = null;
+let quantity = 1;
+let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+
+async function loadProduct() {
+  if (!productId) { window.location.href = '/'; return; }
+  try {
+    const res = await fetch(API_URL + '/api/products/' + productId);
+    product = await res.json();
+    renderProduct();
+  } catch (e) { console.error('Failed to load product:', e); }
+}
+
+function renderProduct() {
+  const container = document.getElementById('product-container');
+  const images = product.images || [product.image];
+  
+  container.innerHTML = `
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Gallery -->
+      <div class="space-y-4">
+        <div class="aspect-[3/4] overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm">
+          <img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-full object-cover">
+        </div>
+        ${images.length > 1 ? `
+          <div class="flex gap-2 overflow-x-auto hide-scrollbar">
+            ${images.map((img, i) => `<img src="${img}" onclick="document.getElementById('main-image').src='${img}'" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i === 0 ? 'border-primary-container' : 'border-white/10'} hover:border-primary-container/50 transition-all">`).join('')}
+          </div>
+        ` : ''}
+      </div>
+      
+      <!-- Details -->
+      <div class="space-y-6">
+        <div>
+          <p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category || 'Limited Edition'}</p>
+          <h1 class="font-headline text-4xl md:text-5xl text-primary-container tracking-wide">${product.name}</h1>
+          <p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p>
+        </div>
+        
+        <p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic">${product.description || 'A timeless piece from the Private Collection.'}</p>
+        
+        <!-- Color Selector -->
+        <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Color</label><div class="flex gap-3">${(product.colors || ['Default']).map(c => `<button onclick="selectColor('${c}')" class="w-10 h-10 rounded-full border-2 ${selectedColor === c ? 'border-primary-container' : 'border-white/20'}" style="background-color: ${getColorHex(c)};"></button>`).join('')}</div></div>
+        
+        <!-- Size Selector -->
+        <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Size</label><div class="flex flex-wrap gap-3">${(product.sizes || ['M']).map(s => `<button onclick="selectSize('${s}')" class="px-6 py-2 rounded-full border ${selectedSize === s ? 'border-primary-container bg-primary-container text-on-primary-container' : 'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('')}</div></div>
+        
+        <!-- Quantity & Add to Cart -->
+        <div class="flex items-center gap-4 pt-4">
+          <div class="flex items-center border border-outline-variant rounded-lg"><button onclick="decrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">−</button><span class="w-12 text-center font-bold">${quantity}</span><button onclick="incrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">+</button></div>
+          <button onclick="addToCart()" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all">Add to Cart</button>
+          <button onclick="addToFavorites(${product.id})" class="p-4 border border-outline-variant rounded-lg text-primary-container hover:bg-primary-container hover:text-on-primary-container transition-all"><span class="material-symbols-outlined">favorite</span></button>
+        </div>
+        
+        <!-- Details Accordion -->
+        <div class="border-t border-white/10 pt-6 mt-6 space-y-3">
+          <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Material & Care</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">100% Mulberry Silk. Hand wash cold, lay flat to dry.</p></details>
+          <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Shipping</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">Free shipping on orders over 300 RON. Delivery within 2-5 business days.</p></details>
+          <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Returns</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">14-day returns. Items must be unworn with tags attached.</p></details>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  selectedColor = product.colors?.[0] || 'Default';
+  selectedSize = product.sizes?.[0] || 'M';
+}
+
+function getColorHex(color) { const map = {'Black':'#1a1a1a','Gold':'#FFD700','Midnight Blue':'#3D3F93','Rose':'#E8A2B4','Red':'#7f1d1d','Green':'#064e3b','White':'#ffffff','Default':'#888888'}; return map[color] || '#888888'; }
+function selectColor(c) { selectedColor = c; renderProduct(); }
+function selectSize(s) { selectedSize = s; renderProduct(); }
+function incrementQuantity() { quantity = Math.min(10, quantity + 1); document.querySelector('span.w-12').textContent = quantity; }
+function decrementQuantity() { quantity = Math.max(1, quantity - 1); document.querySelector('span.w-12').textContent = quantity; }
+
+function addToCart() {
+  const existing = cart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
+  if (existing) { existing.quantity += quantity; }
+  else { cart.push({ id: product.id, name: product.name, price: product.price, size: selectedSize, color: selectedColor, quantity, image: product.images?.[0] || product.image }); }
+  localStorage.setItem('silkisland_cart', JSON.stringify(cart));
+  updateCartDisplay();
+  alert(`${product.name} added to cart!`);
+}
+
+function updateCartDisplay() {
+  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  document.getElementById('cart-count').textContent = count;
+}
+
+function addToFavorites(id) {
+  let favorites = JSON.parse(localStorage.getItem('silkisland_favorites') || '[]');
+  if (!favorites.includes(id)) { favorites.push(id); localStorage.setItem('silkisland_favorites', JSON.stringify(favorites)); alert('Added to favorites!'); }
+}
+
+loadProduct();
+</script>
 </body>
 </html>

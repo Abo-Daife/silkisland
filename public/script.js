@@ -234,37 +234,36 @@ async function loadProducts() {
 function renderProducts() {
   const container = document.getElementById('products-container');
   if (!container) return;
+  
   const filteredProducts = currentCategory === 'All' ? products : products.filter(p => p.category === currentCategory);
   const t = translations[currentLang];
+  
   container.innerHTML = '';
+  
   filteredProducts.forEach(product => {
     const card = document.createElement('div');
-    card.className = 'product-card group relative flex flex-col space-y-6';
+    card.className = 'product-card group relative flex flex-col space-y-4';
     card.id = `product-${product.id}`;
+    
     const images = product.images || [product.image];
     const mainImage = images[0] || '/images/placeholder.jpg';
+    
+    // CLEAN MINIMAL CARD - Only image, name, price
     card.innerHTML = `
-      <div class="product-gallery" id="gallery-${product.id}">
-        <img src="${mainImage}" alt="${product.name}" class="main-image w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onclick="openLightbox(${product.id}, 0)">
-        ${images.length > 1 ? `
-          <div class="gallery-nav gallery-prev" onclick="event.stopPropagation(); prevImage(${product.id})">❮</div>
-          <div class="gallery-nav gallery-next" onclick="event.stopPropagation(); nextImage(${product.id})">❯</div>
-          <div class="gallery-dots">${images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); openLightbox(${product.id}, ${i})"></span>`).join('')}</div>
-        ` : ''}
-      </div>
-      <div class="flex justify-between items-start pt-4 border-t border-outline-variant/30">
-        <div><h3 class="font-headline text-2xl mb-1 text-on-surface">${product.name}</h3><p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">${product.category || ''}</p>${product.description ? `<p class="product-description">${product.description.substring(0, 80)}${product.description.length > 80 ? '...' : ''}</p>` : ''}</div>
-        <span class="font-headline text-xl text-primary-container">${product.price} RON</span>
-      </div>
-      <div class="variant-group" id="variants-${product.id}">
-        <div class="variant-item"><label>${t.size}:</label><select class="variant-size">${(product.sizes || ['M']).map(s => `<option>${s}</option>`).join('')}</select></div>
-        <div class="variant-item"><label>${t.color}:</label><select class="variant-color">${(product.colors || ['Default']).map(c => `<option>${c}</option>`).join('')}</select></div>
-        <div class="variant-item"><label>${t.quantity}:</label><input type="number" class="variant-qty" value="1" min="1" max="10"></div>
-      </div>
-      <button class="add-variant-btn" onclick="addVariantRow(${product.id})">${t.add_variant}</button>
-      <button class="add-to-cart bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm" onclick="addProductToCart(${product.id})">${t.add_to_cart}</button>
-      <button onclick="addToFavorites(${product.id})" class="absolute top-4 right-4 glass-effect p-2 rounded-full"><span class="material-symbols-outlined">${favorites.includes(product.id) ? 'favorite' : 'favorite'}</span></button>
+      <a href="/product.html?id=${product.id}" class="block">
+        <div class="aspect-[3/4] overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
+          <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <button onclick="event.preventDefault(); addToFavorites(${product.id});" class="absolute top-4 right-4 bg-surface/40 backdrop-blur-md p-2 rounded-lg">
+            <span class="material-symbols-outlined text-primary-container">${favorites.includes(product.id) ? 'favorite' : 'favorite'}</span>
+          </button>
+        </div>
+        <div class="flex justify-between items-start pt-4 border-t border-outline-variant/30">
+          <h3 class="font-headline text-2xl mb-1 text-on-surface">${product.name}</h3>
+          <span class="font-headline text-xl text-primary-container">${product.price} RON</span>
+        </div>
+      </a>
     `;
+    
     container.appendChild(card);
   });
 }
