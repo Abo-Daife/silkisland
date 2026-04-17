@@ -3,380 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Complete Purchase — SilkIsland</title>
+  <title data-i18n="checkout_title">Complete Purchase — SilkIsland</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  
-  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;400;700&family=Manrope:wght@200;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  
-  <!-- Your Existing CSS -->
   <link rel="stylesheet" href="/style.css">
-  
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "surface": "#131313",
-            "primary-container": "#ffd700",
-            "background": "#131313",
-            "on-primary": "#3a3000",
-            "surface-container-highest": "#353534",
-            "primary-fixed": "#ffe16d",
-            "tertiary-fixed": "#ffd9e1",
-            "on-primary-container": "#705e00",
-            "outline-variant": "#4d4732",
-            "tertiary-fixed-dim": "#fbb3c5",
-            "surface-container-low": "#1c1b1b",
-            "on-surface": "#e5e2e1",
-            "on-surface-variant": "#d0c6ab",
-            "surface-container": "#201f1f",
-            "primary": "#fff6df"
-          },
-          borderRadius: {
-            DEFAULT: "0.125rem",
-            lg: "0.25rem",
-            xl: "0.5rem",
-            full: "0.75rem"
-          },
-          fontFamily: {
-            headline: ["Noto Serif", "serif"],
-            body: ["Manrope", "sans-serif"],
-            label: ["Manrope", "sans-serif"]
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-    }
-    .glass-panel {
-      background: rgba(19, 19, 19, 0.75);
-      backdrop-filter: blur(24px);
-    }
-    body { min-height: max(884px, 100dvh); }
-  </style>
+  <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface":"#131313","primary-container":"#ffd700","background":"#131313","on-primary":"#3a3000","surface-container-highest":"#353534","primary-fixed":"#ffe16d","tertiary-fixed":"#ffd9e1","on-primary-container":"#705e00","outline-variant":"#4d4732","tertiary-fixed-dim":"#fbb3c5","surface-container-low":"#1c1b1b","on-surface":"#e5e2e1","on-surface-variant":"#d0c6ab","surface-container":"#201f1f","primary":"#fff6df"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},fontFamily:{headline:["Noto Serif","serif"],body:["Manrope","sans-serif"],label:["Manrope","sans-serif"]}}}}</script>
+  <style>.material-symbols-outlined{font-variation-settings:'FILL'0,'wght'300,'GRAD'0,'opsz'24}.glass-panel{background:rgba(19,19,19,0.75);backdrop-filter:blur(24px)}body{min-height:max(884px,100dvh)}</style>
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
 
-<!-- Hero Background -->
-<div class="fixed inset-0 z-0">
-  <img alt="Atmospheric background" class="w-full h-full object-cover brightness-[0.35]" src="/images/checkout-bg.jpg" onerror="this.src='https://images.pexels.com/photos/1723637/pexels-photo-1723637.jpeg'">
-  <div class="absolute inset-0 bg-gradient-to-tr from-surface via-surface/85 to-transparent"></div>
-</div>
+<div class="fixed inset-0 z-0"><img alt="Atmospheric background" class="w-full h-full object-cover brightness-[0.35]" src="/images/checkout-bg.jpg" onerror="this.src='https://images.pexels.com/photos/1723637/pexels-photo-1723637.jpeg'"><div class="absolute inset-0 bg-gradient-to-tr from-surface via-surface/85 to-transparent"></div></div>
 
-<!-- ===== FUNCTIONAL HEADER ===== -->
 <header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
-  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase" data-i18n="brand">SILKISLAND</a>
   <div class="flex items-center gap-4">
-    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
-      <span class="material-symbols-outlined">search</span>
-    </button>
-    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container">
-      <span class="material-symbols-outlined">person</span>
-    </a>
-    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative">
-      <span class="material-symbols-outlined">shopping_bag</span>
-      <span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-    </button>
+    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">search</span></button>
+    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">person</span></a>
+    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative"><span class="material-symbols-outlined">shopping_bag</span><span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span></button>
+    <select id="language-select" class="bg-transparent text-on-surface-variant border border-outline-variant rounded-sm px-2 py-1 text-sm uppercase tracking-wider"><option value="en" class="bg-surface">EN</option><option value="ro" class="bg-surface">RO</option><option value="tr" class="bg-surface">TR</option></select>
   </div>
 </header>
 
-<!-- ===== MAIN CONTENT ===== -->
 <main class="relative z-10 pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+  <nav class="mb-16 max-w-md mx-auto"><div class="flex justify-between items-center relative"><div class="absolute top-1/2 left-0 w-full h-[1px] bg-outline-variant opacity-30 -z-10"></div><div class="flex flex-col items-center gap-3"><div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary shadow-[0_0_15px_rgba(255,215,0,0.4)]"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL'1">check</span></div><span class="text-[10px] font-bold tracking-[0.2em] text-primary-container font-label uppercase" data-i18n="shipping">Shipping</span></div><div class="flex flex-col items-center gap-3"><div class="w-10 h-10 rounded-full border border-primary-container bg-surface flex items-center justify-center text-primary-container"><span class="text-xs font-headline">II</span></div><span class="text-[10px] font-bold tracking-[0.2em] text-primary-container font-label uppercase" data-i18n="payment">Payment</span></div></div></nav>
   
-  <!-- Progress Indicator -->
-  <nav class="mb-16 max-w-md mx-auto">
-    <div class="flex justify-between items-center relative">
-      <div class="absolute top-1/2 left-0 w-full h-[1px] bg-outline-variant opacity-30 -z-10"></div>
-      <div class="flex flex-col items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary shadow-[0_0_15px_rgba(255,215,0,0.4)]">
-          <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
-        </div>
-        <span class="text-[10px] font-bold tracking-[0.2em] text-primary-container font-label uppercase">Shipping</span>
-      </div>
-      <div class="flex flex-col items-center gap-3">
-        <div class="w-10 h-10 rounded-full border border-primary-container bg-surface flex items-center justify-center text-primary-container">
-          <span class="text-xs font-headline">II</span>
-        </div>
-        <span class="text-[10px] font-bold tracking-[0.2em] text-primary-container font-label uppercase">Payment</span>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Status Message -->
   <div id="status-message" class="hidden mb-8 p-6 rounded-lg text-center"></div>
-
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start" id="checkout-content">
-    <!-- Shipping Form -->
-    <section class="lg:col-span-7 space-y-12">
-      <div>
-        <h2 class="text-4xl font-headline tracking-wider mb-2 text-primary">Shipping Details</h2>
-        <p class="text-tertiary-fixed-dim text-sm tracking-wide opacity-80">Ensure your sanctuary receives its new addition.</p>
-      </div>
-      
-      <form id="checkout-form" class="space-y-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="space-y-2">
-            <label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">First Name</label>
-            <input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Aurelius" type="text" id="first-name" required>
-          </div>
-          <div class="space-y-2">
-            <label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">Last Name</label>
-            <input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Silicus" type="text" id="last-name" required>
-          </div>
-          <div class="space-y-2">
-            <label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">Email</label>
-            <input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="archetype@silkisland.com" type="email" id="email" required>
-          </div>
-          <div class="space-y-2">
-            <label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">Phone</label>
-            <input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="+40 7XX XXX XXX" type="tel" id="phone" required>
-          </div>
-          <div class="md:col-span-2 space-y-2">
-            <label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">Address</label>
-            <input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Via del Corso, 18" type="text" id="address" required>
-          </div>
-          <div class="space-y-2">
-            <label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">City</label>
-            <input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Bucharest" type="text" id="city" required>
-          </div>
-          <div class="space-y-2">
-            <label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label">Postal Code</label>
-            <input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="00186" type="text" id="postal" required>
-          </div>
-        </div>
-
-        <!-- Payment Method Toggle -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-6 bg-surface-container-high/60 border border-primary-container/20 rounded-lg cursor-pointer hover:bg-surface-container-highest transition-all group" id="card-option" onclick="selectPayment('card')">
-            <span class="material-symbols-outlined text-primary-container mb-4 block">credit_card</span>
-            <p class="text-xs font-bold tracking-widest uppercase">CARD / GOOGLE PAY</p>
-            <input type="radio" name="payment" value="card" class="hidden" id="payment-card">
-          </div>
-          <div class="p-6 bg-surface-container-low/60 opacity-60 hover:opacity-100 rounded-lg cursor-pointer hover:bg-surface-container-high transition-all" id="cash-option" onclick="selectPayment('cash')">
-            <span class="material-symbols-outlined text-on-surface-variant mb-4 block">payments</span>
-            <p class="text-xs font-bold tracking-widest uppercase">CASH ON DELIVERY</p>
-            <input type="radio" name="payment" value="cash" class="hidden" id="payment-cash" checked>
-          </div>
-        </div>
-      </form>
-    </section>
-
-    <!-- Order Summary -->
+    <section class="lg:col-span-7 space-y-12"><div><h2 class="text-4xl font-headline tracking-wider mb-2 text-primary" data-i18n="shipping_details">Shipping Details</h2><p class="text-tertiary-fixed-dim text-sm tracking-wide opacity-80" data-i18n="ensure_sanctuary">Ensure your sanctuary receives its new addition.</p></div>
+    <form id="checkout-form" class="space-y-8"><div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="space-y-2"><label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label" data-i18n="first_name">First Name</label><input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Aurelius" type="text" id="first-name" required></div>
+      <div class="space-y-2"><label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label" data-i18n="last_name">Last Name</label><input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Silicus" type="text" id="last-name" required></div>
+      <div class="space-y-2"><label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label" data-i18n="email">Email</label><input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="archetype@silkisland.com" type="email" id="email" required></div>
+      <div class="space-y-2"><label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label" data-i18n="phone">Phone</label><input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="+40 7XX XXX XXX" type="tel" id="phone" required></div>
+      <div class="md:col-span-2 space-y-2"><label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label" data-i18n="address">Address</label><input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Via del Corso, 18" type="text" id="address" required></div>
+      <div class="space-y-2"><label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label" data-i18n="city">City</label><input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="Bucharest" type="text" id="city" required></div>
+      <div class="space-y-2"><label class="block text-[10px] tracking-[0.15em] text-on-surface-variant uppercase font-label" data-i18n="postal_code">Postal Code</label><input class="w-full bg-surface-container-highest/60 border-none rounded-lg focus:ring-0 focus:border-b-2 focus:border-primary-fixed text-on-surface p-4 font-headline placeholder:text-on-surface-variant/30" placeholder="00186" type="text" id="postal" required></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="p-6 bg-surface-container-high/60 border border-primary-container/20 rounded-lg cursor-pointer hover:bg-surface-container-highest transition-all group" id="card-option" onclick="selectPayment('card')"><span class="material-symbols-outlined text-primary-container mb-4 block">credit_card</span><p class="text-xs font-bold tracking-widest uppercase" data-i18n="card_google_pay">CARD / GOOGLE PAY</p><input type="radio" name="payment" value="card" class="hidden" id="payment-card"></div>
+      <div class="p-6 bg-surface-container-low/60 opacity-60 hover:opacity-100 rounded-lg cursor-pointer hover:bg-surface-container-high transition-all" id="cash-option" onclick="selectPayment('cash')"><span class="material-symbols-outlined text-on-surface-variant mb-4 block">payments</span><p class="text-xs font-bold tracking-widest uppercase" data-i18n="cash_delivery">CASH ON DELIVERY</p><input type="radio" name="payment" value="cash" class="hidden" id="payment-cash" checked></div>
+    </div></form></section>
+    
     <aside class="lg:col-span-5 glass-panel p-8 rounded-lg shadow-2xl border border-outline-variant/10 sticky top-32">
-      <h3 class="text-xl font-headline tracking-widest text-primary mb-8 border-b border-primary-container/10 pb-4">Order Archive</h3>
+      <h3 class="text-xl font-headline tracking-widest text-primary mb-8 border-b border-primary-container/10 pb-4" data-i18n="order_archive">Order Archive</h3>
       <div class="space-y-6 mb-8 max-h-80 overflow-y-auto" id="order-items"></div>
-      
       <div class="space-y-4 text-sm font-label tracking-wide text-on-surface-variant/80">
-        <div class="flex justify-between">
-          <span>Subtotal</span>
-          <span id="subtotal">0.00 RON</span>
-        </div>
-        <div class="flex justify-between">
-          <span>Private Courier</span>
-          <span id="shipping-fee">25.00 RON</span>
-        </div>
-        <div class="flex justify-between text-primary font-bold pt-4 border-t border-primary-container/10">
-          <span class="uppercase tracking-[0.2em]">Total</span>
-          <span class="text-xl font-headline" id="total">0.00 RON</span>
-        </div>
-        <!-- NEW LINE: Delivery fee notice -->
-        <p class="text-right text-[10px] text-tertiary-fixed-dim/50 uppercase tracking-widest italic">* delivery fee is not included</p>
+        <div class="flex justify-between"><span data-i18n="subtotal">Subtotal</span><span id="subtotal">0.00 RON</span></div>
+        <div class="flex justify-between"><span data-i18n="private_courier">Private Courier</span><span id="shipping-fee">25.00 RON</span></div>
+        <div class="flex justify-between text-primary font-bold pt-4 border-t border-primary-container/10"><span class="uppercase tracking-[0.2em]" data-i18n="total">Total</span><span class="text-xl font-headline" id="total">0.00 RON</span></div>
+        <p class="text-right text-[10px] text-tertiary-fixed-dim/50 uppercase tracking-widest italic" data-i18n="delivery_fee_notice">* delivery fee is not included</p>
       </div>
-      
-      <button class="w-full mt-8 bg-primary-container text-on-primary py-5 rounded-lg text-xs font-bold tracking-[0.3em] uppercase transition-all hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] active:scale-95" id="submit-btn" onclick="processCheckout()">
-        Complete Purchase
-      </button>
-      <p class="mt-6 text-center text-[10px] text-tertiary-fixed-dim/40 tracking-widest uppercase">
-        Encrypted through the Aurelian Security Protocol
-      </p>
+      <button class="w-full mt-8 bg-primary-container text-on-primary py-5 rounded-lg text-xs font-bold tracking-[0.3em] uppercase transition-all hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] active:scale-95" id="submit-btn" onclick="processCheckout()" data-i18n="complete_purchase">Complete Purchase</button>
+      <p class="mt-6 text-center text-[10px] text-tertiary-fixed-dim/40 tracking-widest uppercase" data-i18n="encrypted_protocol">Encrypted through the Aurelian Security Protocol</p>
     </aside>
   </div>
 </main>
 
-<!-- ===== CART MODAL ===== -->
-<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
-  <div class="p-6">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="font-headline text-2xl text-primary-container">Your Selection</h2>
-      <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container">
-        <span class="material-symbols-outlined text-3xl">close</span>
-      </button>
-    </div>
-    <div id="cart-items-modal" class="space-y-6"></div>
-    <div class="border-t border-outline-variant/30 pt-6 mt-8">
-      <button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm">
-        Proceed to Checkout
-      </button>
-    </div>
-  </div>
-</div>
+<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal"><div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container" data-i18n="your_selection">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items-modal" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm" data-i18n="proceed_checkout">Proceed to Checkout</button></div></div></div>
 
-<!-- Stripe JS -->
 <script src="https://js.stripe.com/v3/"></script>
-
 <script>
-  const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
-  const stripe = Stripe('pk_live_51TKMgJEqFnDyg3gakXA9wC0rscEnXuuZYYv4BSEuTVb6u3HCRLVywIE2CFhOvd6deAKu6ZaX6TAIsLbQ5axW7Fao005nEa1Olj');
+const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+const stripe = Stripe('pk_live_51TKMgJEqFnDyg3gakXA9wC0rscEnXuuZYYv4BSEuTVb6u3HCRLVywIE2CFhOvd6deAKu6ZaX6TAIsLbQ5axW7Fao005nEa1Olj');
+
+let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+let selectedPayment = 'cash';
+const SHIPPING_FEE = 25.00;
+const FREE_SHIPPING_THRESHOLD = 300.00;
+
+function loadCart() {
+  const container = document.getElementById('order-items');
+  let subtotal = 0;
+  if (cart.length === 0) { container.innerHTML = '<p class="text-tertiary-fixed-dim text-center py-8">Your selection is empty</p>'; document.getElementById('submit-btn').disabled = true; return; }
+  container.innerHTML = cart.map(item => { const itemTotal = item.price * item.quantity; subtotal += itemTotal; return `<div class="flex gap-4 items-center border-b border-white/5 pb-4"><div class="w-16 h-20 bg-surface-container-high flex-shrink-0 overflow-hidden rounded"><img src="${item.image || '/images/placeholder.jpg'}" class="w-full h-full object-cover"></div><div class="flex-grow"><p class="text-xs font-bold uppercase">${item.name}</p><p class="text-[10px] text-tertiary-fixed-dim">${item.size} / ${item.color} x${item.quantity}</p><p class="text-primary-container font-headline mt-1 text-sm">${itemTotal.toFixed(2)} RON</p></div></div>`; }).join('');
+  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} RON`;
+  document.getElementById('shipping-fee').textContent = shipping === 0 ? 'FREE' : `${shipping.toFixed(2)} RON`;
+  document.getElementById('total').textContent = `${(subtotal + shipping).toFixed(2)} RON`;
+  document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+}
+
+window.selectPayment = function(method) {
+  selectedPayment = method;
+  document.getElementById('payment-card').checked = (method === 'card');
+  document.getElementById('payment-cash').checked = (method === 'cash');
+  document.getElementById('card-option').classList.toggle('bg-surface-container-high/60', method === 'card');
+  document.getElementById('card-option').classList.toggle('opacity-100', method === 'card');
+  document.getElementById('card-option').classList.toggle('opacity-60', method !== 'card');
+  document.getElementById('cash-option').classList.toggle('bg-surface-container-high/60', method === 'cash');
+  document.getElementById('cash-option').classList.toggle('opacity-100', method === 'cash');
+  document.getElementById('cash-option').classList.toggle('opacity-60', method !== 'cash');
+};
+
+window.processCheckout = async function() {
+  if (cart.length === 0) { alert('Your selection is empty'); return; }
+  const customerInfo = {
+    name: document.getElementById('first-name').value + ' ' + document.getElementById('last-name').value,
+    email: document.getElementById('email').value, phone: document.getElementById('phone').value,
+    address: document.getElementById('address').value + ', ' + document.getElementById('city').value + ', ' + document.getElementById('postal').value
+  };
+  if (!customerInfo.name.trim() || !customerInfo.email || !customerInfo.phone || !customerInfo.address.trim()) { alert('Please fill in all shipping details'); return; }
+  const submitBtn = document.getElementById('submit-btn'); submitBtn.disabled = true; submitBtn.textContent = 'Processing...';
   
-  let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  let selectedPayment = 'cash';
-  const SHIPPING_FEE = 25.00;
-  const FREE_SHIPPING_THRESHOLD = 300.00;
-
-  // Load cart and calculate totals
-  function loadCart() {
-    const container = document.getElementById('order-items');
-    let subtotal = 0;
-    
-    if (cart.length === 0) {
-      container.innerHTML = '<p class="text-tertiary-fixed-dim text-center py-8">Your selection is empty</p>';
-      document.getElementById('submit-btn').disabled = true;
-    } else {
-      container.innerHTML = cart.map(item => {
-        const itemTotal = item.price * item.quantity;
-        subtotal += itemTotal;
-        return `
-          <div class="flex gap-4 items-center border-b border-white/5 pb-4">
-            <div class="relative w-16 h-20 bg-surface-container-high flex-shrink-0 overflow-hidden rounded">
-              <img src="${item.image || '/images/placeholder.jpg'}" alt="${item.name}" class="w-full h-full object-cover opacity-80">
-            </div>
-            <div class="flex-grow">
-              <p class="text-xs font-bold tracking-[0.1em] uppercase text-on-surface">${item.name}</p>
-              <p class="text-[10px] text-tertiary-fixed-dim mt-1">${item.size} / ${item.color} x${item.quantity}</p>
-              <p class="text-primary-container font-headline mt-1 text-sm">${itemTotal.toFixed(2)} RON</p>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-    
-    // Calculate shipping
-    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
-    const total = subtotal + shipping;
-    
-    document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} RON`;
-    document.getElementById('shipping-fee').textContent = shipping === 0 ? 'FREE' : `${shipping.toFixed(2)} RON`;
-    document.getElementById('total').textContent = `${total.toFixed(2)} RON`;
-    document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+  if (selectedPayment === 'card') {
+    try {
+      const response = await fetch(API_URL + '/api/create-checkout-session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cart, customerInfo }) });
+      const session = await response.json();
+      if (session.url) { window.location.href = session.url; } else { alert('Payment session failed'); submitBtn.disabled = false; submitBtn.textContent = 'Complete Purchase'; }
+    } catch (err) { alert('Payment error'); submitBtn.disabled = false; submitBtn.textContent = 'Complete Purchase'; }
+  } else {
+    try {
+      const response = await fetch(API_URL + '/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cart, customerInfo, paymentMethod: 'cash' }) });
+      const result = await response.json();
+      if (result.success) {
+        localStorage.removeItem('silkisland_cart');
+        document.getElementById('checkout-content').classList.add('hidden');
+        const statusDiv = document.getElementById('status-message'); statusDiv.classList.remove('hidden');
+        statusDiv.className = 'block mb-8 p-8 rounded-lg text-center bg-green-900/30 border border-green-500/30';
+        statusDiv.innerHTML = `<span class="material-symbols-outlined text-5xl text-primary-container mb-4">check_circle</span><h2 class="font-headline text-3xl text-primary-container mb-4">Purchase Complete</h2><p class="text-tertiary-fixed-dim mb-2">Order #${result.orderId}</p><p class="text-on-surface-variant mb-6">Total: ${document.getElementById('total').textContent}</p><p class="text-sm text-on-surface-variant/60 mb-8">You will pay cash upon delivery.</p><a href="/" class="inline-block bg-primary-container text-on-primary-container px-8 py-3 rounded-lg text-xs font-bold tracking-widest uppercase">Return to Atrium</a>`;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else { alert('Order failed'); submitBtn.disabled = false; submitBtn.textContent = 'Complete Purchase'; }
+    } catch (err) { alert('Network error'); submitBtn.disabled = false; submitBtn.textContent = 'Complete Purchase'; }
   }
+};
 
-  // Payment selection
-  window.selectPayment = function(method) {
-    selectedPayment = method;
-    document.getElementById('payment-card').checked = (method === 'card');
-    document.getElementById('payment-cash').checked = (method === 'cash');
-    
-    // Visual feedback
-    document.getElementById('card-option').classList.toggle('bg-surface-container-high/60', method === 'card');
-    document.getElementById('card-option').classList.toggle('border-primary-container/20', method === 'card');
-    document.getElementById('card-option').classList.toggle('opacity-100', method === 'card');
-    document.getElementById('card-option').classList.toggle('opacity-60', method !== 'card');
-    
-    document.getElementById('cash-option').classList.toggle('bg-surface-container-high/60', method === 'cash');
-    document.getElementById('cash-option').classList.toggle('border-primary-container/20', method === 'cash');
-    document.getElementById('cash-option').classList.toggle('opacity-100', method === 'cash');
-    document.getElementById('cash-option').classList.toggle('opacity-60', method !== 'cash');
-  };
-
-  // Process checkout
-  window.processCheckout = async function() {
-    if (cart.length === 0) {
-      alert('Your selection is empty');
-      return;
-    }
-    
-    const customerInfo = {
-      name: document.getElementById('first-name').value + ' ' + document.getElementById('last-name').value,
-      email: document.getElementById('email').value,
-      phone: document.getElementById('phone').value,
-      address: document.getElementById('address').value + ', ' + document.getElementById('city').value + ', ' + document.getElementById('postal').value
-    };
-    
-    // Validate
-    if (!customerInfo.name.trim() || !customerInfo.email || !customerInfo.phone || !customerInfo.address.trim()) {
-      alert('Please fill in all shipping details');
-      return;
-    }
-    
-    const submitBtn = document.getElementById('submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Processing...';
-    
-    if (selectedPayment === 'card') {
-      // Stripe checkout
-      try {
-        const response = await fetch(API_URL + '/api/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cart, customerInfo })
-        });
-        
-        const session = await response.json();
-        if (session.url) {
-          window.location.href = session.url;
-        } else {
-          alert('Payment session failed');
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Complete Purchase';
-        }
-      } catch (err) {
-        alert('Payment error');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Complete Purchase';
-      }
-    } else {
-      // Cash on delivery
-      try {
-        const response = await fetch(API_URL + '/api/checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cart, customerInfo, paymentMethod: 'cash' })
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-          localStorage.removeItem('silkisland_cart');
-          
-          // Show success message
-          document.getElementById('checkout-content').classList.add('hidden');
-          const statusDiv = document.getElementById('status-message');
-          statusDiv.classList.remove('hidden');
-          statusDiv.className = 'block mb-8 p-8 rounded-lg text-center bg-green-900/30 border border-green-500/30';
-          statusDiv.innerHTML = `
-            <span class="material-symbols-outlined text-5xl text-primary-container mb-4">check_circle</span>
-            <h2 class="font-headline text-3xl text-primary-container mb-4">Purchase Complete</h2>
-            <p class="text-tertiary-fixed-dim mb-2">Order #${result.orderId}</p>
-            <p class="text-on-surface-variant mb-6">Total: ${document.getElementById('total').textContent}</p>
-            <p class="text-sm text-on-surface-variant/60 mb-8">You will pay cash upon delivery.</p>
-            <a href="/" class="inline-block bg-primary-container text-on-primary-container px-8 py-3 rounded-lg text-xs font-bold tracking-widest uppercase">Return to Atrium</a>
-          `;
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          alert('Order failed: ' + (result.error || 'Unknown error'));
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Complete Purchase';
-        }
-      } catch (err) {
-        alert('Network error');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Complete Purchase';
-      }
-    }
-  };
-
-  // Initialize
-  loadCart();
-  selectPayment('cash');
+loadCart();
+selectPayment('cash');
 </script>
-
 <script src="/script.js"></script>
 </body>
 </html>
