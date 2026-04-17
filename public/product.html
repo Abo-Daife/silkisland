@@ -101,11 +101,73 @@ function renderProduct() {
           <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Material & Care</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">100% Mulberry Silk. Hand wash cold, lay flat to dry.</p></details>
           <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Shipping</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">Free shipping on orders over 300 RON. Delivery within 2-5 business days.</p></details>
           <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Returns</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">14-day returns. Items must be unworn with tags attached.</p></details>
-        </div>
-      </div>
-    </div>
-  `;
+            <!-- Reviews Section -->
+            <div class="border-t border-white/10 pt-8 mt-8">
+                <div class="flex items-center justify-between mb-6">
+                     <h3 class="font-headline text-2xl text-primary-container">Sanctuary Whispers</h3>
+                 <button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-primary-fixed-dim transition-all">
+                <span class="material-symbols-outlined text-lg">add</span>
+                  Write a Review
+                </button>
+            </div>
   
+            <!-- Reviews List -->
+            <div id="reviews-list" class="space-y-6">
+                <!-- Reviews will be loaded here -->
+                <p class="text-tertiary-fixed-dim italic">Loading reviews...</p>
+            </div>
+            </div>
+
+        <!-- Review Modal -->
+        <div id="review-modal" class="fixed inset-0 z-[2000] bg-black/80 backdrop-blur-md hidden items-center justify-center" onclick="closeReviewModal(event)">
+        <div class="glass-panel p-8 rounded-lg max-w-lg w-full mx-4" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between mb-6">
+            <h3 class="font-headline text-2xl text-primary-container">Write a Review</h3>
+            <button onclick="closeReviewModal()" class="text-on-surface-variant hover:text-primary-container">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+            </div>
+            
+            <form id="review-form" onsubmit="submitReview(event)">
+            <input type="hidden" id="review-product-id">
+            
+            <!-- Rating -->
+            <div class="mb-6">
+                <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Your Rating</label>
+                <div class="flex gap-2" id="star-rating">
+                <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30 hover:text-primary-container" onclick="setRating(1)">star</span>
+                <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30 hover:text-primary-container" onclick="setRating(2)">star</span>
+                <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30 hover:text-primary-container" onclick="setRating(3)">star</span>
+                <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30 hover:text-primary-container" onclick="setRating(4)">star</span>
+                <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30 hover:text-primary-container" onclick="setRating(5)">star</span>
+                </div>
+                <input type="hidden" id="review-rating" value="5">
+            </div>
+            
+            <!-- Name -->
+            <div class="mb-4">
+                <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Your Name</label>
+                <input type="text" id="review-name" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-3 text-on-surface" placeholder="Enter your name" required>
+            </div>
+            
+            <!-- Review Text -->
+            <div class="mb-6">
+                <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Your Review</label>
+                <textarea id="review-text" rows="4" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-3 text-on-surface resize-none" placeholder="Share your thoughts..." required></textarea>
+            </div>
+            
+            <div class="flex gap-3">
+                <button type="submit" class="flex-1 bg-primary-container text-on-primary-container py-3 rounded-lg font-bold uppercase tracking-widest text-xs hover:bg-primary-fixed-dim transition-all">Submit Review</button>
+                <button type="button" onclick="closeReviewModal()" class="flex-1 border border-outline-variant text-on-surface-variant py-3 rounded-lg font-bold uppercase tracking-widest text-xs hover:bg-surface-container-highest transition-all">Cancel</button>
+            </div>
+            </form>
+        </div>
+        </div>
+                </div>
+            </div>
+            </div>
+        `;
+        
   selectedColor = product.colors?.[0] || 'Default';
   selectedSize = product.sizes?.[0] || 'M';
 }
@@ -136,6 +198,86 @@ function addToFavorites(id) {
 }
 
 loadProduct();
+
+// Reviews
+let currentRating = 5;
+
+function openReviewModal() {
+  document.getElementById('review-product-id').value = productId;
+  document.getElementById('review-modal').style.display = 'flex';
+  setRating(5);
+}
+
+function closeReviewModal(event) {
+  if (!event || event.target === document.getElementById('review-modal')) {
+    document.getElementById('review-modal').style.display = 'none';
+  }
+}
+
+function setRating(rating) {
+  currentRating = rating;
+  document.getElementById('review-rating').value = rating;
+  const stars = document.querySelectorAll('#star-rating span');
+  stars.forEach((star, i) => {
+    if (i < rating) {
+      star.style.fontVariationSettings = "'FILL' 1";
+      star.style.color = '#FFD700';
+    } else {
+      star.style.fontVariationSettings = "'FILL' 0";
+      star.style.color = '';
+    }
+  });
+}
+
+function submitReview(event) {
+  event.preventDefault();
+  
+  const review = {
+    productId: document.getElementById('review-product-id').value,
+    name: document.getElementById('review-name').value,
+    rating: currentRating,
+    text: document.getElementById('review-text').value,
+    date: new Date().toISOString()
+  };
+  
+  // Save to localStorage (you can upgrade to Supabase later)
+  let reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]');
+  reviews.push(review);
+  localStorage.setItem('silkisland_reviews', JSON.stringify(reviews));
+  
+  closeReviewModal();
+  loadReviews();
+  alert('Thank you for your review!');
+  document.getElementById('review-form').reset();
+  setRating(5);
+}
+
+function loadReviews() {
+  const container = document.getElementById('reviews-list');
+  const reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]');
+  const productReviews = reviews.filter(r => r.productId === productId);
+  
+  if (productReviews.length === 0) {
+    container.innerHTML = '<p class="text-tertiary-fixed-dim italic text-center py-8">No reviews yet. Be the first to whisper.</p>';
+    return;
+  }
+  
+  container.innerHTML = productReviews.reverse().map(r => `
+    <div class="border-b border-white/5 pb-6">
+      <div class="flex items-center gap-2 mb-2">
+        <div class="flex">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+        <span class="text-xs text-on-surface-variant">${new Date(r.date).toLocaleDateString()}</span>
+      </div>
+      <p class="text-tertiary-fixed-dim italic mb-2">"${r.text}"</p>
+      <p class="text-xs text-on-surface-variant uppercase tracking-widest">— ${r.name}</p>
+    </div>
+  `).join('');
+}
+
+// Call loadReviews after renderProduct
+// Add this at the end of renderProduct():
+setTimeout(() => loadReviews(), 100);
+
 </script>
 </body>
 </html>
