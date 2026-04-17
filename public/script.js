@@ -257,7 +257,7 @@ function renderProducts() {
             <span class="material-symbols-outlined text-primary-container">${favorites.includes(product.id) ? 'favorite' : 'favorite'}</span>
           </button>
         </div>
-        <div class="flex justify-between items-start pt-4 border-t border-outline-variant/30">
+        <div class="flex justify-between items-start pt-2 border-t border-outline-variant/30">
           <h3 class="font-headline text-2xl mb-1 text-on-surface">${product.name}</h3>
           <span class="font-headline text-xl text-primary-container">${product.price} RON</span>
         </div>
