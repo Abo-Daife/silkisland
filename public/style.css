@@ -1162,24 +1162,31 @@ select {
   font-weight: bold;
   letter-spacing: 1px;
 }
-/* Reduce space between image and price */
-.product-card .flex {
-  margin-top: 0.5rem !important;  /* Reduce from whatever it was */
-  padding-top: 0.5rem !important;
+
+/* Make product images taller on home page */
+.product-card img,
+.product-card .main-image,
+.product-card .product-gallery {
+  height: 400px !important;
+  max-height: 450px !important;
+  aspect-ratio: 3/4 !important;
+  object-fit: cover !important;
 }
 
-/* Make the image and text tighter */
-.product-card img {
-  margin-bottom: 0 !important;
+/* For mobile */
+@media screen and (max-width: 768px) {
+  .product-card img,
+  .product-card .main-image,
+  .product-card .product-gallery {
+    height: 350px !important;
+  }
 }
 
-/* Reduce space between name and price */
-.product-card h3 {
-  margin-bottom: 0.25rem !important;
-}
-
-/* Overall tighter card */
-.product-card {
-  gap: 0.25rem !important;
-  padding: 0.75rem !important;
+/* For small mobile */
+@media screen and (max-width: 480px) {
+  .product-card img,
+  .product-card .main-image,
+  .product-card .product-gallery {
+    height: 300px !important;
+  }
 }

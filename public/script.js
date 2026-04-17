@@ -249,24 +249,14 @@ function renderProducts() {
     const mainImage = images[0] || '/images/placeholder.jpg';
     
     // CLEAN MINIMAL CARD - Only image, name, price
-    card.innerHTML = `
-      <a href="/product.html?id=${product.id}" class="block">
-        <div class="aspect-[3/4] overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
-          <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-          <button onclick="event.preventDefault(); addToFavorites(${product.id});" class="absolute top-4 right-4 bg-surface/40 backdrop-blur-md p-2 rounded-lg">
-            <span class="material-symbols-outlined text-primary-container">${favorites.includes(product.id) ? 'favorite' : 'favorite'}</span>
-          </button>
-        </div>
-        <div class="flex justify-between items-start pt-2 border-t border-outline-variant/30">
-          <h3 class="font-headline text-2xl mb-1 text-on-surface">${product.name}</h3>
-          <span class="font-headline text-xl text-primary-container">${product.price} RON</span>
-        </div>
-      </a>
-    `;
-    
-    container.appendChild(card);
-  });
-}
+   card.innerHTML = `
+  <a href="/product.html?id=${product.id}" class="block">
+    <div class="aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
+      <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+    </div>
+    <!-- rest of card -->
+  </a>
+`;
 
 // ========== CART ==========
 function addProductToCart(productId) {
