@@ -34,6 +34,7 @@
 </div>
 
 <script src="/script.js"></script>
+
 <script>
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('id');
@@ -337,9 +338,6 @@ function attachEventListeners() {
 }
 
 // ========== LIGHTBOX FUNCTIONS ==========
-let currentLightboxImages = [];
-let currentLightboxIndex = 0;
-
 function openLightbox(index) {
   const images = product.images || [product.image];
   currentLightboxImages = images;
