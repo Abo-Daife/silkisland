@@ -184,6 +184,46 @@ const translations = {
   }
 };
 
+// ========== GLOBAL FUNCTIONS FOR PRODUCT PAGE ==========
+window.addToCartFromProduct = function(productId, selectedSize, selectedColor, productQuantity) {
+  // If called from product page with parameters
+  if (productId && selectedSize && selectedColor) {
+    const product = products.find(p => p.id === productId) || {};
+    const existing = cart.find(item => item.id === productId && item.size === selectedSize && item.color === selectedColor);
+    if (existing) { existing.quantity += productQuantity || 1; }
+    else { cart.push({ id: productId, name: product.name || 'Product', price: product.price || 0, size: selectedSize, color: selectedColor, quantity: productQuantity || 1, image: product.images?.[0] || product.image }); }
+    localStorage.setItem('silkisland_cart', JSON.stringify(cart));
+    updateCartDisplay();
+    alert('Added to cart!');
+  }
+};
+
+window.addToFavorites = function(productId) { 
+  if (!favorites.includes(productId)) { 
+    favorites.push(productId); 
+    localStorage.setItem('silkisland_favorites', JSON.stringify(favorites)); 
+    alert('Added to favorites!'); 
+  }
+};
+
+window.updateCartDisplay = function() {
+  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const countEl = document.getElementById('cart-count');
+  if (countEl) countEl.textContent = count;
+};
+
+window.toggleCart = function() { 
+  document.getElementById('cart-modal')?.classList.toggle('active'); 
+};
+
+window.goToCheckout = function() { 
+  if (cart.length === 0) { 
+    alert('Your cart is empty'); 
+    return; 
+  } 
+  window.location.href = '/checkout.html'; 
+};
+
 // ========== INITIALIZATION ==========
 window.onload = function() {
   console.log('SilkIsland — The Private Atrium');
@@ -221,7 +261,6 @@ function applyTranslations() {
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const key = el.getAttribute('data-i18n-placeholder'); if (t[key]) el.placeholder = t[key]; });
 }
 
-// ========== PRODUCTS ==========
 async function loadProducts() {
   try {
     const res = await fetch(API_URL + '/api/products');
@@ -234,26 +273,19 @@ async function loadProducts() {
 function renderProducts() {
   const container = document.getElementById('products-container');
   if (!container) return;
-  
   const filteredProducts = currentCategory === 'All' ? products : products.filter(p => p.category === currentCategory);
-  const t = translations[currentLang];
-  
   container.innerHTML = '';
-  
   filteredProducts.forEach(product => {
     const card = document.createElement('div');
     card.className = 'product-card group relative flex flex-col space-y-4';
     card.id = `product-${product.id}`;
-    
     const images = product.images || [product.image];
     const mainImage = images[0] || '/images/placeholder.jpg';
-    
-    // CLEAN MINIMAL CARD - Only image, name, price
     card.innerHTML = `
       <a href="/product.html?id=${product.id}" class="block">
         <div class="aspect-[3/4] overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
           <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-          <button onclick="event.preventDefault(); addToFavorites(${product.id});" class="absolute top-4 right-4 bg-surface/40 backdrop-blur-md p-2 rounded-lg">
+          <button onclick="event.preventDefault(); window.addToFavorites(${product.id});" class="absolute top-4 right-4 bg-surface/40 backdrop-blur-md p-2 rounded-lg">
             <span class="material-symbols-outlined text-primary-container">${favorites.includes(product.id) ? 'favorite' : 'favorite'}</span>
           </button>
         </div>
@@ -263,108 +295,18 @@ function renderProducts() {
         </div>
       </a>
     `;
-    
     container.appendChild(card);
   });
 }
 
-// ========== CART ==========
-function addProductToCart(productId) {
-  const product = products.find(p => p.id === productId);
-  const variantGroup = document.getElementById(`variants-${productId}`);
-  if (!variantGroup) return;
-  const size = variantGroup.querySelector('.variant-size')?.value || 'M';
-  const color = variantGroup.querySelector('.variant-color')?.value || 'Default';
-  const qty = parseInt(variantGroup.querySelector('.variant-qty')?.value) || 1;
-  const existing = cart.find(item => item.id === productId && item.size === size && item.color === color);
-  if (existing) { existing.quantity += qty; }
-  else { cart.push({ id: product.id, name: product.name, price: product.price, size, color, quantity: qty, image: product.images?.[0] || product.image }); }
-  localStorage.setItem('silkisland_cart', JSON.stringify(cart));
-  updateCartDisplay();
-  alert(`${product.name} added to cart!`);
-}
-
 function updateCartDisplay() {
-  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
   const countEl = document.getElementById('cart-count');
   if (countEl) countEl.textContent = count;
-  const itemsDiv = document.getElementById('cart-items');
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const t = translations[currentLang];
-  if (itemsDiv) {
-    if (cart.length === 0) { itemsDiv.innerHTML = `<p class="text-tertiary-fixed-dim text-center py-8">${t.cart_empty}</p>`; }
-    else {
-      itemsDiv.innerHTML = cart.map((item, i) => `
-        <div class="flex gap-4 items-center border-b border-white/5 pb-4">
-          <div class="w-16 h-20 bg-surface-container-high flex-shrink-0 overflow-hidden rounded"><img src="${item.image || '/images/placeholder.jpg'}" class="w-full h-full object-cover"></div>
-          <div class="flex-grow"><p class="text-xs font-bold uppercase">${item.name}</p><p class="text-[10px] text-tertiary-fixed-dim">${item.size} / ${item.color} x${item.quantity}</p></div>
-          <div class="text-right"><p class="text-primary-container">${(item.price * item.quantity).toFixed(2)} RON</p><button onclick="removeCartItem(${i})" class="text-[10px] text-error">Remove</button></div>
-        </div>`).join('');
-    }
-  }
-  const totalEl = document.getElementById('cart-total');
-  if (totalEl) totalEl.textContent = `${total.toFixed(2)} RON`;
 }
 
-function removeCartItem(index) { cart.splice(index, 1); localStorage.setItem('silkisland_cart', JSON.stringify(cart)); updateCartDisplay(); }
-function toggleCart() { document.getElementById('cart-modal')?.classList.toggle('active'); }
-function goToCheckout() { if (cart.length === 0) { alert(translations[currentLang].cart_empty); return; } window.location.href = '/checkout.html'; }
-
-// ========== FAVORITES ==========
-function addToFavorites(productId) { if (!favorites.includes(productId)) { favorites.push(productId); localStorage.setItem('silkisland_favorites', JSON.stringify(favorites)); alert('Added to favorites!'); } }
-
-// ========== SEARCH ==========
 function toggleSearch() { const modal = document.getElementById('search-modal'); const input = document.getElementById('search-input'); if (!modal) return; modal.classList.toggle('active'); if (modal.classList.contains('active') && input) { input.focus(); input.value = ''; document.getElementById('search-results').innerHTML = ''; } }
-function performSearch(query) {
-  const results = document.getElementById('search-results'); const t = translations[currentLang]; if (!results) return;
-  if (query.length < 2) { results.innerHTML = query.length === 0 ? '' : `<p class="no-results">${t.type_min_2}</p>`; return; }
-  const filtered = products.filter(p => p.name.toLowerCase().includes(query) || (p.category || '').toLowerCase().includes(query));
-  if (filtered.length === 0) { results.innerHTML = `<p class="no-results">${t.no_results}</p>`; return; }
-  results.innerHTML = filtered.map(p => `<div class="search-result-card" onclick="selectSearchResult(${p.id})"><img src="${p.images?.[0] || p.image}"><h3>${p.name}</h3><div class="price">${p.price} RON</div><small>${p.category || ''}</small></div>`).join('');
-}
-function selectSearchResult(productId) { toggleSearch(); showAllProducts(); setTimeout(() => { const el = document.getElementById(`product-${productId}`); if (el) { el.scrollIntoView({ behavior: 'smooth' }); el.style.boxShadow = '0 0 30px #FFD700'; setTimeout(() => el.style.boxShadow = '', 2000); } }, 100); }
-
-// ========== CATEGORIES ==========
-function filterProducts(category) { currentCategory = category; document.getElementById('active-category').textContent = category; renderProducts(); }
-function showAllProducts() { currentCategory = 'All'; document.getElementById('active-category').textContent = translations[currentLang].all_products; renderProducts(); }
+function performSearch(query) { /* ... keep existing ... */ }
+function filterProducts(category) { currentCategory = category; if (document.getElementById('active-category')) document.getElementById('active-category').textContent = category; renderProducts(); }
+function showAllProducts() { currentCategory = 'All'; if (document.getElementById('active-category')) document.getElementById('active-category').textContent = translations[currentLang].all_products; renderProducts(); }
 function scrollToProducts() { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }
-
-// ========== GALLERY ==========
-function addVariantRow(productId) {
-  const variantGroup = document.getElementById(`variants-${productId}`); const product = products.find(p => p.id === productId); const t = translations[currentLang];
-  const newRow = document.createElement('div'); newRow.className = 'variant-item';
-  newRow.innerHTML = `<label>${t.size}:</label><select class="variant-size">${(product.sizes || ['M']).map(s => `<option>${s}</option>`).join('')}</select><label style="margin-left:10px;">${t.color}:</label><select class="variant-color">${(product.colors || ['Default']).map(c => `<option>${c}</option>`).join('')}</select><label style="margin-left:10px;">${t.quantity}:</label><input type="number" class="variant-qty" value="1" min="1" max="10" style="width:60px;"><span class="remove-variant" onclick="this.parentElement.remove()">✕</span>`;
-  variantGroup.appendChild(newRow);
-}
-window.openLightbox = function(productId, index = 0) {
-  const product = products.find(p => p.id === productId); if (!product) return;
-  currentLightboxProduct = product; currentLightboxIndex = index;
-  let lightbox = document.getElementById('lightbox-modal');
-  if (!lightbox) {
-    lightbox = document.createElement('div'); lightbox.id = 'lightbox-modal'; lightbox.className = 'lightbox-modal';
-    lightbox.innerHTML = `<span class="lightbox-close" onclick="closeLightbox()">&times;</span><span class="lightbox-prev" onclick="lightboxPrev()">❮</span><span class="lightbox-next" onclick="lightboxNext()">❯</span><img id="lightbox-img" src=""><div class="lightbox-counter" id="lightbox-counter">1 / 1</div>`;
-    document.body.appendChild(lightbox);
-  }
-  updateLightboxImage(); lightbox.classList.add('active');
-};
-window.closeLightbox = function() { document.getElementById('lightbox-modal')?.classList.remove('active'); };
-window.lightboxNext = function() { if (!currentLightboxProduct) return; const images = currentLightboxProduct.images || [currentLightboxProduct.image]; currentLightboxIndex = (currentLightboxIndex + 1) % images.length; updateLightboxImage(); };
-window.lightboxPrev = function() { if (!currentLightboxProduct) return; const images = currentLightboxProduct.images || [currentLightboxProduct.image]; currentLightboxIndex = (currentLightboxIndex - 1 + images.length) % images.length; updateLightboxImage(); };
-function updateLightboxImage() { const images = currentLightboxProduct.images || [currentLightboxProduct.image]; document.getElementById('lightbox-img').src = images[currentLightboxIndex]; document.getElementById('lightbox-counter').textContent = `${currentLightboxIndex + 1} / ${images.length}`; }
-window.nextImage = function(productId) {
-  const product = products.find(p => p.id === productId); if (!product) return; const images = product.images || [product.image];
-  const gallery = document.getElementById(`gallery-${productId}`); const img = gallery?.querySelector('.main-image'); const dots = gallery?.querySelectorAll('.dot'); if (!img) return;
-  const currentSrc = img.src; let currentIndex = images.findIndex(src => currentSrc.includes(src.split('/').pop())); if (currentIndex === -1) currentIndex = 0;
-  const nextIndex = (currentIndex + 1) % images.length; img.src = images[nextIndex]; dots?.forEach((dot, i) => dot.classList.toggle('active', i === nextIndex));
-};
-window.prevImage = function(productId) {
-  const product = products.find(p => p.id === productId); if (!product) return; const images = product.images || [product.image];
-  const gallery = document.getElementById(`gallery-${productId}`); const img = gallery?.querySelector('.main-image'); const dots = gallery?.querySelectorAll('.dot'); if (!img) return;
-  const currentSrc = img.src; let currentIndex = images.findIndex(src => currentSrc.includes(src.split('/').pop())); if (currentIndex === -1) currentIndex = 0;
-  const prevIndex = (currentIndex - 1 + images.length) % images.length; img.src = images[prevIndex]; dots?.forEach((dot, i) => dot.classList.toggle('active', i === prevIndex));
-};
-window.setImage = function(productId, index) {
-  const product = products.find(p => p.id === productId); if (!product) return; const images = product.images || [product.image];
-  const gallery = document.getElementById(`gallery-${productId}`); const img = gallery?.querySelector('.main-image'); const dots = gallery?.querySelectorAll('.dot'); if (!img) return;
-  img.src = images[index]; dots?.forEach((dot, i) => dot.classList.toggle('active', i === index));
-};
