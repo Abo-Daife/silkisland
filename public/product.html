@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/style.css">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary-fixed":"#ffe16d","tertiary-fixed":"#ffd9e1","primary-fixed-dim":"#e9c400","surface":"#131313","primary-container":"#FFD700","on-surface":"#e5e2e1","on-surface-variant":"#d0c6ab","surface-container-low":"#1c1b1b","surface-container-highest":"#353534","outline-variant":"#4d4732","tertiary-fixed-dim":"#fbb3c5","background":"#131313","on-primary-container":"#705e00"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},fontFamily:{headline:["Noto Serif","serif"],body:["Manrope","sans-serif"],label:["Manrope","sans-serif"]}}}}</script>
-  <style>.material-symbols-outlined{font-variation-settings:'FILL'0,'wght'300,'GRAD'0,'opsz'24}.hide-scrollbar::-webkit-scrollbar{display:none}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}.glass-panel{background:rgba(19,19,19,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,215,0,0.1)}body{min-height:max(884px,100dvh);background-color:#131313}</style>
+  <style>.material-symbols-outlined{font-variation-settings:'FILL'0,'wght'300,'GRAD'0,'opsz'24}.hide-scrollbar::-webkit-scrollbar{display:none}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}body{min-height:max(884px,100dvh);background-color:#131313}#review-modal{display:none}.glass-panel{background:rgba(19,19,19,0.85);backdrop-filter:blur(20px);border:1px solid rgba(255,215,0,0.15)}</style>
 </head>
 <body class="bg-surface text-on-surface font-body">
 
@@ -25,10 +25,45 @@
 
 <main class="pt-20 pb-32">
   <div id="product-container" class="max-w-7xl mx-auto px-6">
-    <!-- Product will be dynamically loaded here -->
     <div class="text-center py-20"><p class="text-tertiary-fixed-dim">Loading...</p></div>
   </div>
 </main>
+
+<!-- Review Modal -->
+<div id="review-modal" class="fixed inset-0 z-[2000] bg-black/80 backdrop-blur-md flex items-center justify-center" onclick="closeReviewModal(event)">
+  <div class="glass-panel p-8 rounded-lg max-w-lg w-full mx-4" onclick="event.stopPropagation()">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="font-headline text-2xl text-primary-container">Write a Review</h3>
+      <button onclick="closeReviewModal()" class="text-on-surface-variant hover:text-primary-container">
+        <span class="material-symbols-outlined text-2xl">close</span>
+      </button>
+    </div>
+    <form onsubmit="submitReview(event)">
+      <div class="mb-6">
+        <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Your Rating</label>
+        <div class="flex gap-2" id="star-rating">
+          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(1)">star</span>
+          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(2)">star</span>
+          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(3)">star</span>
+          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(4)">star</span>
+          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(5)">star</span>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Your Name</label>
+        <input type="text" id="review-name" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-3 text-on-surface" placeholder="Enter your name" required>
+      </div>
+      <div class="mb-6">
+        <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Your Review</label>
+        <textarea id="review-text" rows="4" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-3 text-on-surface resize-none" placeholder="Share your thoughts..." required></textarea>
+      </div>
+      <div class="flex gap-3">
+        <button type="submit" class="flex-1 bg-primary-container text-on-primary-container py-3 rounded-lg font-bold uppercase tracking-widest text-xs">Submit Review</button>
+        <button type="button" onclick="closeReviewModal()" class="flex-1 border border-outline-variant text-on-surface-variant py-3 rounded-lg font-bold uppercase tracking-widest text-xs">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
   <div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><div class="flex justify-between items-center mb-6"><span class="font-label text-lg uppercase tracking-wider">Total</span><span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span></div><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm">Proceed to Checkout</button></div></div>
@@ -40,6 +75,9 @@ const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('id');
 
 let product = null;
+let selectedColor = null;
+let selectedSize = null;
+let productQuantity = 1;
 let currentRating = 5;
 
 async function loadProduct() {
@@ -57,96 +95,50 @@ function renderProduct() {
   
   container.innerHTML = `
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <!-- Gallery -->
       <div class="space-y-4">
         <div class="aspect-[3/4] overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm">
           <img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-full object-cover">
         </div>
-        ${images.length > 1 ? `
-          <div class="flex gap-2 overflow-x-auto hide-scrollbar">
-            ${images.map((img, i) => `<img src="${img}" onclick="document.getElementById('main-image').src='${img}'" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i === 0 ? 'border-primary-container' : 'border-white/10'} hover:border-primary-container/50 transition-all">`).join('')}
-          </div>
-        ` : ''}
+        ${images.length > 1 ? `<div class="flex gap-2 overflow-x-auto hide-scrollbar">${images.map((img, i) => `<img src="${img}" onclick="document.getElementById('main-image').src='${img}'" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i === 0 ? 'border-primary-container' : 'border-white/10'} hover:border-primary-container/50 transition-all">`).join('')}</div>` : ''}
       </div>
-      
-      <!-- Details -->
       <div class="space-y-6">
-        <div>
-          <p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category || 'Limited Edition'}</p>
-          <h1 class="font-headline text-4xl md:text-5xl text-primary-container tracking-wide">${product.name}</p>
-          <p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p>
-        </div>
-        
+        <div><p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category || 'Limited Edition'}</p><h1 class="font-headline text-4xl md:text-5xl text-primary-container tracking-wide">${product.name}</h1><p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p></div>
         <p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic">${product.description || 'A timeless piece from the Private Collection.'}</p>
-        
-        <!-- Color Selector -->
         <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Color</label><div class="flex gap-3" id="color-selector"></div></div>
-        
-        <!-- Size Selector -->
         <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Size</label><div class="flex flex-wrap gap-3" id="size-selector"></div></div>
-        
-        <!-- Quantity & Add to Cart -->
         <div class="flex items-center gap-4 pt-4">
-          <div class="flex items-center border border-outline-variant rounded-lg">
-            <button onclick="decrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">−</button>
-            <span class="w-12 text-center font-bold" id="quantity-display">1</span>
-            <button onclick="incrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">+</button>
-          </div>
+          <div class="flex items-center border border-outline-variant rounded-lg"><button onclick="decrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">−</button><span class="w-12 text-center font-bold" id="quantity-display">1</span><button onclick="incrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">+</button></div>
           <button onclick="addToCartFromProduct()" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all">Add to Cart</button>
           <button onclick="addToFavorites(${product.id})" class="p-4 border border-outline-variant rounded-lg text-primary-container hover:bg-primary-container hover:text-on-primary-container transition-all"><span class="material-symbols-outlined">favorite</span></button>
         </div>
-        
-        <!-- Details Accordion -->
         <div class="border-t border-white/10 pt-6 mt-6 space-y-3">
           <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Material & Care</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">100% Mulberry Silk. Hand wash cold, lay flat to dry.</p></details>
           <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Shipping</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">Free shipping on orders over 300 RON. Delivery within 2-5 business days.</p></details>
-          <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Returns</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">14-day returns. Items must be unworn with tags attached.</p></details>
+          <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Returns</span><span class="material-symbols-outlined text26 text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">14-day returns. Items must be unworn with tags attached.</p></details>
         </div>
       </div>
     </div>
-    
-    <!-- Reviews Section -->
     <div class="border-t border-white/10 pt-8 mt-8">
-      <div class="flex items-center justify-between mb-6">
-        <h3 class="font-headline text-2xl text-primary-container">Sanctuary Whispers</h3>
-        <button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-primary-fixed-dim transition-all">
-          <span class="material-symbols-outlined text-lg">add</span>
-          Write a Review
-        </button>
-      </div>
+      <div class="flex items-center justify-between mb-6"><h3 class="font-headline text-2xl text-primary-container">Sanctuary Whispers</h3><button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-primary-fixed-dim transition-all"><span class="material-symbols-outlined text-lg">add</span>Write a Review</button></div>
       <div id="reviews-list" class="space-y-6"><p class="text-tertiary-fixed-dim italic">Loading reviews...</p></div>
     </div>
   `;
-  
-  // Setup selectors
   setupSelectors();
   setTimeout(() => loadReviews(), 100);
 }
 
-// These variables are local to product page
-let selectedColor = null;
-let selectedSize = null;
-let productQuantity = 1;
-
 function setupSelectors() {
   const colorContainer = document.getElementById('color-selector');
   const sizeContainer = document.getElementById('size-selector');
-  
   if (!product.colors) product.colors = ['Default'];
   if (!product.sizes) product.sizes = ['M'];
-  
   selectedColor = product.colors[0];
   selectedSize = product.sizes[0];
-  
   colorContainer.innerHTML = product.colors.map(c => `<button onclick="selectColor('${c}')" class="w-10 h-10 rounded-full border-2 ${selectedColor === c ? 'border-primary-container' : 'border-white/20'}" style="background-color: ${getColorHex(c)};"></button>`).join('');
   sizeContainer.innerHTML = product.sizes.map(s => `<button onclick="selectSize('${s}')" class="px-6 py-2 rounded-full border ${selectedSize === s ? 'border-primary-container bg-primary-container text-on-primary-container' : 'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('');
 }
 
-function getColorHex(color) { 
-  const map = {'Black':'#1a1a1a','Gold':'#FFD700','Midnight Blue':'#3D3F93','Rose':'#E8A2B4','Red':'#7f1d1d','Green':'#064e3b','White':'#ffffff','Default':'#888888'}; 
-  return map[color] || '#888888'; 
-}
-
+function getColorHex(color) { const map = {'Black':'#1a1a1a','Gold':'#FFD700','Midnight Blue':'#3D3F93','Rose':'#E8A2B4','Red':'#7f1d1d','Green':'#064e3b','White':'#ffffff','Default':'#888888'}; return map[color] || '#888888'; }
 function selectColor(c) { selectedColor = c; setupSelectors(); }
 function selectSize(s) { selectedSize = s; setupSelectors(); }
 function incrementQuantity() { productQuantity = Math.min(10, productQuantity + 1); document.getElementById('quantity-display').textContent = productQuantity; }
@@ -162,12 +154,30 @@ function addToCartFromProduct() {
   alert(`${product.name} added to cart!`);
 }
 
-// Reviews
-function openReviewModal() { /* ... keep existing ... */ }
-function closeReviewModal(event) { /* ... keep existing ... */ }
-function setRating(rating) { /* ... keep existing ... */ }
-function submitReview(event) { /* ... keep existing ... */ }
-function loadReviews() { /* ... keep existing ... */ }
+function openReviewModal() { document.getElementById('review-modal').style.display = 'flex'; setRating(5); }
+function closeReviewModal(event) { if (!event || event.target === document.getElementById('review-modal')) { document.getElementById('review-modal').style.display = 'none'; } }
+function setRating(rating) { currentRating = rating; const stars = document.querySelectorAll('#star-rating span'); stars.forEach((star, i) => { if (i < rating) { star.style.fontVariationSettings = "'FILL' 1"; star.style.color = '#FFD700'; } else { star.style.fontVariationSettings = "'FILL' 0"; star.style.color = ''; } }); }
+function submitReview(event) {
+  event.preventDefault();
+  const review = { productId: productId, name: document.getElementById('review-name').value, rating: currentRating, text: document.getElementById('review-text').value, date: new Date().toISOString() };
+  let reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]');
+  reviews.push(review);
+  localStorage.setItem('silkisland_reviews', JSON.stringify(reviews));
+  closeReviewModal();
+  loadReviews();
+  alert('Thank you for your review!');
+  document.getElementById('review-name').value = '';
+  document.getElementById('review-text').value = '';
+  setRating(5);
+}
+function loadReviews() {
+  const container = document.getElementById('reviews-list');
+  if (!container) return;
+  const reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]');
+  const productReviews = reviews.filter(r => r.productId === productId);
+  if (productReviews.length === 0) { container.innerHTML = '<p class="text-tertiary-fixed-dim italic text-center py-8">No reviews yet. Be the first to whisper.</p>'; return; }
+  container.innerHTML = productReviews.reverse().map(r => `<div class="border-b border-white/5 pb-6"><div class="flex items-center gap-2 mb-2"><div class="flex text-primary-container">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div><span class="text-xs text-on-surface-variant">${new Date(r.date).toLocaleDateString()}</span></div><p class="text-tertiary-fixed-dim italic mb-2">"${r.text}"</p><p class="text-xs text-on-surface-variant uppercase tracking-widest">— ${r.name}</p></div>`).join('');
+}
 
 loadProduct();
 </script>
