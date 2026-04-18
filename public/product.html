@@ -42,7 +42,6 @@ let product = null;
 let selectedColor = null;
 let selectedSize = null;
 let productQuantity = 1;
-let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
 
 async function loadProduct() {
   if (!productId) { window.location.href = '/'; return; }
