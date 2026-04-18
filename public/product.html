@@ -135,8 +135,7 @@ function attachEventListeners() {
   });
   
   // Add to Cart
-  document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-  // Use the global cart from script.js
+    document.getElementById('add-to-cart-btn').addEventListener('click', () => {
   let globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
   
   const existing = globalCart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
@@ -156,10 +155,19 @@ function attachEventListeners() {
   
   localStorage.setItem('silkisland_cart', JSON.stringify(globalCart));
   
-  // Update the cart display
-  const count = globalCart.reduce((sum, item) => sum + item.quantity, 0);
-  document.getElementById('cart-count').textContent = count;
-  function updateCartCount() {
+  // Update cart count display
+  updateCartCount();
+  
+  // Refresh the cart modal (calls the global function from script.js)
+  if (typeof window.updateCartDisplay === 'function') {
+    window.updateCartDisplay();
+  }
+  
+  alert(`${product.name} added to cart!`);
+});
+
+// Separate function to update cart count (place OUTSIDE the event listener)
+function updateCartCount() {
   const globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
   const count = globalCart.reduce((sum, item) => sum + item.quantity, 0);
   document.getElementById('cart-count').textContent = count;
@@ -169,7 +177,7 @@ function attachEventListeners() {
 updateCartCount();
   
   alert(`${product.name} added to cart!`);
-});
+
   
   // Favorite
   document.getElementById('favorite-btn').addEventListener('click', () => {
