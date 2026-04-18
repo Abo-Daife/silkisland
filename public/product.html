@@ -34,33 +34,13 @@
   <div class="glass-panel p-8 rounded-lg max-w-lg w-full mx-4" onclick="event.stopPropagation()">
     <div class="flex items-center justify-between mb-6">
       <h3 class="font-headline text-2xl text-primary-container">Write a Review</h3>
-      <button onclick="closeReviewModal()" class="text-on-surface-variant hover:text-primary-container">
-        <span class="material-symbols-outlined text-2xl">close</span>
-      </button>
+      <button onclick="closeReviewModal()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-2xl">close</span></button>
     </div>
     <form onsubmit="submitReview(event)">
-      <div class="mb-6">
-        <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Your Rating</label>
-        <div class="flex gap-2" id="star-rating">
-          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(1)">star</span>
-          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(2)">star</span>
-          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(3)">star</span>
-          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(4)">star</span>
-          <span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(5)">star</span>
-        </div>
-      </div>
-      <div class="mb-4">
-        <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Your Name</label>
-        <input type="text" id="review-name" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-3 text-on-surface" placeholder="Enter your name" required>
-      </div>
-      <div class="mb-6">
-        <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Your Review</label>
-        <textarea id="review-text" rows="4" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-3 text-on-surface resize-none" placeholder="Share your thoughts..." required></textarea>
-      </div>
-      <div class="flex gap-3">
-        <button type="submit" class="flex-1 bg-primary-container text-on-primary-container py-3 rounded-lg font-bold uppercase tracking-widest text-xs">Submit Review</button>
-        <button type="button" onclick="closeReviewModal()" class="flex-1 border border-outline-variant text-on-surface-variant py-3 rounded-lg font-bold uppercase tracking-widest text-xs">Cancel</button>
-      </div>
+      <div class="mb-6"><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Your Rating</label><div class="flex gap-2" id="star-rating"><span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(1)">star</span><span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(2)">star</span><span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(3)">star</span><span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(4)">star</span><span class="material-symbols-outlined text-3xl cursor-pointer text-on-surface-variant/30" onclick="setRating(5)">star</span></div></div>
+      <div class="mb-4"><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Your Name</label><input type="text" id="review-name" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-3 text-on-surface" placeholder="Enter your name" required></div>
+      <div class="mb-6"><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Your Review</label><textarea id="review-text" rows="4" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-3 text-on-surface resize-none" placeholder="Share your thoughts..." required></textarea></div>
+      <div class="flex gap-3"><button type="submit" class="flex-1 bg-primary-container text-on-primary-container py-3 rounded-lg font-bold uppercase tracking-widest text-xs">Submit Review</button><button type="button" onclick="closeReviewModal()" class="flex-1 border border-outline-variant text-on-surface-variant py-3 rounded-lg font-bold uppercase tracking-widest text-xs">Cancel</button></div>
     </form>
   </div>
 </div>
@@ -107,8 +87,8 @@ function renderProduct() {
         <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Color</label><div class="flex gap-3" id="color-selector"></div></div>
         <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Size</label><div class="flex flex-wrap gap-3" id="size-selector"></div></div>
         <div class="flex items-center gap-4 pt-4">
-          <div class="flex items-center border border-outline-variant rounded-lg"><button onclick="decrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">−</button><span class="w-12 text-center font-bold" id="quantity-display">1</span><button onclick="incrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">+</button></div>
-          <button onclick="addToCartFromProduct()" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all">Add to Cart</button>
+          <div class="flex items-center border border-outline-variant rounded-lg"><button onclick="window.decrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">−</button><span class="w-12 text-center font-bold" id="quantity-display">1</span><button onclick="window.incrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">+</button></div>
+          <button onclick="window.addToCartFromProduct()" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all">Add to Cart</button>
           <button onclick="addToFavorites(${product.id})" class="p-4 border border-outline-variant rounded-lg text-primary-container hover:bg-primary-container hover:text-on-primary-container transition-all"><span class="material-symbols-outlined">favorite</span></button>
         </div>
         <div class="border-t border-white/10 pt-6 mt-6 space-y-3">
@@ -130,21 +110,23 @@ function renderProduct() {
 function setupSelectors() {
   const colorContainer = document.getElementById('color-selector');
   const sizeContainer = document.getElementById('size-selector');
-  if (!product.colors) product.colors = ['Default'];
-  if (!product.sizes) product.sizes = ['M'];
+  if (!colorContainer || !sizeContainer) return;
+  if (!product.colors || product.colors.length === 0) product.colors = ['Black', 'Gold', 'Rose'];
+  if (!product.sizes || product.sizes.length === 0) product.sizes = ['S', 'M', 'L', 'XL'];
   selectedColor = product.colors[0];
   selectedSize = product.sizes[0];
-  colorContainer.innerHTML = product.colors.map(c => `<button onclick="selectColor('${c}')" class="w-10 h-10 rounded-full border-2 ${selectedColor === c ? 'border-primary-container' : 'border-white/20'}" style="background-color: ${getColorHex(c)};"></button>`).join('');
-  sizeContainer.innerHTML = product.sizes.map(s => `<button onclick="selectSize('${s}')" class="px-6 py-2 rounded-full border ${selectedSize === s ? 'border-primary-container bg-primary-container text-on-primary-container' : 'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('');
+  colorContainer.innerHTML = product.colors.map(c => `<button onclick="window.selectColor('${c}')" class="w-10 h-10 rounded-full border-2 ${selectedColor === c ? 'border-primary-container' : 'border-white/20'}" style="background-color: ${getColorHex(c)};"></button>`).join('');
+  sizeContainer.innerHTML = product.sizes.map(s => `<button onclick="window.selectSize('${s}')" class="px-6 py-2 rounded-full border ${selectedSize === s ? 'border-primary-container bg-primary-container text-on-primary-container' : 'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('');
 }
 
 function getColorHex(color) { const map = {'Black':'#1a1a1a','Gold':'#FFD700','Midnight Blue':'#3D3F93','Rose':'#E8A2B4','Red':'#7f1d1d','Green':'#064e3b','White':'#ffffff','Default':'#888888'}; return map[color] || '#888888'; }
-function selectColor(c) { selectedColor = c; setupSelectors(); }
-function selectSize(s) { selectedSize = s; setupSelectors(); }
-function incrementQuantity() { productQuantity = Math.min(10, productQuantity + 1); document.getElementById('quantity-display').textContent = productQuantity; }
-function decrementQuantity() { productQuantity = Math.max(1, productQuantity - 1); document.getElementById('quantity-display').textContent = productQuantity; }
 
-function addToCartFromProduct() {
+window.selectColor = function(c) { selectedColor = c; setupSelectors(); };
+window.selectSize = function(s) { selectedSize = s; setupSelectors(); };
+window.incrementQuantity = function() { productQuantity = Math.min(10, productQuantity + 1); document.getElementById('quantity-display').textContent = productQuantity; };
+window.decrementQuantity = function() { productQuantity = Math.max(1, productQuantity - 1); document.getElementById('quantity-display').textContent = productQuantity; };
+
+window.addToCartFromProduct = function() {
   let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
   const existing = cart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
   if (existing) { existing.quantity += productQuantity; }
@@ -152,31 +134,27 @@ function addToCartFromProduct() {
   localStorage.setItem('silkisland_cart', JSON.stringify(cart));
   updateCartDisplay();
   alert(`${product.name} added to cart!`);
-}
+};
 
 function openReviewModal() { document.getElementById('review-modal').style.display = 'flex'; setRating(5); }
-function closeReviewModal(event) { if (!event || event.target === document.getElementById('review-modal')) { document.getElementById('review-modal').style.display = 'none'; } }
-function setRating(rating) { currentRating = rating; const stars = document.querySelectorAll('#star-rating span'); stars.forEach((star, i) => { if (i < rating) { star.style.fontVariationSettings = "'FILL' 1"; star.style.color = '#FFD700'; } else { star.style.fontVariationSettings = "'FILL' 0"; star.style.color = ''; } }); }
+function closeReviewModal(event) { if (!event || event.target === document.getElementById('review-modal')) document.getElementById('review-modal').style.display = 'none'; }
+function setRating(rating) { currentRating = rating; document.querySelectorAll('#star-rating span').forEach((star, i) => { star.style.fontVariationSettings = i < rating ? "'FILL' 1" : "'FILL' 0"; star.style.color = i < rating ? '#FFD700' : ''; }); }
 function submitReview(event) {
   event.preventDefault();
-  const review = { productId: productId, name: document.getElementById('review-name').value, rating: currentRating, text: document.getElementById('review-text').value, date: new Date().toISOString() };
+  const review = { productId, name: document.getElementById('review-name').value, rating: currentRating, text: document.getElementById('review-text').value, date: new Date().toISOString() };
   let reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]');
   reviews.push(review);
   localStorage.setItem('silkisland_reviews', JSON.stringify(reviews));
-  closeReviewModal();
-  loadReviews();
+  closeReviewModal(); loadReviews();
   alert('Thank you for your review!');
-  document.getElementById('review-name').value = '';
-  document.getElementById('review-text').value = '';
+  document.getElementById('review-name').value = document.getElementById('review-text').value = '';
   setRating(5);
 }
 function loadReviews() {
   const container = document.getElementById('reviews-list');
   if (!container) return;
-  const reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]');
-  const productReviews = reviews.filter(r => r.productId === productId);
-  if (productReviews.length === 0) { container.innerHTML = '<p class="text-tertiary-fixed-dim italic text-center py-8">No reviews yet. Be the first to whisper.</p>'; return; }
-  container.innerHTML = productReviews.reverse().map(r => `<div class="border-b border-white/5 pb-6"><div class="flex items-center gap-2 mb-2"><div class="flex text-primary-container">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div><span class="text-xs text-on-surface-variant">${new Date(r.date).toLocaleDateString()}</span></div><p class="text-tertiary-fixed-dim italic mb-2">"${r.text}"</p><p class="text-xs text-on-surface-variant uppercase tracking-widest">— ${r.name}</p></div>`).join('');
+  const reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]').filter(r => r.productId === productId);
+  container.innerHTML = reviews.length === 0 ? '<p class="text-tertiary-fixed-dim italic text-center py-8">No reviews yet. Be the first to whisper.</p>' : reviews.reverse().map(r => `<div class="border-b border-white/5 pb-6"><div class="flex items-center gap-2 mb-2"><div class="flex text-primary-container">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div><span class="text-xs text-on-surface-variant">${new Date(r.date).toLocaleDateString()}</span></div><p class="text-tertiary-fixed-dim italic mb-2">"${r.text}"</p><p class="text-xs text-on-surface-variant uppercase tracking-widest">— ${r.name}</p></div>`).join('');
 }
 
 loadProduct();
