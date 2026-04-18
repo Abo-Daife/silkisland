@@ -105,24 +105,35 @@ window.selectPayment = function(method) {
 };
 
 window.processCheckout = async function() {
-  if (cart.length === 0) { alert('Your selection is empty'); return; }
+  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  
+  if (cart.length === 0) { 
+    alert('Your selection is empty'); 
+    return; 
+  }
+  
   const customerInfo = {
     name: document.getElementById('first-name').value + ' ' + document.getElementById('last-name').value,
     email: document.getElementById('email').value, 
     phone: document.getElementById('phone').value,
     address: document.getElementById('address').value + ', ' + document.getElementById('city').value + ', ' + document.getElementById('postal').value
   };
+  
   if (!customerInfo.name.trim() || !customerInfo.email || !customerInfo.phone || !customerInfo.address.trim()) { 
     alert('Please fill in all shipping details'); 
     return; 
   }
+  
   const submitBtn = document.getElementById('submit-btn'); 
   submitBtn.disabled = true; 
   submitBtn.textContent = 'Processing...';
   
+  // Use the global API_URL from script.js
+  const apiUrl = window.API_URL || 'https://silkisland-api.amr-mokhtar301.workers.dev';
+  
   if (selectedPayment === 'card') {
     try {
-      const response = await fetch(API_URL + '/api/create-checkout-session', { 
+      const response = await fetch(apiUrl + '/api/create-checkout-session', { 
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' }, 
         body: JSON.stringify({ cart, customerInfo }) 
@@ -136,18 +147,19 @@ window.processCheckout = async function() {
         submitBtn.textContent = 'Complete Purchase'; 
       }
     } catch (err) { 
-      alert('Payment error'); 
+      alert('Payment error: ' + err.message); 
       submitBtn.disabled = false; 
       submitBtn.textContent = 'Complete Purchase'; 
     }
   } else {
     try {
-      const response = await fetch(API_URL + '/api/checkout', { 
+      const response = await fetch(apiUrl + '/api/checkout', { 
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' }, 
         body: JSON.stringify({ cart, customerInfo, paymentMethod: 'cash' }) 
       });
       const result = await response.json();
+      
       if (result.success) {
         localStorage.removeItem('silkisland_cart');
         document.getElementById('checkout-content').classList.add('hidden');
@@ -162,7 +174,7 @@ window.processCheckout = async function() {
         submitBtn.textContent = 'Complete Purchase'; 
       }
     } catch (err) { 
-      alert('Network error'); 
+      alert('Network error: ' + err.message); 
       submitBtn.disabled = false; 
       submitBtn.textContent = 'Complete Purchase'; 
     }

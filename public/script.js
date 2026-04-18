@@ -1,4 +1,4 @@
-const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+window.API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
 
 // ========== STATE ==========
 let products = [];
