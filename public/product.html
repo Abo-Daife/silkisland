@@ -131,9 +131,8 @@ function renderProduct() {
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <div class="space-y-4">
         <div class="aspect-[3/4] overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm">
-          <img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-full object-cover">
-        </div>
-        ${images.length > 1 ? `<div class="flex gap-2 overflow-x-auto hide-scrollbar">${images.map((img, i) => `<img src="${img}" onclick="document.getElementById('main-image').src='${img}'" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i === 0 ? 'border-primary-container' : 'border-white/10'}">`).join('')}</div>` : ''}
+        <img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(0)">        </div>
+        ${images.length > 1 ? `<div class="flex gap-2 overflow-x-auto hide-scrollbar">${images.map((img, i) => `<img src="${img}" onclick="openLightbox(${i})" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i === 0 ? 'border-primary-container' : 'border-white/10'} hover:border-primary-container/50 transition-all">`).join('')}</div>` : ''}
       </div>
       <div class="space-y-6">
         <div><p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category || 'Limited Edition'}</p><h1 class="font-headline text-4xl md:text-5xl text-primary-container">${product.name}</h1><p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p></div>
@@ -337,6 +336,65 @@ function attachEventListeners() {
     }
   });
 }
+
+// ========== LIGHTBOX FUNCTIONS ==========
+let currentLightboxImages = [];
+let currentLightboxIndex = 0;
+
+function openLightbox(index) {
+  const images = product.images || [product.image];
+  currentLightboxImages = images;
+  currentLightboxIndex = index;
+  
+  let lightbox = document.getElementById('lightbox-modal');
+  if (!lightbox) {
+    lightbox = document.createElement('div');
+    lightbox.id = 'lightbox-modal';
+    lightbox.className = 'lightbox-modal';
+    lightbox.innerHTML = `
+      <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+      <span class="lightbox-prev" onclick="lightboxPrev()">❮</span>
+      <span class="lightbox-next" onclick="lightboxNext()">❯</span>
+      <img id="lightbox-img" src="">
+      <div class="lightbox-counter" id="lightbox-counter">1 / 1</div>
+    `;
+    document.body.appendChild(lightbox);
+  }
+  
+  updateLightboxImage();
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox-modal')?.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function lightboxNext() {
+  currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxImages.length;
+  updateLightboxImage();
+}
+
+function lightboxPrev() {
+  currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
+  updateLightboxImage();
+}
+
+function updateLightboxImage() {
+  document.getElementById('lightbox-img').src = currentLightboxImages[currentLightboxIndex];
+  document.getElementById('lightbox-counter').textContent = `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  const lightbox = document.getElementById('lightbox-modal');
+  if (!lightbox || !lightbox.classList.contains('active')) return;
+  
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') lightboxPrev();
+  if (e.key === 'ArrowRight') lightboxNext();
+});
 
 loadProduct();
 </script>
