@@ -136,13 +136,40 @@ function attachEventListeners() {
   
   // Add to Cart
   document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-    const existing = cart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
-    if (existing) { existing.quantity += productQuantity; }
-    else { cart.push({ id: product.id, name: product.name, price: product.price, size: selectedSize, color: selectedColor, quantity: productQuantity, image: product.images?.[0] || product.image }); }
-    localStorage.setItem('silkisland_cart', JSON.stringify(cart));
-    updateCartDisplay();
-    alert(`${product.name} added to cart!`);
-  });
+  // Use the global cart from script.js
+  let globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  
+  const existing = globalCart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
+  if (existing) { 
+    existing.quantity += productQuantity; 
+  } else { 
+    globalCart.push({ 
+      id: product.id, 
+      name: product.name, 
+      price: product.price, 
+      size: selectedSize, 
+      color: selectedColor, 
+      quantity: productQuantity, 
+      image: product.images?.[0] || product.image 
+    }); 
+  }
+  
+  localStorage.setItem('silkisland_cart', JSON.stringify(globalCart));
+  
+  // Update the cart display
+  const count = globalCart.reduce((sum, item) => sum + item.quantity, 0);
+  document.getElementById('cart-count').textContent = count;
+  function updateCartCount() {
+  const globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  const count = globalCart.reduce((sum, item) => sum + item.quantity, 0);
+  document.getElementById('cart-count').textContent = count;
+}
+
+// Call it when page loads
+updateCartCount();
+  
+  alert(`${product.name} added to cart!`);
+});
   
   // Favorite
   document.getElementById('favorite-btn').addEventListener('click', () => {
