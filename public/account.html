@@ -96,9 +96,13 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   const password = document.getElementById('login-password').value;
   
   try {
-    const res = await fetch(window.API_URL + '/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
-    const data = await res.json();
-    if (data.success) {
+  const res = await fetch('https://silkisland-api.amr-mokhtar301.workers.dev/api/login', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+      });   
+     const data = await res.json();
+      if (data.success) {
       currentUser = data.user;
       localStorage.setItem('silkisland_user', JSON.stringify(data.user));
       document.getElementById('profile-name').textContent = currentUser.name || currentUser.email;
@@ -117,11 +121,15 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
   const phone = document.getElementById('reg-phone').value;
   
   try {
-    const res = await fetch(API_URL + '/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, password, phone, address: '' }) });
-    const data = await res.json();
-    if (data.success) { alert('Account created! Please sign in.'); showLogin(); }
-    else { alert(data.error || 'Registration failed'); }
-  } catch (err) { alert('Network error: ' + err.message); }
+      const res = await fetch('https://silkisland-api.amr-mokhtar301.workers.dev/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password, phone, address: '' })
+      });    const data = await res.json();
+      if (data.success) { alert('Account created! Please sign in.'); showLogin(); }
+      else { alert(data.error || 'Registration failed'); }
+    }   
+      catch (err) { alert('Network error: ' + err.message); }
 });
 
 function logout() { localStorage.removeItem('silkisland_user'); localStorage.removeItem('silkisland_cart'); currentUser = null; showLogin(); }
