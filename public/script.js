@@ -248,16 +248,24 @@ window.removeCartItem = function(index) {
   window.updateCartDisplay();
 };
 
-// ========== CART MODAL FUNCTIONS ==========
+// ========== CART & UI FUNCTIONS ==========
 window.toggleCart = function() {
   const modal = document.getElementById('cart-modal');
   if (modal) {
     modal.classList.toggle('active');
-    // Refresh cart display when opening
-    if (modal.classList.contains('active') && typeof window.updateCartDisplay === 'function') {
+    if (modal.classList.contains('active')) {
       window.updateCartDisplay();
     }
   }
+};
+
+window.toggleSearch = function() {
+  const modal = document.getElementById('search-modal');
+  if (modal) modal.classList.toggle('active');
+};
+
+window.scrollToProducts = function() {
+  document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
 };
 
 window.goToCheckout = function() {

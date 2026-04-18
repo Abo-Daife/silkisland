@@ -64,7 +64,7 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+// NO const API_URL here - it's already in script.js
 const stripe = Stripe('pk_live_51TKMgJEqFnDyg3gakXA9wC0rscEnXuuZYYv4BSEuTVb6u3HCRLVywIE2CFhOvd6deAKu6ZaX6TAIsLbQ5axW7Fao005nEa1Olj');
 
 let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
@@ -75,8 +75,16 @@ const FREE_SHIPPING_THRESHOLD = 300.00;
 function loadCart() {
   const container = document.getElementById('order-items');
   let subtotal = 0;
-  if (cart.length === 0) { container.innerHTML = '<p class="text-tertiary-fixed-dim text-center py-8">Your selection is empty</p>'; document.getElementById('submit-btn').disabled = true; return; }
-  container.innerHTML = cart.map(item => { const itemTotal = item.price * item.quantity; subtotal += itemTotal; return `<div class="flex gap-4 items-center border-b border-white/5 pb-4"><div class="w-16 h-20 bg-surface-container-high flex-shrink-0 overflow-hidden rounded"><img src="${item.image || '/images/placeholder.jpg'}" class="w-full h-full object-cover"></div><div class="flex-grow"><p class="text-xs font-bold uppercase">${item.name}</p><p class="text-[10px] text-tertiary-fixed-dim">${item.size} / ${item.color} x${item.quantity}</p><p class="text-primary-container font-headline mt-1 text-sm">${itemTotal.toFixed(2)} RON</p></div></div>`; }).join('');
+  if (cart.length === 0) { 
+    container.innerHTML = '<p class="text-tertiary-fixed-dim text-center py-8">Your selection is empty</p>'; 
+    document.getElementById('submit-btn').disabled = true; 
+    return; 
+  }
+  container.innerHTML = cart.map(item => { 
+    const itemTotal = item.price * item.quantity; 
+    subtotal += itemTotal; 
+    return `<div class="flex gap-4 items-center border-b border-white/5 pb-4"><div class="w-16 h-20 bg-surface-container-high flex-shrink-0 overflow-hidden rounded"><img src="${item.image || '/images/placeholder.jpg'}" class="w-full h-full object-cover"></div><div class="flex-grow"><p class="text-xs font-bold uppercase">${item.name}</p><p class="text-[10px] text-tertiary-fixed-dim">${item.size} / ${item.color} x${item.quantity}</p><p class="text-primary-container font-headline mt-1 text-sm">${itemTotal.toFixed(2)} RON</p></div></div>`; 
+  }).join('');
   const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
   document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} RON`;
   document.getElementById('shipping-fee').textContent = shipping === 0 ? 'FREE' : `${shipping.toFixed(2)} RON`;
@@ -100,36 +108,76 @@ window.processCheckout = async function() {
   if (cart.length === 0) { alert('Your selection is empty'); return; }
   const customerInfo = {
     name: document.getElementById('first-name').value + ' ' + document.getElementById('last-name').value,
-    email: document.getElementById('email').value, phone: document.getElementById('phone').value,
+    email: document.getElementById('email').value, 
+    phone: document.getElementById('phone').value,
     address: document.getElementById('address').value + ', ' + document.getElementById('city').value + ', ' + document.getElementById('postal').value
   };
-  if (!customerInfo.name.trim() || !customerInfo.email || !customerInfo.phone || !customerInfo.address.trim()) { alert('Please fill in all shipping details'); return; }
-  const submitBtn = document.getElementById('submit-btn'); submitBtn.disabled = true; submitBtn.textContent = 'Processing...';
+  if (!customerInfo.name.trim() || !customerInfo.email || !customerInfo.phone || !customerInfo.address.trim()) { 
+    alert('Please fill in all shipping details'); 
+    return; 
+  }
+  const submitBtn = document.getElementById('submit-btn'); 
+  submitBtn.disabled = true; 
+  submitBtn.textContent = 'Processing...';
   
   if (selectedPayment === 'card') {
     try {
-      const response = await fetch(API_URL + '/api/create-checkout-session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cart, customerInfo }) });
+      const response = await fetch(API_URL + '/api/create-checkout-session', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ cart, customerInfo }) 
+      });
       const session = await response.json();
-      if (session.url) { window.location.href = session.url; } else { alert('Payment session failed'); submitBtn.disabled = false; submitBtn.textContent = 'Complete Purchase'; }
-    } catch (err) { alert('Payment error'); submitBtn.disabled = false; submitBtn.textContent = 'Complete Purchase'; }
+      if (session.url) { 
+        window.location.href = session.url; 
+      } else { 
+        alert('Payment session failed'); 
+        submitBtn.disabled = false; 
+        submitBtn.textContent = 'Complete Purchase'; 
+      }
+    } catch (err) { 
+      alert('Payment error'); 
+      submitBtn.disabled = false; 
+      submitBtn.textContent = 'Complete Purchase'; 
+    }
   } else {
     try {
-      const response = await fetch(API_URL + '/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cart, customerInfo, paymentMethod: 'cash' }) });
+      const response = await fetch(API_URL + '/api/checkout', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ cart, customerInfo, paymentMethod: 'cash' }) 
+      });
       const result = await response.json();
       if (result.success) {
         localStorage.removeItem('silkisland_cart');
         document.getElementById('checkout-content').classList.add('hidden');
-        const statusDiv = document.getElementById('status-message'); statusDiv.classList.remove('hidden');
+        const statusDiv = document.getElementById('status-message'); 
+        statusDiv.classList.remove('hidden');
         statusDiv.className = 'block mb-8 p-8 rounded-lg text-center bg-green-900/30 border border-green-500/30';
         statusDiv.innerHTML = `<span class="material-symbols-outlined text-5xl text-primary-container mb-4">check_circle</span><h2 class="font-headline text-3xl text-primary-container mb-4">Purchase Complete</h2><p class="text-tertiary-fixed-dim mb-2">Order #${result.orderId}</p><p class="text-on-surface-variant mb-6">Total: ${document.getElementById('total').textContent}</p><p class="text-sm text-on-surface-variant/60 mb-8">You will pay cash upon delivery.</p><a href="/" class="inline-block bg-primary-container text-on-primary-container px-8 py-3 rounded-lg text-xs font-bold tracking-widest uppercase">Return to Atrium</a>`;
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else { alert('Order failed'); submitBtn.disabled = false; submitBtn.textContent = 'Complete Purchase'; }
-    } catch (err) { alert('Network error'); submitBtn.disabled = false; submitBtn.textContent = 'Complete Purchase'; }
+      } else { 
+        alert('Order failed: ' + (result.error || 'Unknown error')); 
+        submitBtn.disabled = false; 
+        submitBtn.textContent = 'Complete Purchase'; 
+      }
+    } catch (err) { 
+      alert('Network error'); 
+      submitBtn.disabled = false; 
+      submitBtn.textContent = 'Complete Purchase'; 
+    }
   }
 };
 
 loadCart();
 selectPayment('cash');
+
+// Update cart count on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  document.getElementById('cart-count').textContent = count;
+});
 </script>
 <script src="/script.js"></script>
 </body>
