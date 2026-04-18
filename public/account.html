@@ -27,18 +27,20 @@
 <main class="relative min-h-screen pt-16 pb-20 overflow-hidden flex items-center justify-center">
   <div class="absolute inset-0 z-0"><img alt="Dark atmospheric background" class="w-full h-full object-cover" src="/images/account-bg.jpg" onerror="this.src='https://images.pexels.com/photos/1723637/pexels-photo-1723637.jpeg'"><div class="absolute inset-0 bg-temple-overlay"></div></div>
   
+  <!-- LOGIN VIEW -->
   <div class="relative z-10 w-full max-w-md px-6 py-12" id="login-view">
     <div class="mb-12 text-center md:text-left"><p class="font-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-2" data-i18n="private_atrium">The Private Atrium</p><h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-4" data-i18n="welcome_back">Welcome Back</h1><div class="h-[1px] w-12 bg-primary-container/30 mx-auto md:mx-0"></div></div>
     <div class="glass-panel p-8 md:p-10 border border-white/5 rounded-lg shadow-2xl">
       <form id="login-form" class="space-y-8">
         <div class="relative group"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1" data-i18n="identity_email">Identity (Email)</label><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface placeholder:text-on-surface-variant/30 py-4 px-4 focus:ring-0 focus:border-primary-fixed transition-all duration-500 outline-none rounded-t-lg" placeholder="archetype@silkisland.com" type="email" id="login-email" required></div>
-        <div class="relative group"><div class="flex justify-between items-center mb-2 ml-1"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed" data-i18n="passage_code">Passage Code</label><a class="font-label text-[10px] uppercase tracking-tighter text-tertiary-fixed-dim hover:text-primary-container transition-colors" href="#" data-i18n="forgot">Forgot?</a></div><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface placeholder:text-on-surface-variant/30 py-4 px-4 focus:ring-0 focus:border-primary-fixed transition-all duration-500 outline-none rounded-t-lg" placeholder="••••••••" type="password" id="login-password" required></div>
-        <div class="pt-4"><button class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded shadow-[0_0_20px_rgba(255,215,0,0.2)]" type="submit" data-i18n="enter_atrium">Enter the Atrium</button></div>
+        <div class="relative group"><div class="flex justify-between items-center mb-2 ml-1"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed" data-i18n="passage_code">Passage Code</label></div><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface placeholder:text-on-surface-variant/30 py-4 px-4 focus:ring-0 focus:border-primary-fixed transition-all duration-500 outline-none rounded-t-lg" placeholder="••••••••" type="password" id="login-password" required></div>
+        <div class="pt-4"><button type="submit" class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded shadow-[0_0_20px_rgba(255,215,0,0.2)]" data-i18n="enter_atrium">Enter the Atrium</button></div>
       </form>
       <div class="mt-10 text-center"><p class="font-body text-xs text-on-surface-variant/60 mb-2" data-i18n="new_sanctuary">New to the sanctuary?</p><button onclick="showRegister()" class="font-label text-sm font-bold uppercase tracking-widest text-tertiary-fixed hover:text-primary-container transition-colors" data-i18n="create_account">Create an Account</button></div>
     </div>
   </div>
   
+  <!-- REGISTER VIEW -->
   <div class="relative z-10 w-full max-w-md px-6 py-12 hidden" id="register-view">
     <div class="mb-12 text-center md:text-left"><p class="font-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-2" data-i18n="join_sanctuary">Join the Sanctuary</p><h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-4" data-i18n="create_account_title">Create Account</h1><div class="h-[1px] w-12 bg-primary-container/30 mx-auto md:mx-0"></div></div>
     <div class="glass-panel p-8 md:p-10 border border-white/5 rounded-lg shadow-2xl">
@@ -47,12 +49,13 @@
         <div class="relative group"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1" data-i18n="identity_email">Identity (Email)</label><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="email" id="reg-email" required></div>
         <div class="relative group"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1" data-i18n="passage_code">Passage Code</label><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="password" id="reg-password" required></div>
         <div class="relative group"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1" data-i18n="phone_optional">Phone (Optional)</label><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="tel" id="reg-phone"></div>
-        <div class="pt-4"><button class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded" type="submit" data-i18n="join_atrium">Join the Atrium</button></div>
+        <div class="pt-4"><button type="submit" class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded" data-i18n="join_atrium">Join the Atrium</button></div>
       </form>
       <div class="mt-8 text-center"><p class="font-body text-xs text-on-surface-variant/60 mb-2" data-i18n="already_account">Already have an account?</p><button onclick="showLogin()" class="font-label text-sm font-bold uppercase tracking-widest text-tertiary-fixed hover:text-primary-container transition-colors" data-i18n="sign_in">Sign In</button></div>
     </div>
   </div>
   
+  <!-- PROFILE VIEW -->
   <div class="relative z-10 w-full max-w-2xl px-6 py-12 hidden" id="profile-view">
     <div class="glass-panel p-8 md:p-10 border border-white/5 rounded-lg shadow-2xl">
       <div class="flex items-center justify-between mb-8"><h2 class="font-headline text-3xl text-primary-container" data-i18n="my_atrium">My Atrium</h2><button onclick="logout()" class="text-tertiary-fixed-dim hover:text-primary-container text-sm uppercase tracking-widest" data-i18n="leave_sanctuary">Leave Sanctuary</button></div>
@@ -65,8 +68,66 @@
 </main>
 
 <div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal"><div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container" data-i18n="your_selection">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><div class="flex justify-between items-center mb-6"><span class="font-label text-lg uppercase tracking-wider" data-i18n="total">Total</span><span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span></div><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm" data-i18n="proceed_checkout">Proceed to Checkout</button></div></div></div>
-<div class="search-modal fixed inset-0 z-[1000] bg-surface/95 backdrop-blur-md hidden" id="search-modal"><div class="max-w-3xl mx-auto pt-24 px-6"><div class="flex items-center gap-4 mb-8"><input type="text" id="search-input" class="w-full bg-surface-container-highest border-b-2 border-outline-variant focus:border-primary-container px-4 py-3 text-on-surface text-lg outline-none"><button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div></div></div>
 
 <script src="/script.js"></script>
+<script>
+const API_URL = window.API_URL || 'https://silkisland-api.amr-mokhtar301.workers.dev';
+let currentUser = null;
+
+function showLogin() { document.getElementById('login-view').classList.remove('hidden'); document.getElementById('register-view').classList.add('hidden'); document.getElementById('profile-view').classList.add('hidden'); }
+function showRegister() { document.getElementById('login-view').classList.add('hidden'); document.getElementById('register-view').classList.remove('hidden'); document.getElementById('profile-view').classList.add('hidden'); }
+function showProfile() { document.getElementById('login-view').classList.add('hidden'); document.getElementById('register-view').classList.add('hidden'); document.getElementById('profile-view').classList.remove('hidden'); }
+
+async function checkAuth() {
+  const savedUser = localStorage.getItem('silkisland_user');
+  if (savedUser) {
+    currentUser = JSON.parse(savedUser);
+    document.getElementById('profile-name').textContent = currentUser.name || currentUser.email;
+    document.getElementById('profile-email-display').textContent = currentUser.email;
+    if (currentUser.is_admin) document.getElementById('admin-link').style.display = 'block';
+    showProfile();
+  } else {
+    showLogin();
+  }
+}
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  
+  try {
+    const res = await fetch(API_URL + '/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+    const data = await res.json();
+    if (data.success) {
+      currentUser = data.user;
+      localStorage.setItem('silkisland_user', JSON.stringify(data.user));
+      document.getElementById('profile-name').textContent = currentUser.name || currentUser.email;
+      document.getElementById('profile-email-display').textContent = currentUser.email;
+      if (currentUser.is_admin) document.getElementById('admin-link').style.display = 'block';
+      showProfile();
+    } else { alert(data.error || 'Login failed'); }
+  } catch (err) { alert('Network error: ' + err.message); }
+});
+
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('reg-name').value;
+  const email = document.getElementById('reg-email').value;
+  const password = document.getElementById('reg-password').value;
+  const phone = document.getElementById('reg-phone').value;
+  
+  try {
+    const res = await fetch(API_URL + '/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, password, phone, address: '' }) });
+    const data = await res.json();
+    if (data.success) { alert('Account created! Please sign in.'); showLogin(); }
+    else { alert(data.error || 'Registration failed'); }
+  } catch (err) { alert('Network error: ' + err.message); }
+});
+
+function logout() { localStorage.removeItem('silkisland_user'); localStorage.removeItem('silkisland_cart'); currentUser = null; showLogin(); }
+
+checkAuth();
+</script>
 </body>
 </html>
