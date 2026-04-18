@@ -43,6 +43,71 @@ let selectedColor = null;
 let selectedSize = null;
 let productQuantity = 1;
 
+// ========== PRODUCT TRANSLATIONS ==========
+const productTranslations = {
+  en: {
+    material: 'Material',
+    origin: 'Origin',
+    structure: 'Structure',
+    silhouette: 'Silhouette',
+    care: 'Care',
+    wireless: 'Wireless',
+    wide_straps: 'Wide comfort straps',
+    removable_padding: 'Removable padding',
+    push_up_vest: 'Push-up vest style',
+    hand_wash: 'Hand wash cold',
+    lay_flat: 'Lay flat to dry',
+    breathable_blend: 'Breathable performance blend',
+    modern_silhouette: 'Designed for the modern silhouette',
+    technical_architecture: 'Technical Architecture'
+  },
+  ro: {
+    material: 'Material',
+    origin: 'Origine',
+    structure: 'Structură',
+    silhouette: 'Siluetă',
+    care: 'Îngrijire',
+    wireless: 'Fără arcuri',
+    wide_straps: 'Bretele late confortabile',
+    removable_padding: 'Padding detașabil',
+    push_up_vest: 'Stil vestă tip push-up',
+    hand_wash: 'Spălare manuală la rece',
+    lay_flat: 'Uscare pe suprafață plană',
+    breathable_blend: 'Amestec respirabil performant',
+    modern_silhouette: 'Creat pentru silueta modernă',
+    technical_architecture: 'Arhitectură Tehnică'
+  },
+  tr: {
+    material: 'Materyal',
+    origin: 'Menşei',
+    structure: 'Yapı',
+    silhouette: 'Silüet',
+    care: 'Bakım',
+    wireless: 'Balensiz',
+    wide_straps: 'Geniş konforlu askılar',
+    removable_padding: 'Çıkarılabilir ped',
+    push_up_vest: 'Push-up yelek stili',
+    hand_wash: 'Soğuk suda elde yıkayın',
+    lay_flat: 'Düz sererek kurutun',
+    breathable_blend: 'Nefes alabilen performans karışımı',
+    modern_silhouette: 'Modern silüet için tasarlandı',
+    technical_architecture: 'Teknik Mimari'
+  }
+};
+
+function getProductSpecs() {
+  const lang = localStorage.getItem('language') || 'en';
+  const t = productTranslations[lang] || productTranslations.en;
+  
+  return {
+    material: t.breathable_blend,
+    origin: t.modern_silhouette,
+    structure: `${t.wireless} · ${t.wide_straps} · ${t.removable_padding}`,
+    silhouette: t.push_up_vest,
+    care: `${t.hand_wash} · ${t.lay_flat}`
+  };
+}
+
 async function loadProduct() {
   if (!productId) { window.location.href = '/'; return; }
   try {
@@ -57,6 +122,9 @@ async function loadProduct() {
 function renderProduct() {
   const container = document.getElementById('product-container');
   const images = product.images || [product.image];
+  const lang = localStorage.getItem('language') || 'en';
+  const t = productTranslations[lang] || productTranslations.en;
+  const specs = getProductSpecs();
   
   container.innerHTML = `
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -87,6 +155,18 @@ function renderProduct() {
           <button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm">Add to Cart</button>
           <button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container"><span class="material-symbols-outlined">favorite</span></button>
         </div>
+        
+        <!-- Technical Architecture Section -->
+        <div class="mt-6 p-5 bg-surface-container-low/40 backdrop-blur-sm rounded-lg border border-white/5">
+          <h4 class="font-headline text-lg text-primary-container mb-4">${t.technical_architecture}</h4>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.material}</p><p class="font-medium">${specs.material}</p></div>
+            <div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.origin}</p><p class="font-medium">${specs.origin}</p></div>
+            <div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.structure}</p><p class="font-medium">${specs.structure}</p></div>
+            <div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.silhouette}</p><p class="font-medium">${specs.silhouette}</p></div>
+            <div class="col-span-2"><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.care}</p><p class="font-medium">${specs.care}</p></div>
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -108,7 +188,6 @@ function updateCartCount() {
 }
 
 function attachEventListeners() {
-  // Color buttons
   document.querySelectorAll('.color-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       selectedColor = this.dataset.color;
@@ -118,7 +197,6 @@ function attachEventListeners() {
     });
   });
   
-  // Size buttons
   document.querySelectorAll('.size-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       selectedSize = this.dataset.size;
@@ -132,7 +210,6 @@ function attachEventListeners() {
     });
   });
   
-  // Quantity
   document.getElementById('decrement-btn').addEventListener('click', () => {
     productQuantity = Math.max(1, productQuantity - 1);
     document.getElementById('quantity-display').textContent = productQuantity;
@@ -142,36 +219,23 @@ function attachEventListeners() {
     document.getElementById('quantity-display').textContent = productQuantity;
   });
   
-  // Add to Cart
   document.getElementById('add-to-cart-btn').addEventListener('click', () => {
     let globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-    
     const existing = globalCart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
-    if (existing) { 
-      existing.quantity += productQuantity; 
-    } else { 
+    if (existing) { existing.quantity += productQuantity; }
+    else { 
       globalCart.push({ 
-        id: product.id, 
-        name: product.name, 
-        price: product.price, 
-        size: selectedSize, 
-        color: selectedColor, 
-        quantity: productQuantity, 
+        id: product.id, name: product.name, price: product.price, 
+        size: selectedSize, color: selectedColor, quantity: productQuantity, 
         image: product.images?.[0] || product.image 
       }); 
     }
-    
     localStorage.setItem('silkisland_cart', JSON.stringify(globalCart));
     updateCartCount();
-    
-    if (typeof window.updateCartDisplay === 'function') {
-      window.updateCartDisplay();
-    }
-    
+    if (typeof window.updateCartDisplay === 'function') window.updateCartDisplay();
     alert(`${product.name} added to cart!`);
   });
   
-  // Favorite
   document.getElementById('favorite-btn').addEventListener('click', () => {
     let favorites = JSON.parse(localStorage.getItem('silkisland_favorites') || '[]');
     if (!favorites.includes(product.id)) { 
