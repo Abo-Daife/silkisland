@@ -66,6 +66,7 @@ async function loadProduct() {
     const res = await fetch(API_URL + '/api/products/' + productId);
     product = await res.json();
     renderProduct();
+    attachEventListeners();
   } catch (e) { console.error('Failed to load product:', e); }
 }
 
@@ -87,9 +88,13 @@ function renderProduct() {
         <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Color</label><div class="flex gap-3" id="color-selector"></div></div>
         <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Size</label><div class="flex flex-wrap gap-3" id="size-selector"></div></div>
         <div class="flex items-center gap-4 pt-4">
-          <div class="flex items-center border border-outline-variant rounded-lg"><button onclick="window.decrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">−</button><span class="w-12 text-center font-bold" id="quantity-display">1</span><button onclick="window.incrementQuantity()" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">+</button></div>
-          <button onclick="window.addToCartFromProduct()" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all">Add to Cart</button>
-          <button onclick="addToFavorites(${product.id})" class="p-4 border border-outline-variant rounded-lg text-primary-container hover:bg-primary-container hover:text-on-primary-container transition-all"><span class="material-symbols-outlined">favorite</span></button>
+          <div class="flex items-center border border-outline-variant rounded-lg">
+            <button id="decrement-btn" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">−</button>
+            <span class="w-12 text-center font-bold" id="quantity-display">1</span>
+            <button id="increment-btn" class="px-4 py-3 text-on-surface-variant hover:text-primary-container">+</button>
+          </div>
+          <button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all">Add to Cart</button>
+          <button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container hover:bg-primary-container hover:text-on-primary-container transition-all"><span class="material-symbols-outlined">favorite</span></button>
         </div>
         <div class="border-t border-white/10 pt-6 mt-6 space-y-3">
           <details class="group"><summary class="flex justify-between items-center cursor-pointer py-2"><span class="text-xs uppercase tracking-widest">Material & Care</span><span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-sm text-on-surface-variant py-3">100% Mulberry Silk. Hand wash cold, lay flat to dry.</p></details>
@@ -99,62 +104,115 @@ function renderProduct() {
       </div>
     </div>
     <div class="border-t border-white/10 pt-8 mt-8">
-      <div class="flex items-center justify-between mb-6"><h3 class="font-headline text-2xl text-primary-container">Sanctuary Whispers</h3><button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-primary-fixed-dim transition-all"><span class="material-symbols-outlined text-lg">add</span>Write a Review</button></div>
+      <div class="flex items-center justify-between mb-6"><h3 class="font-headline text-2xl text-primary-container">Sanctuary Whispers</h3><button id="write-review-btn" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-primary-fixed-dim transition-all"><span class="material-symbols-outlined text-lg">add</span>Write a Review</button></div>
       <div id="reviews-list" class="space-y-6"><p class="text-tertiary-fixed-dim italic">Loading reviews...</p></div>
     </div>
   `;
-  setupSelectors();
-  setTimeout(() => loadReviews(), 100);
+  
+  buildSelectors();
+  loadReviews();
 }
 
-function setupSelectors() {
+function buildSelectors() {
   const colorContainer = document.getElementById('color-selector');
   const sizeContainer = document.getElementById('size-selector');
   if (!colorContainer || !sizeContainer) return;
+  
   if (!product.colors || product.colors.length === 0) product.colors = ['Black', 'Gold', 'Rose'];
   if (!product.sizes || product.sizes.length === 0) product.sizes = ['S', 'M', 'L', 'XL'];
+  
   selectedColor = product.colors[0];
   selectedSize = product.sizes[0];
-  colorContainer.innerHTML = product.colors.map(c => `<button onclick="window.selectColor('${c}')" class="w-10 h-10 rounded-full border-2 ${selectedColor === c ? 'border-primary-container' : 'border-white/20'}" style="background-color: ${getColorHex(c)};"></button>`).join('');
-  sizeContainer.innerHTML = product.sizes.map(s => `<button onclick="window.selectSize('${s}')" class="px-6 py-2 rounded-full border ${selectedSize === s ? 'border-primary-container bg-primary-container text-on-primary-container' : 'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('');
+  
+  colorContainer.innerHTML = product.colors.map(c => `<button data-color="${c}" class="color-btn w-10 h-10 rounded-full border-2 ${selectedColor === c ? 'border-primary-container' : 'border-white/20'}" style="background-color: ${getColorHex(c)};"></button>`).join('');
+  sizeContainer.innerHTML = product.sizes.map(s => `<button data-size="${s}" class="size-btn px-6 py-2 rounded-full border ${selectedSize === s ? 'border-primary-container bg-primary-container text-on-primary-container' : 'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('');
 }
 
-function getColorHex(color) { const map = {'Black':'#1a1a1a','Gold':'#FFD700','Midnight Blue':'#3D3F93','Rose':'#E8A2B4','Red':'#7f1d1d','Green':'#064e3b','White':'#ffffff','Default':'#888888'}; return map[color] || '#888888'; }
+function getColorHex(color) { 
+  const map = {'Black':'#1a1a1a','Gold':'#FFD700','Midnight Blue':'#3D3F93','Rose':'#E8A2B4','Red':'#7f1d1d','Green':'#064e3b','White':'#ffffff','Default':'#888888'}; 
+  return map[color] || '#888888'; 
+}
 
-window.selectColor = function(c) { selectedColor = c; setupSelectors(); };
-window.selectSize = function(s) { selectedSize = s; setupSelectors(); };
-window.incrementQuantity = function() { productQuantity = Math.min(10, productQuantity + 1); document.getElementById('quantity-display').textContent = productQuantity; };
-window.decrementQuantity = function() { productQuantity = Math.max(1, productQuantity - 1); document.getElementById('quantity-display').textContent = productQuantity; };
+function attachEventListeners() {
+  // Quantity
+  document.getElementById('decrement-btn')?.addEventListener('click', () => {
+    productQuantity = Math.max(1, productQuantity - 1);
+    document.getElementById('quantity-display').textContent = productQuantity;
+  });
+  document.getElementById('increment-btn')?.addEventListener('click', () => {
+    productQuantity = Math.min(10, productQuantity + 1);
+    document.getElementById('quantity-display').textContent = productQuantity;
+  });
+  
+  // Add to Cart
+  document.getElementById('add-to-cart-btn')?.addEventListener('click', () => {
+    let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+    const existing = cart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
+    if (existing) { existing.quantity += productQuantity; }
+    else { cart.push({ id: product.id, name: product.name, price: product.price, size: selectedSize, color: selectedColor, quantity: productQuantity, image: product.images?.[0] || product.image }); }
+    localStorage.setItem('silkisland_cart', JSON.stringify(cart));
+    updateCartDisplay();
+    alert(`${product.name} added to cart!`);
+  });
+  
+  // Favorite
+  document.getElementById('favorite-btn')?.addEventListener('click', () => addToFavorites(product.id));
+  
+  // Color buttons (event delegation)
+  document.getElementById('color-selector')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.color-btn');
+    if (!btn) return;
+    selectedColor = btn.dataset.color;
+    buildSelectors();
+  });
+  
+  // Size buttons (event delegation)
+  document.getElementById('size-selector')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.size-btn');
+    if (!btn) return;
+    selectedSize = btn.dataset.size;
+    buildSelectors();
+  });
+  
+  // Review
+  document.getElementById('write-review-btn')?.addEventListener('click', () => {
+    document.getElementById('review-modal').style.display = 'flex';
+    setRating(5);
+  });
+}
 
-window.addToCartFromProduct = function() {
-  let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  const existing = cart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
-  if (existing) { existing.quantity += productQuantity; }
-  else { cart.push({ id: product.id, name: product.name, price: product.price, size: selectedSize, color: selectedColor, quantity: productQuantity, image: product.images?.[0] || product.image }); }
-  localStorage.setItem('silkisland_cart', JSON.stringify(cart));
-  updateCartDisplay();
-  alert(`${product.name} added to cart!`);
-};
+function setRating(rating) {
+  currentRating = rating;
+  document.querySelectorAll('#star-rating span').forEach((star, i) => {
+    star.style.fontVariationSettings = i < rating ? "'FILL' 1" : "'FILL' 0";
+    star.style.color = i < rating ? '#FFD700' : '';
+  });
+}
 
-function openReviewModal() { document.getElementById('review-modal').style.display = 'flex'; setRating(5); }
-function closeReviewModal(event) { if (!event || event.target === document.getElementById('review-modal')) document.getElementById('review-modal').style.display = 'none'; }
-function setRating(rating) { currentRating = rating; document.querySelectorAll('#star-rating span').forEach((star, i) => { star.style.fontVariationSettings = i < rating ? "'FILL' 1" : "'FILL' 0"; star.style.color = i < rating ? '#FFD700' : ''; }); }
 function submitReview(event) {
   event.preventDefault();
   const review = { productId, name: document.getElementById('review-name').value, rating: currentRating, text: document.getElementById('review-text').value, date: new Date().toISOString() };
   let reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]');
   reviews.push(review);
   localStorage.setItem('silkisland_reviews', JSON.stringify(reviews));
-  closeReviewModal(); loadReviews();
+  document.getElementById('review-modal').style.display = 'none';
+  loadReviews();
   alert('Thank you for your review!');
   document.getElementById('review-name').value = document.getElementById('review-text').value = '';
   setRating(5);
 }
+
 function loadReviews() {
   const container = document.getElementById('reviews-list');
   if (!container) return;
   const reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]').filter(r => r.productId === productId);
   container.innerHTML = reviews.length === 0 ? '<p class="text-tertiary-fixed-dim italic text-center py-8">No reviews yet. Be the first to whisper.</p>' : reviews.reverse().map(r => `<div class="border-b border-white/5 pb-6"><div class="flex items-center gap-2 mb-2"><div class="flex text-primary-container">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div><span class="text-xs text-on-surface-variant">${new Date(r.date).toLocaleDateString()}</span></div><p class="text-tertiary-fixed-dim italic mb-2">"${r.text}"</p><p class="text-xs text-on-surface-variant uppercase tracking-widest">— ${r.name}</p></div>`).join('');
+}
+
+function closeReviewModal(event) {
+  if (!event || event.target === document.getElementById('review-modal')) {
+    document.getElementById('review-modal').style.display = 'none';
+  }
 }
 
 loadProduct();
