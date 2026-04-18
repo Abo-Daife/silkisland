@@ -3,377 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Private Atrium — SilkIsland</title>
+  <title data-i18n="account_title">The Private Atrium — SilkIsland</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  
-  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@300;400;500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  
-  <!-- Your Existing CSS -->
   <link rel="stylesheet" href="/style.css">
-  
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary-fixed": "#ffe16d",
-            "tertiary-fixed": "#ffd9e1",
-            "primary-fixed-dim": "#e9c400",
-            "surface": "#131313",
-            "primary-container": "#ffd700",
-            "on-surface": "#e5e2e1",
-            "on-surface-variant": "#d0c6ab",
-            "surface-container": "#201f1f",
-            "surface-container-low": "#1c1b1b",
-            "surface-container-highest": "#353534",
-            "outline-variant": "#4d4732",
-            "tertiary-fixed-dim": "#fbb3c5",
-            "background": "#131313",
-            "on-primary-container": "#705e00",
-            "on-tertiary": "#502130"
-          },
-          borderRadius: {
-            DEFAULT: "0.125rem",
-            lg: "0.25rem",
-            xl: "0.5rem",
-            full: "0.75rem"
-          },
-          fontFamily: {
-            headline: ["Noto Serif", "serif"],
-            body: ["Manrope", "sans-serif"],
-            label: ["Manrope", "sans-serif"]
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-    .bg-temple-overlay {
-      background: linear-gradient(to bottom, rgba(19, 19, 19, 0.8), rgba(19, 19, 19, 0.95));
-    }
-    .glass-panel {
-      background: rgba(53, 53, 52, 0.4);
-      backdrop-filter: blur(20px);
-    }
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
+  <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary-fixed":"#ffe16d","tertiary-fixed":"#ffd9e1","primary-fixed-dim":"#e9c400","surface":"#131313","primary-container":"#ffd700","on-surface":"#e5e2e1","on-surface-variant":"#d0c6ab","surface-container":"#201f1f","surface-container-low":"#1c1b1b","surface-container-highest":"#353534","outline-variant":"#4d4732","tertiary-fixed-dim":"#fbb3c5","background":"#131313","on-primary-container":"#705e00","on-tertiary":"#502130"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},fontFamily:{headline:["Noto Serif","serif"],body:["Manrope","sans-serif"],label:["Manrope","sans-serif"]}}}}</script>
+  <style>.material-symbols-outlined{font-variation-settings:'FILL'0,'wght'400,'GRAD'0,'opsz'24}.bg-temple-overlay{background:linear-gradient(to bottom,rgba(19,19,19,0.8),rgba(19,19,19,0.95))}.glass-panel{background:rgba(53,53,52,0.4);backdrop-filter:blur(20px)}body{min-height:max(884px,100dvh)}</style>
 </head>
 <body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
 
-<!-- ===== FUNCTIONAL HEADER ===== -->
 <header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
-  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase" data-i18n="brand">SILKISLAND</a>
   <div class="flex items-center gap-4">
-    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
-      <span class="material-symbols-outlined">search</span>
-    </button>
-    <a href="/account.html" class="text-primary-container">
-      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
-    </a>
-    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative">
-      <span class="material-symbols-outlined">shopping_bag</span>
-      <span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-    </button>
-    <select id="language-select" class="bg-transparent text-on-surface-variant border border-outline-variant rounded-sm px-2 py-1 text-sm uppercase tracking-wider">
-      <option value="en" class="bg-surface">EN</option>
-      <option value="ro" class="bg-surface">RO</option>
-      <option value="tr" class="bg-surface">TR</option>
-    </select>
+    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">search</span></button>
+    <a href="/favorites.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">favorite</span></a>
+    <a href="/account.html" class="text-primary-container"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1">person</span></a>
+    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative"><span class="material-symbols-outlined">shopping_bag</span><span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span></button>
+    <select id="language-select" class="bg-transparent text-on-surface-variant border border-outline-variant rounded-sm px-2 py-1 text-sm uppercase tracking-wider"><option value="en" class="bg-surface">EN</option><option value="ro" class="bg-surface">RO</option><option value="tr" class="bg-surface">TR</option></select>
   </div>
 </header>
 
-<!-- ===== MAIN CONTENT ===== -->
 <main class="relative min-h-screen pt-16 pb-20 overflow-hidden flex items-center justify-center">
+  <div class="absolute inset-0 z-0"><img alt="Dark atmospheric background" class="w-full h-full object-cover" src="/images/account-bg.jpg" onerror="this.src='https://images.pexels.com/photos/1723637/pexels-photo-1723637.jpeg'"><div class="absolute inset-0 bg-temple-overlay"></div></div>
   
-  <!-- Background Image with Atrium Style -->
-  <div class="absolute inset-0 z-0">
-    <img alt="Dark atmospheric background" class="w-full h-full object-cover" src="/images/account-bg.jpg" onerror="this.src='https://images.pexels.com/photos/1723637/pexels-photo-1723637.jpeg'">
-    <div class="absolute inset-0 bg-temple-overlay"></div>
-  </div>
-  
-  <!-- LOGIN VIEW (Default) -->
   <div class="relative z-10 w-full max-w-md px-6 py-12" id="login-view">
-    <div class="mb-12 text-center md:text-left">
-      <p class="font-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-2">The Private Atrium</p>
-      <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-4">Welcome Back</h1>
-      <div class="h-[1px] w-12 bg-primary-container/30 mx-auto md:mx-0"></div>
-    </div>
-    
+    <div class="mb-12 text-center md:text-left"><p class="font-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-2" data-i18n="private_atrium">The Private Atrium</p><h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-4" data-i18n="welcome_back">Welcome Back</h1><div class="h-[1px] w-12 bg-primary-container/30 mx-auto md:mx-0"></div></div>
     <div class="glass-panel p-8 md:p-10 border border-white/5 rounded-lg shadow-2xl">
       <form id="login-form" class="space-y-8">
-        <div class="relative group">
-          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Identity (Email)</label>
-          <div class="relative">
-            <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface placeholder:text-on-surface-variant/30 py-4 px-4 focus:ring-0 focus:border-primary-fixed transition-all duration-500 outline-none rounded-t-lg" placeholder="archetype@silkisland.com" type="email" id="login-email" required>
-          </div>
-        </div>
-        
-        <div class="relative group">
-          <div class="flex justify-between items-center mb-2 ml-1">
-            <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed">Passage Code</label>
-            <a class="font-label text-[10px] uppercase tracking-tighter text-tertiary-fixed-dim hover:text-primary-container transition-colors" href="#">Forgot?</a>
-          </div>
-          <div class="relative">
-            <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface placeholder:text-on-surface-variant/30 py-4 px-4 focus:ring-0 focus:border-primary-fixed transition-all duration-500 outline-none rounded-t-lg" placeholder="••••••••" type="password" id="login-password" required>
-          </div>
-        </div>
-        
-        <div class="pt-4">
-          <button class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded shadow-[0_0_20px_rgba(255,215,0,0.2)]" type="submit">
-            Enter the Atrium
-          </button>
-        </div>
+        <div class="relative group"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1" data-i18n="identity_email">Identity (Email)</label><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface placeholder:text-on-surface-variant/30 py-4 px-4 focus:ring-0 focus:border-primary-fixed transition-all duration-500 outline-none rounded-t-lg" placeholder="archetype@silkisland.com" type="email" id="login-email" required></div>
+        <div class="relative group"><div class="flex justify-between items-center mb-2 ml-1"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed" data-i18n="passage_code">Passage Code</label><a class="font-label text-[10px] uppercase tracking-tighter text-tertiary-fixed-dim hover:text-primary-container transition-colors" href="#" data-i18n="forgot">Forgot?</a></div><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface placeholder:text-on-surface-variant/30 py-4 px-4 focus:ring-0 focus:border-primary-fixed transition-all duration-500 outline-none rounded-t-lg" placeholder="••••••••" type="password" id="login-password" required></div>
+        <div class="pt-4"><button class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded shadow-[0_0_20px_rgba(255,215,0,0.2)]" type="submit" data-i18n="enter_atrium">Enter the Atrium</button></div>
       </form>
-      
-      <div class="mt-10 text-center">
-        <p class="font-body text-xs text-on-surface-variant/60 mb-2">New to the sanctuary?</p>
-        <button onclick="showRegister()" class="font-label text-sm font-bold uppercase tracking-widest text-tertiary-fixed hover:text-primary-container transition-colors">Create an Account</button>
-      </div>
-    </div>
-    <div class="mt-12 text-center opacity-40">
-      <span class="material-symbols-outlined text-primary-fixed-dim scale-75">vignette</span>
+      <div class="mt-10 text-center"><p class="font-body text-xs text-on-surface-variant/60 mb-2" data-i18n="new_sanctuary">New to the sanctuary?</p><button onclick="showRegister()" class="font-label text-sm font-bold uppercase tracking-widest text-tertiary-fixed hover:text-primary-container transition-colors" data-i18n="create_account">Create an Account</button></div>
     </div>
   </div>
   
-  <!-- REGISTER VIEW (Hidden by default) -->
   <div class="relative z-10 w-full max-w-md px-6 py-12 hidden" id="register-view">
-    <div class="mb-12 text-center md:text-left">
-      <p class="font-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-2">Join the Sanctuary</p>
-      <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-4">Create Account</h1>
-      <div class="h-[1px] w-12 bg-primary-container/30 mx-auto md:mx-0"></div>
-    </div>
-    
+    <div class="mb-12 text-center md:text-left"><p class="font-label text-[10px] uppercase tracking-[0.3em] text-tertiary-fixed-dim mb-2" data-i18n="join_sanctuary">Join the Sanctuary</p><h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-4" data-i18n="create_account_title">Create Account</h1><div class="h-[1px] w-12 bg-primary-container/30 mx-auto md:mx-0"></div></div>
     <div class="glass-panel p-8 md:p-10 border border-white/5 rounded-lg shadow-2xl">
       <form id="register-form" class="space-y-6">
-        <div class="relative group">
-          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Full Name</label>
-          <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="text" id="reg-name" required>
-        </div>
-        
-        <div class="relative group">
-          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Identity (Email)</label>
-          <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="email" id="reg-email" required>
-        </div>
-        
-        <div class="relative group">
-          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Passage Code</label>
-          <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="password" id="reg-password" required>
-        </div>
-        
-        <div class="relative group">
-          <label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1">Phone (Optional)</label>
-          <input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="tel" id="reg-phone">
-        </div>
-        
-        <div class="pt-4">
-          <button class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded" type="submit">
-            Join the Atrium
-          </button>
-        </div>
+        <div class="relative group"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1" data-i18n="full_name">Full Name</label><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="text" id="reg-name" required></div>
+        <div class="relative group"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1" data-i18n="identity_email">Identity (Email)</label><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="email" id="reg-email" required></div>
+        <div class="relative group"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1" data-i18n="passage_code">Passage Code</label><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="password" id="reg-password" required></div>
+        <div class="relative group"><label class="block font-label text-[11px] uppercase tracking-widest text-tertiary-fixed mb-2 ml-1" data-i18n="phone_optional">Phone (Optional)</label><input class="w-full bg-surface-container-highest/50 border-b border-primary-container/20 text-on-surface py-3 px-4 focus:border-primary-fixed outline-none rounded-t-lg" type="tel" id="reg-phone"></div>
+        <div class="pt-4"><button class="w-full h-14 bg-primary-container text-on-primary-container font-label font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-[0.98] transition-all duration-300 rounded" type="submit" data-i18n="join_atrium">Join the Atrium</button></div>
       </form>
-      
-      <div class="mt-8 text-center">
-        <p class="font-body text-xs text-on-surface-variant/60 mb-2">Already have an account?</p>
-        <button onclick="showLogin()" class="font-label text-sm font-bold uppercase tracking-widest text-tertiary-fixed hover:text-primary-container transition-colors">Sign In</button>
-      </div>
+      <div class="mt-8 text-center"><p class="font-body text-xs text-on-surface-variant/60 mb-2" data-i18n="already_account">Already have an account?</p><button onclick="showLogin()" class="font-label text-sm font-bold uppercase tracking-widest text-tertiary-fixed hover:text-primary-container transition-colors" data-i18n="sign_in">Sign In</button></div>
     </div>
   </div>
   
-  <!-- PROFILE VIEW (Shown when logged in) -->
   <div class="relative z-10 w-full max-w-2xl px-6 py-12 hidden" id="profile-view">
     <div class="glass-panel p-8 md:p-10 border border-white/5 rounded-lg shadow-2xl">
-      <div class="flex items-center justify-between mb-8">
-        <h2 class="font-headline text-3xl text-primary-container">My Atrium</h2>
-        <button onclick="logout()" class="text-tertiary-fixed-dim hover:text-primary-container text-sm uppercase tracking-widest">Leave Sanctuary</button>
-      </div>
-      
-      <!-- Profile Info -->
-      <div class="space-y-6">
-        <div class="border-b border-white/5 pb-6">
-          <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Identity</p>
-          <p class="text-xl font-headline text-on-surface" id="profile-name"></p>
-          <p class="text-tertiary-fixed-dim" id="profile-email-display"></p>
-        </div>
-        
-        <div class="grid grid-cols-2 gap-6">
-          <div>
-            <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Orders</p>
-            <p class="text-2xl font-headline text-primary-container" id="orders-count">0</p>
-          </div>
-          <div>
-            <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Member Since</p>
-            <p class="text-on-surface" id="member-since">—</p>
-          </div>
-        </div>
-        
-        <div class="pt-6">
-          <a href="/account.html?tab=orders" class="block w-full text-center py-3 border border-primary-container/30 text-primary-container hover:bg-primary-container hover:text-on-primary-container transition-all uppercase tracking-widest text-sm font-bold">View Order History</a>
-        </div>
-        
-        <div class="pt-4">
-          <a href="/admin/dashboard.html" class="block w-full text-center py-3 border border-tertiary-fixed-dim/30 text-tertiary-fixed-dim hover:bg-tertiary-fixed-dim hover:text-on-tertiary transition-all uppercase tracking-widest text-sm font-bold" id="admin-link" style="display: none;">Admin Panel</a>
-        </div>
-      </div>
+      <div class="flex items-center justify-between mb-8"><h2 class="font-headline text-3xl text-primary-container" data-i18n="my_atrium">My Atrium</h2><button onclick="logout()" class="text-tertiary-fixed-dim hover:text-primary-container text-sm uppercase tracking-widest" data-i18n="leave_sanctuary">Leave Sanctuary</button></div>
+      <div class="space-y-6"><div class="border-b border-white/5 pb-6"><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1" data-i18n="identity">Identity</p><p class="text-xl font-headline text-on-surface" id="profile-name"></p><p class="text-tertiary-fixed-dim" id="profile-email-display"></p></div>
+      <div class="grid grid-cols-2 gap-6"><div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1" data-i18n="orders">Orders</p><p class="text-2xl font-headline text-primary-container" id="orders-count">0</p></div><div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1" data-i18n="member_since">Member Since</p><p class="text-on-surface" id="member-since">—</p></div></div>
+      <div class="pt-6"><a href="/account.html?tab=orders" class="block w-full text-center py-3 border border-primary-container/30 text-primary-container hover:bg-primary-container hover:text-on-primary-container transition-all uppercase tracking-widest text-sm font-bold" data-i18n="view_order_history">View Order History</a></div>
+      <div class="pt-4"><a href="/admin/dashboard.html" class="block w-full text-center py-3 border border-tertiary-fixed-dim/30 text-tertiary-fixed-dim hover:bg-tertiary-fixed-dim hover:text-on-tertiary transition-all uppercase tracking-widest text-sm font-bold" id="admin-link" style="display:none" data-i18n="admin_panel">Admin Panel</a></div></div>
     </div>
   </div>
 </main>
 
-<!-- ===== CART MODAL ===== -->
-<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
-  <div class="p-6">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="font-headline text-2xl text-primary-container">Your Selection</h2>
-      <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container">
-        <span class="material-symbols-outlined text-3xl">close</span>
-      </button>
-    </div>
-    <div id="cart-items" class="space-y-6"></div>
-    <div class="border-t border-outline-variant/30 pt-6 mt-8">
-      <div class="flex justify-between items-center mb-6">
-        <span class="font-label text-lg uppercase tracking-wider">Total</span>
-        <span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span>
-      </div>
-      <button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm hover:bg-primary-fixed-dim transition-all">
-        Proceed to Checkout
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== SEARCH MODAL ===== -->
-<div class="search-modal fixed inset-0 z-[1000] bg-surface/95 backdrop-blur-md hidden" id="search-modal">
-  <div class="max-w-3xl mx-auto pt-24 px-6">
-    <div class="flex items-center gap-4 mb-8">
-      <input type="text" id="search-input" placeholder="Find your essence..." class="w-full bg-surface-container-highest border-b-2 border-outline-variant focus:border-primary-container px-4 py-3 text-on-surface text-lg outline-none">
-      <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
-        <span class="material-symbols-outlined text-3xl">close</span>
-      </button>
-    </div>
-    <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
-  </div>
-</div>
-
-<!-- ===== SCRIPT ===== -->
-<script>
-  const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
-  let currentUser = null;
-
-  // Check login status on page load
-  async function checkAuth() {
-    const savedUser = localStorage.getItem('silkisland_user');
-    if (savedUser) {
-      try {
-        currentUser = JSON.parse(savedUser);
-        showProfile();
-      } catch(e) {
-        showLogin();
-      }
-    } else {
-      showLogin();
-    }
-  }
-
-  function showLogin() {
-    document.getElementById('login-view').classList.remove('hidden');
-    document.getElementById('register-view').classList.add('hidden');
-    document.getElementById('profile-view').classList.add('hidden');
-  }
-
-  function showRegister() {
-    document.getElementById('login-view').classList.add('hidden');
-    document.getElementById('register-view').classList.remove('hidden');
-    document.getElementById('profile-view').classList.add('hidden');
-  }
-
-  function showProfile() {
-    document.getElementById('login-view').classList.add('hidden');
-    document.getElementById('register-view').classList.add('hidden');
-    document.getElementById('profile-view').classList.remove('hidden');
-    
-    if (currentUser) {
-      document.getElementById('profile-name').textContent = currentUser.name || currentUser.email;
-      document.getElementById('profile-email-display').textContent = currentUser.email;
-      
-      if (currentUser.is_admin) {
-        document.getElementById('admin-link').style.display = 'block';
-      }
-    }
-  }
-
-  // Login handler
-  document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    
-    try {
-      const res = await fetch(API_URL + '/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-      
-      const data = await res.json();
-      
-      if (data.success) {
-        currentUser = data.user;
-        localStorage.setItem('silkisland_user', JSON.stringify(data.user));
-        showProfile();
-      } else {
-        alert(data.error || 'Invalid credentials');
-      }
-    } catch (err) {
-      alert('Login failed. Please try again.');
-    }
-  });
-
-  // Register handler
-  document.getElementById('register-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('reg-name').value;
-    const email = document.getElementById('reg-email').value;
-    const password = document.getElementById('reg-password').value;
-    const phone = document.getElementById('reg-phone').value;
-    
-    try {
-      const res = await fetch(API_URL + '/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, phone, address: '' })
-      });
-      
-      const data = await res.json();
-      
-      if (data.success) {
-        alert('Account created! Please sign in.');
-        showLogin();
-      } else {
-        alert(data.error || 'Registration failed');
-      }
-    } catch (err) {
-      alert('Registration failed. Please try again.');
-    }
-  });
-
-  function logout() {
-    localStorage.removeItem('silkisland_user');
-    localStorage.removeItem('silkisland_cart');
-    currentUser = null;
-    showLogin();
-  }
-
-  // Initialize
-  checkAuth();
-</script>
+<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal"><div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container" data-i18n="your_selection">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><div class="flex justify-between items-center mb-6"><span class="font-label text-lg uppercase tracking-wider" data-i18n="total">Total</span><span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span></div><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm" data-i18n="proceed_checkout">Proceed to Checkout</button></div></div></div>
+<div class="search-modal fixed inset-0 z-[1000] bg-surface/95 backdrop-blur-md hidden" id="search-modal"><div class="max-w-3xl mx-auto pt-24 px-6"><div class="flex items-center gap-4 mb-8"><input type="text" id="search-input" class="w-full bg-surface-container-highest border-b-2 border-outline-variant focus:border-primary-container px-4 py-3 text-on-surface text-lg outline-none"><button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div></div></div>
 
 <script src="/script.js"></script>
 </body>

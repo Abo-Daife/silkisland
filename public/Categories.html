@@ -3,252 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curated Collections — SilkIsland</title>
+  <title data-i18n="collections_title">Curated Collections — SilkIsland</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  
-  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  
-  <!-- Your Existing CSS -->
   <link rel="stylesheet" href="/style.css">
-  
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "surface": "#131313",
-            "primary-container": "#ffd700",
-            "background": "#131313",
-            "on-primary": "#3a3000",
-            "surface-container-highest": "#353534",
-            "primary-fixed": "#ffe16d",
-            "tertiary-fixed": "#ffd9e1",
-            "on-primary-container": "#705e00",
-            "outline-variant": "#4d4732",
-            "tertiary-fixed-dim": "#fbb3c5",
-            "surface-container-low": "#1c1b1b",
-            "on-surface": "#e5e2e1",
-            "on-surface-variant": "#d0c6ab",
-            "surface-container": "#201f1f",
-            "primary": "#fff6df",
-            "outline": "#999077"
-          },
-          borderRadius: {
-            DEFAULT: "0.125rem",
-            lg: "0.25rem",
-            xl: "0.5rem",
-            full: "0.75rem"
-          },
-          fontFamily: {
-            headline: ["Noto Serif", "serif"],
-            body: ["Manrope", "sans-serif"],
-            label: ["Manrope", "sans-serif"]
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-    .scrim-overlay {
-      background: linear-gradient(to bottom, rgba(19, 19, 19, 0.8) 0%, rgba(19, 19, 19, 0.4) 30%, rgba(19, 19, 19, 0.4) 70%, rgba(19, 19, 19, 0.9) 100%);
-    }
-    body { min-height: max(884px, 100dvh); }
-  </style>
+  <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface":"#131313","primary-container":"#ffd700","background":"#131313","surface-container-highest":"#353534","primary-fixed":"#ffe16d","tertiary-fixed":"#ffd9e1","tertiary-fixed-dim":"#fbb3c5","surface-container-low":"#1c1b1b","on-surface":"#e5e2e1","on-surface-variant":"#d0c6ab","surface-container":"#201f1f","outline-variant":"#4d4732"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},fontFamily:{headline:["Noto Serif","serif"],body:["Manrope","sans-serif"],label:["Manrope","sans-serif"]}}}}</script>
+  <style>.material-symbols-outlined{font-variation-settings:'FILL'0,'wght'400,'GRAD'0,'opsz'24}.scrim-overlay{background:linear-gradient(to bottom,rgba(19,19,19,0.8)0%,rgba(19,19,19,0.4)30%,rgba(19,19,19,0.4)70%,rgba(19,19,19,0.9)100%)}body{min-height:max(884px,100dvh)}</style>
 </head>
 <body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<div class="fixed inset-0 z-0"><img class="w-full h-full object-cover" src="/images/categories-bg.jpg" onerror="this.src='https://images.pexels.com/photos/1723637/pexels-photo-1723637.jpeg'"><div class="absolute inset-0 scrim-overlay backdrop-blur-[2px]"></div></div>
 
-<!-- Full Screen Background -->
-<div class="fixed inset-0 z-0">
-  <img class="w-full h-full object-cover" src="/images/categories-bg.jpg" onerror="this.src='https://images.pexels.com/photos/1723637/pexels-photo-1723637.jpeg'">
-  <div class="absolute inset-0 scrim-overlay backdrop-blur-[2px]"></div>
-</div>
-
-<!-- ===== FUNCTIONAL HEADER ===== -->
 <header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
-  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase" data-i18n="brand">SILKISLAND</a>
   <div class="flex items-center gap-4">
-    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
-      <span class="material-symbols-outlined">search</span>
-    </button>
-    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container">
-      <span class="material-symbols-outlined">person</span>
-    </a>
-    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative">
-      <span class="material-symbols-outlined">shopping_bag</span>
-      <span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-    </button>
-    <select id="language-select" class="bg-transparent text-on-surface-variant border border-outline-variant rounded-sm px-2 py-1 text-sm uppercase tracking-wider">
-      <option value="en" class="bg-surface">EN</option>
-      <option value="ro" class="bg-surface">RO</option>
-      <option value="tr" class="bg-surface">TR</option>
-    </select>
+    <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">search</span></button>
+    <a href="/favorites.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">favorite</span></a>
+    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">person</span></a>
+    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative"><span class="material-symbols-outlined">shopping_bag</span><span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span></button>
+    <select id="language-select" class="bg-transparent text-on-surface-variant border border-outline-variant rounded-sm px-2 py-1 text-sm uppercase tracking-wider"><option value="en" class="bg-surface">EN</option><option value="ro" class="bg-surface">RO</option><option value="tr" class="bg-surface">TR</option></select>
   </div>
 </header>
 
-<!-- ===== MAIN CONTENT ===== -->
 <main class="relative z-10 pt-24 pb-32 px-6 max-w-2xl mx-auto">
-  
-  <!-- Editorial Header -->
   <section class="mb-10">
-    <span class="font-label text-[10px] tracking-[0.2em] text-tertiary-fixed-dim uppercase block mb-2">Private Viewing</span>
-    <h2 class="font-headline text-5xl text-on-surface leading-tight mb-8">
-      Curated <br/> 
-      <span class="italic text-primary-container">Collections</span>
-    </h2>
-    
-    <!-- Search Bar -->
-    <div class="relative group">
-      <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-        <span class="material-symbols-outlined text-outline text-sm">search</span>
-      </div>
-      <input class="w-full bg-surface-container-highest/60 backdrop-blur-lg border-none rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-zinc-500 focus:ring-1 focus:ring-primary-fixed transition-all" placeholder="Find your sanctuary..." type="text" id="category-search" onkeyup="filterCategories()">
-    </div>
+    <span class="font-label text-[10px] tracking-[0.2em] text-tertiary-fixed-dim uppercase block mb-2" data-i18n="private_viewing">Private Viewing</span>
+    <h2 class="font-headline text-5xl text-on-surface leading-tight mb-8"><span data-i18n="curated">Curated</span><br/><span class="italic text-primary-container" data-i18n="collections">Collections</span></h2>
+    <div class="relative group"><div class="absolute inset-y-0 left-4 flex items-center pointer-events-none"><span class="material-symbols-outlined text-outline text-sm">search</span></div><input class="w-full bg-surface-container-highest/60 backdrop-blur-lg border-none rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-zinc-500 focus:ring-1 focus:ring-primary-fixed transition-all" data-i18n-placeholder="find_sanctuary" placeholder="Find your sanctuary..." type="text" id="category-search" onkeyup="filterCategories()"></div>
   </section>
-
-  <!-- Category Cards -->
   <div class="space-y-4" id="category-list">
-    <!-- The Lingerie Vault -->
-    <a href="/?category=Lingerie" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="lingerie">
-      <div class="flex items-center justify-between p-8">
-        <div class="flex flex-col">
-          <span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1">Vault No. 01</span>
-          <h3 class="font-headline text-2xl text-primary-container tracking-wide">The Lingerie Vault</h3>
-          <p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs">Exquisite lace and architectural silhouettes designed for the private self.</p>
-        </div>
-        <span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span>
-      </div>
-      <div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
-        <span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">diamond</span>
-      </div>
-    </a>
-
-    <!-- The Bathing Sanctuary -->
-    <a href="/?category=Bath Stuff" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="bath">
-      <div class="flex items-center justify-between p-8">
-        <div class="flex flex-col">
-          <span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1">Sanctuary</span>
-          <h3 class="font-headline text-2xl text-primary-container tracking-wide">The Bathing Sanctuary</h3>
-          <p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs">Ritualistic bath essentials infused with ancient botanicals.</p>
-        </div>
-        <span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span>
-      </div>
-      <div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
-        <span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">waves</span>
-      </div>
-    </a>
-
-    <!-- Silk Loungewear -->
-    <a href="/?category=Towels" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="loungewear">
-      <div class="flex items-center justify-between p-8">
-        <div class="flex flex-col">
-          <span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1">Threads</span>
-          <h3 class="font-headline text-2xl text-primary-container tracking-wide">Silk Loungewear</h3>
-          <p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs">Effortless elegance for the quiet moments between.</p>
-        </div>
-        <span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span>
-      </div>
-      <div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
-        <span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-      </div>
-    </a>
-
-    <!-- Sacred Accessories -->
-    <a href="/?category=Accessories" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="accessories">
-      <div class="flex items-center justify-between p-8">
-        <div class="flex flex-col">
-          <span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1">Ornaments</span>
-          <h3 class="font-headline text-2xl text-primary-container tracking-wide">Sacred Accessories</h3>
-          <p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs">The final touch of ritual: silk scarves and bespoke ornaments.</p>
-        </div>
-        <span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span>
-      </div>
-      <div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
-        <span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">history_edu</span>
-      </div>
-    </a>
+    <a href="/?category=Lingerie" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="lingerie"><div class="flex items-center justify-between p-8"><div class="flex flex-col"><span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1" data-i18n="vault_no">Vault No. 01</span><h3 class="font-headline text-2xl text-primary-container tracking-wide" data-i18n="lingerie_vault">The Lingerie Vault</h3><p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs" data-i18n="lingerie_desc">Exquisite lace and architectural silhouettes designed for the private self.</p></div><span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span></div><div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity"><span class="material-symbols-outlined text-8xl" style="font-variation-settings:'FILL'1">diamond</span></div></a>
+    <a href="/?category=Bath Stuff" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="bath"><div class="flex items-center justify-between p-8"><div class="flex flex-col"><span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1" data-i18n="sanctuary">Sanctuary</span><h3 class="font-headline text-2xl text-primary-container tracking-wide" data-i18n="bathing_sanctuary">The Bathing Sanctuary</h3><p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs" data-i18n="bathing_desc">Ritualistic bath essentials infused with ancient botanicals.</p></div><span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span></div><div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity"><span class="material-symbols-outlined text-8xl" style="font-variation-settings:'FILL'1">waves</span></div></a>
+    <a href="/?category=Towels" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="loungewear"><div class="flex items-center justify-between p-8"><div class="flex flex-col"><span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1" data-i18n="threads">Threads</span><h3 class="font-headline text-2xl text-primary-container tracking-wide" data-i18n="silk_loungewear">Silk Loungewear</h3><p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs" data-i18n="loungewear_desc">Effortless elegance for the quiet moments between.</p></div><span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span></div><div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity"><span class="material-symbols-outlined text-8xl" style="font-variation-settings:'FILL'1">auto_awesome</span></div></a>
+    <a href="/?category=Accessories" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="accessories"><div class="flex items-center justify-between p-8"><div class="flex flex-col"><span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1" data-i18n="ornaments">Ornaments</span><h3 class="font-headline text-2xl text-primary-container tracking-wide" data-i18n="sacred_accessories">Sacred Accessories</h3><p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs" data-i18n="accessories_desc">The final touch of ritual: silk scarves and bespoke ornaments.</p></div><span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span></div><div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity"><span class="material-symbols-outlined text-8xl" style="font-variation-settings:'FILL'1">history_edu</span></div></a>
   </div>
-
-  <!-- Archive Collection -->
-  <section class="mt-16 relative">
-    <div class="bg-surface-container-highest/30 backdrop-blur-lg p-8 rounded-lg ml-8 relative z-10 border-t border-white/5">
-      <h4 class="font-headline text-2xl text-primary-container mb-4">The Archive Collection</h4>
-      <p class="font-body text-sm text-on-surface-variant mb-6 leading-relaxed">Discover rare, hand-woven pieces from our historical vault. Limited editions only.</p>
-      <a href="/?category=Archive" class="inline-block bg-primary-container text-on-primary-container px-8 py-4 font-label text-xs tracking-widest uppercase hover:brightness-110 active:scale-95 transition-all">
-        Explore Archive
-      </a>
-    </div>
-    <div class="absolute -top-4 -left-4 w-24 h-24 bg-primary-container/10 blur-3xl rounded-full"></div>
-  </section>
+  <section class="mt-16 relative"><div class="bg-surface-container-highest/30 backdrop-blur-lg p-8 rounded-lg ml-8 relative z-10 border-t border-white/5"><h4 class="font-headline text-2xl text-primary-container mb-4" data-i18n="archive_collection">The Archive Collection</h4><p class="font-body text-sm text-on-surface-variant mb-6 leading-relaxed" data-i18n="archive_desc">Discover rare, hand-woven pieces from our historical vault. Limited editions only.</p><a href="/?category=Archive" class="inline-block bg-primary-container text-on-primary-container px-8 py-4 font-label text-xs tracking-widest uppercase hover:brightness-110 active:scale-95 transition-all" data-i18n="explore_archive">Explore Archive</a></div><div class="absolute -top-4 -left-4 w-24 h-24 bg-primary-container/10 blur-3xl rounded-full"></div></section>
 </main>
 
-<!-- ===== CART MODAL ===== -->
-<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
-  <div class="p-6">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="font-headline text-2xl text-primary-container">Your Selection</h2>
-      <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container">
-        <span class="material-symbols-outlined text-3xl">close</span>
-      </button>
-    </div>
-    <div id="cart-items" class="space-y-6"></div>
-    <div class="border-t border-outline-variant/30 pt-6 mt-8">
-      <div class="flex justify-between items-center mb-6">
-        <span class="font-label text-lg uppercase tracking-wider">Total</span>
-        <span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span>
-      </div>
-      <button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm">
-        Proceed to Checkout
-      </button>
-    </div>
-  </div>
-</div>
+<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal"><div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container" data-i18n="your_selection">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><div class="flex justify-between items-center mb-6"><span class="font-label text-lg uppercase tracking-wider" data-i18n="total">Total</span><span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span></div><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm" data-i18n="proceed_checkout">Proceed to Checkout</button></div></div></div>
+<div class="search-modal fixed inset-0 z-[1000] bg-surface/95 backdrop-blur-md hidden" id="search-modal"><div class="max-w-3xl mx-auto pt-24 px-6"><div class="flex items-center gap-4 mb-8"><input type="text" id="search-input" class="w-full bg-surface-container-highest border-b-2 border-outline-variant focus:border-primary-container px-4 py-3 text-on-surface text-lg outline-none"><button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div></div></div>
 
-<!-- ===== SEARCH MODAL ===== -->
-<div class="search-modal fixed inset-0 z-[1000] bg-surface/95 backdrop-blur-md hidden" id="search-modal">
-  <div class="max-w-3xl mx-auto pt-24 px-6">
-    <div class="flex items-center gap-4 mb-8">
-      <input type="text" id="search-input" placeholder="Find your essence..." class="w-full bg-surface-container-highest border-b-2 border-outline-variant focus:border-primary-container px-4 py-3 text-on-surface text-lg outline-none">
-      <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
-        <span class="material-symbols-outlined text-3xl">close</span>
-      </button>
-    </div>
-    <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
-  </div>
-</div>
-
-<!-- ===== FOOTER ===== -->
-<footer class="relative z-10 border-t border-white/5 py-8 px-6">
-  <div class="max-w-7xl mx-auto text-center">
-    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">© MMXXIV SilkIsland · The Private Atrium</p>
-  </div>
-</footer>
-
-<script>
-  // Filter categories by search
-  window.filterCategories = function() {
-    const query = document.getElementById('category-search').value.toLowerCase();
-    const cards = document.querySelectorAll('.category-card');
-    
-    cards.forEach(card => {
-      const name = card.getAttribute('data-name') || '';
-      const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
-      
-      if (name.includes(query) || title.includes(query) || query === '') {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  };
-</script>
-
+<footer class="relative z-10 border-t border-white/5 py-8 px-6"><div class="max-w-7xl mx-auto text-center"><p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">© MMXXIV SilkIsland · The Private Atrium</p></div></footer>
 <script src="/script.js"></script>
 </body>
 </html>

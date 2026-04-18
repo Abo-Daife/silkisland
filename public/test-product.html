@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Product</title>
+</head>
+<body>
+  <h1>Test Product Page</h1>
+  <div id="result">Loading...</div>
+  
+  <script>
+    const API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id') || 1;
+    
+    fetch(API_URL + '/api/products/' + productId)
+      .then(res => res.json())
+      .then(product => {
+        document.getElementById('result').innerHTML = `
+          <h2>${product.name}</h2>
+          <p>Price: ${product.price} RON</p>
+          <p>Category: ${product.category}</p>
+          <button onclick="alert('Add to cart clicked')">Add to Cart</button>
+        `;
+      })
+      .catch(err => {
+        document.getElementById('result').innerHTML = 'Error: ' + err.message;
+      });
+  </script>
+</body>
+</html>
