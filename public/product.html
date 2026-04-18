@@ -92,11 +92,19 @@ function renderProduct() {
   `;
   
   attachEventListeners();
+  updateCartCount();
 }
 
 function getColorHex(color) { 
   const map = {'Black':'#1a1a1a','Gold':'#FFD700','Midnight Blue':'#3D3F93','Rose':'#E8A2B4','Red':'#7f1d1d','Green':'#064e3b','White':'#ffffff','Default':'#888888'}; 
   return map[color] || '#888888'; 
+}
+
+function updateCartCount() {
+  const globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  const count = globalCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const countEl = document.getElementById('cart-count');
+  if (countEl) countEl.textContent = count;
 }
 
 function attachEventListeners() {
@@ -135,60 +143,43 @@ function attachEventListeners() {
   });
   
   // Add to Cart
-    document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-  let globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  
-  const existing = globalCart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
-  if (existing) { 
-    existing.quantity += productQuantity; 
-  } else { 
-    globalCart.push({ 
-      id: product.id, 
-      name: product.name, 
-      price: product.price, 
-      size: selectedSize, 
-      color: selectedColor, 
-      quantity: productQuantity, 
-      image: product.images?.[0] || product.image 
-    }); 
-  }
-  
-  localStorage.setItem('silkisland_cart', JSON.stringify(globalCart));
-  
-  // Update cart count display
-  updateCartCount();
-  
-  // Refresh the cart modal (calls the global function from script.js)
-  if (typeof window.updateCartDisplay === 'function') {
-    window.updateCartDisplay();
-  }
-  
-  alert(`${product.name} added to cart!`);
-});
-
-// Separate function to update cart count (place OUTSIDE the event listener)
-function updateCartCount() {
-  const globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  const count = globalCart.reduce((sum, item) => sum + item.quantity, 0);
-  document.getElementById('cart-count').textContent = count;
-}
-
-// Call it when page loads
-updateCartCount();
-  
-  alert(`${product.name} added to cart!`);
-
+  document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+    let globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+    
+    const existing = globalCart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
+    if (existing) { 
+      existing.quantity += productQuantity; 
+    } else { 
+      globalCart.push({ 
+        id: product.id, 
+        name: product.name, 
+        price: product.price, 
+        size: selectedSize, 
+        color: selectedColor, 
+        quantity: productQuantity, 
+        image: product.images?.[0] || product.image 
+      }); 
+    }
+    
+    localStorage.setItem('silkisland_cart', JSON.stringify(globalCart));
+    updateCartCount();
+    
+    if (typeof window.updateCartDisplay === 'function') {
+      window.updateCartDisplay();
+    }
+    
+    alert(`${product.name} added to cart!`);
+  });
   
   // Favorite
   document.getElementById('favorite-btn').addEventListener('click', () => {
     let favorites = JSON.parse(localStorage.getItem('silkisland_favorites') || '[]');
-    if (!favorites.includes(product.id)) { favorites.push(product.id); localStorage.setItem('silkisland_favorites', JSON.stringify(favorites)); alert('Added to favorites!'); }
+    if (!favorites.includes(product.id)) { 
+      favorites.push(product.id); 
+      localStorage.setItem('silkisland_favorites', JSON.stringify(favorites)); 
+      alert('Added to favorites!'); 
+    }
   });
-}
-
-function updateCartDisplay() {
-  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-  document.getElementById('cart-count').textContent = count;
 }
 
 loadProduct();

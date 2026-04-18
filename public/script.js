@@ -248,6 +248,15 @@ window.removeCartItem = function(index) {
   window.updateCartDisplay();
 };
 
+window.goToCheckout = function() { 
+  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  if (cart.length === 0) { 
+    alert('Your cart is empty'); 
+    return; 
+  } 
+  window.location.href = '/checkout.html'; 
+};
+
 // ========== INITIALIZATION ==========
 window.onload = function() {
   console.log('SilkIsland — The Private Atrium');
