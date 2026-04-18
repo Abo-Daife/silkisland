@@ -242,7 +242,6 @@ window.updateCartDisplay = function() {
 };
 
 window.removeCartItem = function(index) {
-  let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
   cart.splice(index, 1);
   localStorage.setItem('silkisland_cart', JSON.stringify(cart));
   window.updateCartDisplay();
@@ -314,7 +313,6 @@ window.updateCartDisplay = function() {
 };
 
 window.removeCartItem = function(index) {
-  let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
   cart.splice(index, 1);
   localStorage.setItem('silkisland_cart', JSON.stringify(cart));
   window.updateCartDisplay();
