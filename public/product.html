@@ -195,6 +195,7 @@ function getColorHex(color) {
     'Caramel': '#C68E58',
     'Bronze': '#CD7F32',
     'Copper': '#B87333',
+    'Cappuccino': '#C1A58B',
     
     // Pinks & Peaches
     'Blush': '#DE5D83',
@@ -283,7 +284,7 @@ function attachEventListeners() {
     btn.addEventListener('click', function() {
       selectedColor = this.dataset.color;
       document.getElementById('selected-color-display').textContent = selectedColor;
-      document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('border-primary-container'));
+      document.querySelectorAll('.color-btn').forEach(b => b.classList.re ('border-primary-container'));
       this.classList.add('border-primary-container');
     });
   });
