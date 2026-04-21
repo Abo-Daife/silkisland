@@ -371,21 +371,21 @@ function renderProducts() {
   container.innerHTML = '';
   filteredProducts.forEach(product => {
     const card = document.createElement('div');
-    card.className = 'product-card group relative flex flex-col space-y-4';
+    card.className = 'product-card group relative flex flex-col';
     card.id = `product-${product.id}`;
     const images = product.images || [product.image];
     const mainImage = images[0] || '/images/placeholder.jpg';
     card.innerHTML = `
       <a href="/product.html?id=${product.id}" class="block">
-        <div class="aspect-[3/4] overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
-          <img src="${mainImage}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+        <div class="overflow-hidden bg-neutral-900/50 backdrop-blur-sm relative border border-white/5 rounded-sm shadow-2xl">
+          <img src="${mainImage}" alt="${product.name}" class="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-700">
           <button onclick="event.preventDefault(); window.addToFavorites(${product.id});" class="absolute top-4 right-4 bg-surface/40 backdrop-blur-md p-2 rounded-lg">
             <span class="material-symbols-outlined text-primary-container">${favorites.includes(product.id) ? 'favorite' : 'favorite'}</span>
           </button>
         </div>
         <div class="flex justify-between items-start pt-2 border-t border-outline-variant/30">
-          <h3 class="font-headline text-2xl mb-1 text-on-surface">${product.name}</h3>
-          <span class="font-headline text-xl text-primary-container">${product.price} RON</span>
+          <h3 class="font-headline text-xl mb-1 text-on-surface">${product.name}</h3>
+          <span class="font-headline text-lg text-primary-container">${product.price} RON</span>
         </div>
       </a>
     `;

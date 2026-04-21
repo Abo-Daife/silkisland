@@ -1306,3 +1306,37 @@ img {
   align-items: start !important;
   gap: 1.5rem !important;
 }
+
+/* ========== TIGHT PRODUCT CARDS ========== */
+.product-card {
+  padding: 0 !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.product-card a {
+  display: block !important;
+  line-height: 0 !important;
+}
+
+.product-card img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+}
+
+.product-card .flex {
+  padding: 0.6rem 1rem !important;
+  margin: 0 !important;
+}
+
+.product-card h3 {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.product-card span {
+  margin: 0 !important;
+}
