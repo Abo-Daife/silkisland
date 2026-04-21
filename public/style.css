@@ -1237,38 +1237,33 @@ img {
   }
 }
 
-/* ========== STANDARDIZE PRODUCT IMAGES (NO CROPPING) ========== */
+/* ========== NATURAL PRODUCT IMAGE SIZING ========== */
 
-/* Force the image container to a uniform shape */
+/* Remove fixed aspect ratio - let images determine height */
 .product-card .product-gallery,
 .product-card .aspect-\[3\/4\] {
-  aspect-ratio: 4 / 5 !important;
-  overflow: hidden !important;
-  background-color: #131313 !important; /* Your brand dark background */
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  aspect-ratio: auto !important;
+  overflow: visible !important;
+  background-color: transparent !important;
 }
 
-/* Show the ENTIRE image without cropping */
+/* Images keep their natural proportions */
 .product-card img,
 .product-card .main-image {
   width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important; /* CONTAIN = show full image, no cropping */
-  background-color: #131313 !important; /* Fills empty space with your brand color */
-}
-
-/* For images that are landscape (wider than tall) */
-.product-card img[src*="landscape"],
-.product-card img.landscape {
+  height: auto !important;
   object-fit: contain !important;
+  background-color: transparent !important;
 }
 
-/* Adjust mobile view */
-@media screen and (max-width: 768px) {
-  .product-card .product-gallery,
-  .product-card .aspect-\[3\/4\] {
-    aspect-ratio: 4 / 5 !important;
-  }
+/* Container expands to fit image */
+.product-card {
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Ensure consistent width across cards */
+.products-grid {
+  align-items: start !important; /* Cards align at top, not stretched */
 }
