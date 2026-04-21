@@ -1237,9 +1237,9 @@ img {
   }
 }
 
-/* ========== NATURAL PRODUCT IMAGE SIZING ========== */
+/* ========== TIGHT PRODUCT CARDS - NO EMPTY SPACE ========== */
 
-/* Remove fixed aspect ratio - let images determine height */
+/* Remove fixed aspect ratio */
 .product-card .product-gallery,
 .product-card .aspect-\[3\/4\] {
   aspect-ratio: auto !important;
@@ -1247,23 +1247,62 @@ img {
   background-color: transparent !important;
 }
 
-/* Images keep their natural proportions */
+/* Images keep natural proportions - NO extra space below */
 .product-card img,
 .product-card .main-image {
   width: 100% !important;
   height: auto !important;
   object-fit: contain !important;
-  background-color: transparent !important;
+  display: block !important; /* Removes inline spacing */
+  margin-bottom: 0 !important;
 }
 
-/* Container expands to fit image */
+/* Tighten the card structure */
 .product-card {
   height: auto !important;
   display: flex !important;
   flex-direction: column !important;
+  padding: 0 !important; /* Remove extra padding */
+  background: rgba(0, 0, 0, 0.85) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important; /* Keeps image corners rounded */
 }
 
-/* Ensure consistent width across cards */
+/* Image link takes exactly the image size */
+.product-card a {
+  display: block !important;
+  line-height: 0 !important;
+}
+
+/* Text section - clean spacing */
+.product-card .flex {
+  padding: 0.75rem 1rem !important;
+  margin-top: 0 !important;
+  border-top: 1px solid rgba(255, 215, 0, 0.15) !important;
+}
+
+/* Product name */
+.product-card h3 {
+  margin-top: 0 !important;
+  margin-bottom: 0.25rem !important;
+  font-size: 1.1rem !important;
+}
+
+/* Price */
+.product-card .price {
+  margin: 0 !important;
+  font-size: 1.2rem !important;
+}
+
+/* Favorite button - position over image */
+.product-card .absolute {
+  position: absolute !important;
+  top: 0.5rem !important;
+  right: 0.5rem !important;
+}
+
+/* Grid alignment */
 .products-grid {
-  align-items: start !important; /* Cards align at top, not stretched */
+  align-items: start !important;
+  gap: 1.5rem !important;
 }
