@@ -1236,3 +1236,39 @@ img {
     right: 15px;
   }
 }
+
+/* ========== STANDARDIZE PRODUCT IMAGES (NO CROPPING) ========== */
+
+/* Force the image container to a uniform shape */
+.product-card .product-gallery,
+.product-card .aspect-\[3\/4\] {
+  aspect-ratio: 4 / 5 !important;
+  overflow: hidden !important;
+  background-color: #131313 !important; /* Your brand dark background */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Show the ENTIRE image without cropping */
+.product-card img,
+.product-card .main-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important; /* CONTAIN = show full image, no cropping */
+  background-color: #131313 !important; /* Fills empty space with your brand color */
+}
+
+/* For images that are landscape (wider than tall) */
+.product-card img[src*="landscape"],
+.product-card img.landscape {
+  object-fit: contain !important;
+}
+
+/* Adjust mobile view */
+@media screen and (max-width: 768px) {
+  .product-card .product-gallery,
+  .product-card .aspect-\[3\/4\] {
+    aspect-ratio: 4 / 5 !important;
+  }
+}
