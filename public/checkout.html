@@ -51,8 +51,8 @@
       <div class="space-y-6 mb-8 max-h-80 overflow-y-auto" id="order-items"></div>
       <div class="space-y-4 text-sm font-label tracking-wide text-on-surface-variant/80">
         <div class="flex justify-between"><span data-i18n="subtotal">Subtotal</span><span id="subtotal">0.00 RON</span></div>
-           <div class="flex justify-between text-primary font-bold pt-4 border-t border-primary-container/10"><span class="uppercase tracking-[0.2em]" data-i18n="total">Total</span><span class="text-xl font-headline" id="total">0.00 RON</span></div>
-        <p class="text-right text-[10px] text-tertiary-fixed-dim/50 uppercase tracking-widest italic" data-i18n="delivery_fee_notice">* Free shipping over 300 RON</p>
+        <div class="flex justify-between text-primary font-bold pt-4 border-t border-primary-container/10"><span class="uppercase tracking-[0.2em]" data-i18n="total">Total</span><span class="text-xl font-headline" id="total">0.00 RON</span></div>
+        <p class="text-right text-[10px] text-tertiary-fixed-dim/50 uppercase tracking-widest italic" data-i18n="delivery_fee_notice">* delivery fee is not included</p>
       </div>
       <button class="w-full mt-8 bg-primary-container text-on-primary py-5 rounded-lg text-xs font-bold tracking-[0.3em] uppercase transition-all hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] active:scale-95" id="submit-btn" onclick="processCheckout()" data-i18n="complete_purchase">Complete Purchase</button>
       <p class="mt-6 text-center text-[10px] text-tertiary-fixed-dim/40 tracking-widest uppercase" data-i18n="encrypted_protocol">Encrypted through the Aurelian Security Protocol</p>
@@ -83,12 +83,11 @@ function loadCart() {
   container.innerHTML = cart.map(item => { 
     const itemTotal = item.price * item.quantity; 
     subtotal += itemTotal; 
-    return `<div class="flex gap-4 items-center border-b border-white/5 pb-4"><div class="w-16 h-20 bg-surface-container-high flex-shrink-0 overflow-hidden rounded"><img src="${item.image || '/images/placeholder.jpg'}" class="w-full h-full object-cover"></div><div class="flex-grow"><p class="text-xs font-bold uppercase">${item.name}</p><p class="text-[10px] text-tertiary-fixed-dim">${item.size} / ${item.color} x${item.quantity}</p><p class="text-primary-container font-headline mt-1 text-sm">${itemTotal.toFixed(2)} RON</p></div></div>`; 
+    return `<div class="flex gap-4 items-center border-b border-white/5 pb-4">...</div>`; 
   }).join('');
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  
   document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} RON`;
-  document.getElementById('shipping-fee').textContent = shipping === 0 ? 'FREE' : `${shipping.toFixed(2)} RON`;
-  document.getElementById('total').textContent = `${(subtotal + shipping).toFixed(2)} RON`;
+  document.getElementById('total').textContent = `${subtotal.toFixed(2)} RON`;
   document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
 }
 
