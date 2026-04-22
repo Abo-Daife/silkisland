@@ -43,8 +43,7 @@ let product = null;
 let selectedColor = null;
 let selectedSize = null;
 let productQuantity = 1;
-let currentLightboxImages = [];
-let currentLightboxIndex = 0;
+
 
 // ========== TRANSLATION HELPERS ==========
 const translationCache = {};
@@ -253,8 +252,8 @@ function attachEventListeners() {
 // ========== LIGHTBOX FUNCTIONS ==========
 function openLightbox(index) {
   const images = product.images || [product.image];
-  currentLightboxImages = images;
-  currentLightboxIndex = index;
+  window.currentLightboxImages = images;
+  window.currentLightboxIndex = index;
   let lightbox = document.getElementById('lightbox-modal');
   if (!lightbox) {
     lightbox = document.createElement('div');
@@ -267,11 +266,33 @@ function openLightbox(index) {
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-function closeLightbox() { document.getElementById('lightbox-modal')?.classList.remove('active'); document.body.style.overflow = ''; }
-function lightboxNext() { currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxImages.length; updateLightboxImage(); }
-function lightboxPrev() { currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length; updateLightboxImage(); }
-function updateLightboxImage() { document.getElementById('lightbox-img').src = currentLightboxImages[currentLightboxIndex]; document.getElementById('lightbox-counter').textContent = `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`; }
-document.addEventListener('keydown', function(e) { if (!document.getElementById('lightbox-modal')?.classList.contains('active')) return; if (e.key === 'Escape') closeLightbox(); if (e.key === 'ArrowLeft') lightboxPrev(); if (e.key === 'ArrowRight') lightboxNext(); });
+
+function closeLightbox() { 
+  document.getElementById('lightbox-modal')?.classList.remove('active'); 
+  document.body.style.overflow = ''; 
+}
+
+function lightboxNext() { 
+  window.currentLightboxIndex = (window.currentLightboxIndex + 1) % window.currentLightboxImages.length; 
+  updateLightboxImage(); 
+}
+
+function lightboxPrev() { 
+  window.currentLightboxIndex = (window.currentLightboxIndex - 1 + window.currentLightboxImages.length) % window.currentLightboxImages.length; 
+  updateLightboxImage(); 
+}
+
+function updateLightboxImage() { 
+  document.getElementById('lightbox-img').src = window.currentLightboxImages[window.currentLightboxIndex]; 
+  document.getElementById('lightbox-counter').textContent = `${window.currentLightboxIndex + 1} / ${window.currentLightboxImages.length}`; 
+}
+
+document.addEventListener('keydown', function(e) { 
+  if (!document.getElementById('lightbox-modal')?.classList.contains('active')) return; 
+  if (e.key === 'Escape') closeLightbox(); 
+  if (e.key === 'ArrowLeft') lightboxPrev(); 
+  if (e.key === 'ArrowRight') lightboxNext(); 
+});
 
 // ========== LANGUAGE CHANGE LISTENER ==========
 window.addEventListener('languageChanged', async () => { await updateDescriptionTranslation(); });
