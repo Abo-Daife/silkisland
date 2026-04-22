@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://silkisland.ro/</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/categories.html</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/our-legacy</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/favorites</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/account</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/size-guide</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/track-order</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/shipping.html</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/privacy.html</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/account?tab=orders</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/admin/dashboard</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://silkisland.ro/admin/orders</loc>
+  <lastmod>2026-04-22T22:34:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>
