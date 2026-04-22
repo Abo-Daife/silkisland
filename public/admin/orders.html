@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Management — SilkIsland</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-surface text-on-surface p-8">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl text-primary-container mb-8">Order Management</h1>
+    
+    <table class="w-full">
+      <thead>
+        <tr class="border-b border-white/10">
+          <th class="p-4 text-left">Order ID</th>
+          <th class="p-4 text-left">Customer</th>
+          <th class="p-4 text-left">Total</th>
+          <th class="p-4 text-left">Status</th>
+          <th class="p-4 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="orders-table"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const API_URL = window.API_URL || 'https://silkisland-api.amr-mokhtar301.workers.dev';
+    
+    async function loadOrders() {
+      const res = await fetch(`${API_URL}/api/orders`);
+      const data = await res.json();
+      const orders = data.orders || [];
+      
+      const tbody = document.getElementById('orders-table');
+      tbody.innerHTML = orders.map(order => `
+        <tr class="border-b border-white/5">
+          <td class="p-4">${order.id}</td>
+          <td class="p-4">${order.customer_name}<br><small>${order.customer_email}</small></td>
+          <td class="p-4">${order.total} RON</td>
+          <td class="p-4">
+            <select onchange="updateStatus('${order.id}', this.value)" class="bg-surface-container border border-outline-variant rounded px-3 py-1">
+              <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+              <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Processing</option>
+              <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Shipped</option>
+              <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+            </select>
+          </td>
+          <td class="p-4">
+            <button onclick="viewOrder('${order.id}')" class="text-primary-container">View</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    
+    async function updateStatus(orderId, status) {
+      await fetch(`${API_URL}/api/admin/orders/${orderId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
+      alert('Status updated!');
+    }
+    
+    function viewOrder(orderId) {
+      window.location.href = `/track-order.html?id=${orderId}`;
+    }
+    
+    loadOrders();
+  </script>
+</body>
+</html>
