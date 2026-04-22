@@ -1,4 +1,5 @@
 window.API_URL = 'https://silkisland-api.amr-mokhtar301.workers.dev';
+window.translationCache = {};
 
 // ========== STATE ==========
 let products = [];
