@@ -120,6 +120,26 @@ async function loadProduct() {
   } catch (e) { console.error('Failed to load product:', e); }
 }
 
+async function updateDescriptionTranslation() {
+  const lang = localStorage.getItem('language') || 'en';
+  const descEl = document.getElementById('product-description-text');
+  if (!descEl) return;
+  
+  let description = product.description;
+  if (!description) {
+    const defaults = {
+      en: 'A timeless piece from the Private Collection.',
+      ro: 'O piesă atemporală din Colecția Privată.',
+      tr: 'Özel Koleksiyondan zamansız bir parça.'
+    };
+    description = defaults[lang] || defaults.en;
+  } else if (lang !== 'en') {
+    description = await autoTranslate(description, lang);
+  }
+  
+  descEl.textContent = description;
+}
+
 function renderProduct() {
   const container = document.getElementById('product-container');
   const images = product.images || [product.image];
@@ -135,10 +155,11 @@ function renderProduct() {
       </div>
       <div class="space-y-6">
         <div><p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category || 'Limited Edition'}</p><h1 class="font-headline text-4xl md:text-5xl text-primary-container">${product.name}</h1><p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p></div>
-        <p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic">${product.description || 'A timeless piece from the Private Collection.'}</p>
+        <p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic" id="product-description-text">${product.description || 'A timeless piece from the Private Collection.'}</p>
         
-        <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Color: <span id="selected-color-display">${selectedColor}</span></label>
-          <div class="flex gap-3" id="color-selector">${(product.colors || ['Default']).map(c => `<button data-color="${c}" class="color-btn w-10 h-10 rounded-full border-2 ${selectedColor === c ? 'border-primary-container' : 'border-white/20'}" style="background-color: ${getColorHex(c)};"></button>`).join('')}</div>
+        <div>
+          <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Colors & Quantities</label>
+          <div class="space-y-2" id="color-quantity-selector"></div>
         </div>
         
         <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Size: <span id="selected-size-display">${selectedSize}</span></label>
@@ -157,10 +178,55 @@ function renderProduct() {
       </div>
     </div>
   `;
+
+  function buildColorQuantitySelectors() {
+  const container = document.getElementById('color-quantity-selector');
+  const colors = product.colors || ['Black', 'White', 'Nude'];
   
-  attachEventListeners();
-  updateCartCount();
+  container.innerHTML = colors.map(color => `
+    <div class="flex items-center justify-between p-2 bg-surface-container-low/30 rounded-lg">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full border-2 border-white/20" style="background-color: ${getColorHex(color)};"></div>
+        <span class="text-sm text-on-surface">${color}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="qty-decrease w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">−</button>
+        <span class="w-8 text-center font-bold" id="qty-${color.replace(/\s+/g, '-')}">0</span>
+        <button class="qty-increase w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">+</button>
+      </div>
+    </div>
+  `).join('');
+  
+    // Initialize quantities
+    window.colorQuantities = {};
+    colors.forEach(c => window.colorQuantities[c] = 0);
+    
+    // Add event listeners
+    document.querySelectorAll('.qty-increase').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const color = btn.dataset.color;
+        window.colorQuantities[color] = (window.colorQuantities[color] || 0) + 1;
+        document.getElementById(`qty-${color.replace(/\s+/g, '-')}`).textContent = window.colorQuantities[color];
+      });
+    });
+    
+    document.querySelectorAll('.qty-decrease').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const color = btn.dataset.color;
+        window.colorQuantities[color] = Math.max(0, (window.colorQuantities[color] || 0) - 1);
+        document.getElementById(`qty-${color.replace(/\s+/g, '-')}`).textContent = window.colorQuantities[color];
+      });
+    });
+  }
+    
+    attachEventListeners();
+    updateCartCount();
+    attachEventListeners();
+    updateCartCount();
+    updateDescriptionTranslation(); // ← ADD THIS LINE
 }
+
+
 
 function getColorHex(color) { 
   const map = {
@@ -300,19 +366,32 @@ function attachEventListeners() {
   
   document.getElementById('add-to-cart-btn').addEventListener('click', () => {
     let globalCart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-    const existing = globalCart.find(item => item.id === product.id && item.size === selectedSize && item.color === selectedColor);
-    if (existing) { existing.quantity += productQuantity; }
-    else { 
-      globalCart.push({ 
-        id: product.id, name: product.name, price: product.price, 
-        size: selectedSize, color: selectedColor, quantity: productQuantity, 
-        image: product.images?.[0] || product.image 
-      }); 
+    let addedCount = 0;
+    
+    Object.entries(window.colorQuantities).forEach(([color, qty]) => {
+      if (qty > 0) {
+        const existing = globalCart.find(item => item.id === product.id && item.size === selectedSize && item.color === color);
+        if (existing) {
+          existing.quantity += qty;
+        } else {
+          globalCart.push({
+            id: product.id, name: product.name, price: product.price,
+            size: selectedSize, color: color, quantity: qty,
+            image: product.images?.[0] || product.image
+          });
+        }
+        addedCount += qty;
+      }
+    });
+    
+    if (addedCount > 0) {
+      localStorage.setItem('silkisland_cart', JSON.stringify(globalCart));
+      updateCartCount();
+      if (typeof window.updateCartDisplay === 'function') window.updateCartDisplay();
+      alert(`${addedCount} item(s) added to cart!`);
+    } else {
+      alert('Please select at least one item.');
     }
-    localStorage.setItem('silkisland_cart', JSON.stringify(globalCart));
-    updateCartCount();
-    if (typeof window.updateCartDisplay === 'function') window.updateCartDisplay();
-    alert(`${product.name} added to cart!`);
   });
   
   document.getElementById('favorite-btn').addEventListener('click', () => {

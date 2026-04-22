@@ -404,3 +404,26 @@ function performSearch(query) { /* ... keep existing ... */ }
 function filterProducts(category) { currentCategory = category; if (document.getElementById('active-category')) document.getElementById('active-category').textContent = category; renderProducts(); }
 function showAllProducts() { currentCategory = 'All'; if (document.getElementById('active-category')) document.getElementById('active-category').textContent = translations[currentLang].all_products; renderProducts(); }
 function scrollToProducts() { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }
+
+// Simple translation cache
+const translationCache = {};
+
+async function autoTranslate(text, targetLang) {
+  if (!text || targetLang === 'en') return text;
+  
+  const cacheKey = `${text}_${targetLang}`;
+  if (translationCache[cacheKey]) return translationCache[cacheKey];
+  
+  try {
+    // Using Google Translate unofficial API (free)
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const translated = data[0][0][0];
+    translationCache[cacheKey] = translated;
+    return translated;
+  } catch (e) {
+    console.error('Translation error:', e);
+    return text; // Fallback to original
+  }
+}
