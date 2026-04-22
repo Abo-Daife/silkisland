@@ -124,14 +124,14 @@ function renderProduct() {
   const container = document.getElementById('product-container');
   const images = product.images || [product.image];
   const lang = localStorage.getItem('language') || 'en';
-  const t = productTranslations[lang] || productTranslations.en;
+  const t = productTranslations[lang] || productTranslations.en;  
   const specs = getProductSpecs();
   
   container.innerHTML = `
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <div class="space-y-4">
-        <div class="aspect-[3/4] overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm">
-        <img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox(0)">        </div>
+        <div class="overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm">
+        <img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-auto object-contain cursor-zoom-in" onclick="openLightbox(0)">        </div>
         ${images.length > 1 ? `<div class="flex gap-2 overflow-x-auto hide-scrollbar">${images.map((img, i) => `<img src="${img}" onclick="openLightbox(${i})" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i === 0 ? 'border-primary-container' : 'border-white/10'} hover:border-primary-container/50 transition-all">`).join('')}</div>` : ''}
       </div>
       <div class="space-y-6">
