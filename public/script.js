@@ -347,7 +347,21 @@ window.onload = function() {
   }
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && document.getElementById('search-modal')?.classList.contains('active')) toggleSearch();
+  langSelect.addEventListener('change', e => {
+  currentLang = e.target.value;
+  localStorage.setItem('language', currentLang);
+  applyTranslations();
+  
+  // Trigger translation on product page
+  if (typeof updateDescriptionTranslation === 'function') {
+    updateDescriptionTranslation();
+  }
+  
+  if (typeof renderProducts === 'function') renderProducts();
+  updateCartDisplay();
   });
+  });
+  
 };
 
 function applyTranslations() {

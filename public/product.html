@@ -142,6 +142,18 @@ function buildColorQuantitySelectors() {
   });
 }
 
+// Force translation when language changes
+function forceTranslateDescription() {
+  const langSelect = document.getElementById('language-select');
+  if (langSelect) {
+    langSelect.addEventListener('change', async () => {
+      setTimeout(async () => {
+        await updateDescriptionTranslation();
+      }, 100);
+    });
+  }
+}
+
 async function renderProduct() {
   const container = document.getElementById('product-container');
   const images = product.images || [product.image];
@@ -186,6 +198,7 @@ async function renderProduct() {
   attachEventListeners();
   updateCartCount();
   updateDescriptionTranslation();
+  forceTranslateDescription();
 }
 
 function getColorHex(color) { 
@@ -296,6 +309,15 @@ document.addEventListener('keydown', function(e) {
 
 // ========== LANGUAGE CHANGE LISTENER ==========
 window.addEventListener('languageChanged', async () => { await updateDescriptionTranslation(); });
+
+// Listen for language changes from the header
+const checkLanguageChange = setInterval(() => {
+  const currentLang = localStorage.getItem('language') || 'en';
+  if (window.lastLang !== currentLang) {
+    window.lastLang = currentLang;
+    if (product) updateDescriptionTranslation();
+  }
+}, 500);
 
 loadProduct();
 </script>
