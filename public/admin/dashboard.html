@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Admin - SilkIsland</title>
   <link rel="stylesheet" href="/style.css">
@@ -26,6 +25,8 @@
     }
     .btn:hover { background: #E8A2B4; }
     .btn-danger { background: #ff6b6b; color: white; }
+    .btn-orders { background: #3D3F93; color: white; margin-left: 10px; }
+    .btn-orders:hover { background: #5a5dc8; }
     table {
       width: 100%;
       background: rgba(0,0,0,0.7);
@@ -78,7 +79,10 @@
   <div class="admin-container">
     <div style="display:flex; justify-content:space-between; align-items:center;">
       <h1>Product Management</h1>
-      <a href="/" style="color:#FFD700;">← Back to Site</a>
+      <div style="display:flex; gap:15px;">
+        <a href="/admin/orders.html" class="btn btn-orders">📦 Orders</a>
+        <a href="/" style="color:#FFD700;">← Back to Site</a>
+      </div>
     </div>
     
     <button class="btn" onclick="openModal('add')">+ Add New Product</button>
