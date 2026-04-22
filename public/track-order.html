@@ -2,7 +2,6 @@
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title data-i18n="track_order_title">Track Your Journey — SilkIsland</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
@@ -50,5 +49,107 @@
 <div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal"><div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container" data-i18n="your_selection">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><div class="flex justify-between items-center mb-6"><span class="font-label text-lg uppercase tracking-wider" data-i18n="total">Total</span><span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span></div><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm" data-i18n="proceed_checkout">Proceed to Checkout</button></div></div></div>
 
 <script src="/script.js"></script>
+<script>
+const API_URL = window.API_URL || 'https://silkisland-api.amr-mokhtar301.workers.dev';
+
+async function trackOrder() {
+  const input = document.getElementById('tracking-input').value.trim();
+  if (!input) {
+    alert('Please enter an Order ID or Email address');
+    return;
+  }
+
+  const orderResult = document.getElementById('order-result');
+  const noResult = document.getElementById('no-result');
+  
+  try {
+    const res = await fetch(`${API_URL}/api/orders?query=${encodeURIComponent(input)}`);
+    const data = await res.json();
+    
+    const orders = data.orders || [];
+    const order = orders.find(o => o.id === input || o.customer_email === input);
+    
+    if (!order) {
+      orderResult.classList.add('hidden');
+      noResult.classList.remove('hidden');
+      return;
+    }
+
+    displayOrder(order);
+    orderResult.classList.remove('hidden');
+    noResult.classList.add('hidden');
+    
+  } catch (err) {
+    console.error('Tracking error:', err);
+    orderResult.classList.add('hidden');
+    noResult.classList.remove('hidden');
+  }
+}
+
+function displayOrder(order) {
+  document.getElementById('order-id-display').textContent = `#${order.id}`;
+  document.getElementById('order-status-text').textContent = order.status || 'Processing';
+  
+  const itemsContainer = document.getElementById('order-items-container');
+  let subtotal = 0;
+  
+  if (order.cart) {
+    itemsContainer.innerHTML = order.cart.map(item => {
+      const itemTotal = item.price * item.quantity;
+      subtotal += itemTotal;
+      return `
+        <div class="flex gap-6 items-center">
+          <div class="w-32 h-44 bg-surface-container-low overflow-hidden rounded ghost-border flex-shrink-0">
+            <img src="${item.image || '/images/placeholder.jpg'}" alt="${item.name}" class="w-full h-full object-cover opacity-80">
+          </div>
+          <div class="flex-grow space-y-2">
+            <p class="font-label text-[10px] tracking-[0.2em] uppercase text-tertiary-fixed-dim">Textiles / Rare</p>
+            <h4 class="font-headline text-xl text-on-surface">${item.name}</h4>
+            <p class="text-sm text-on-surface-variant">Size: ${item.size} / Color: ${item.color} x${item.quantity}</p>
+            <p class="font-headline text-lg text-primary-fixed-dim mt-4">${itemTotal.toFixed(2)} RON</p>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } else {
+    itemsContainer.innerHTML = '<p class="text-tertiary-fixed-dim">Order details loading...</p>';
+  }
+  
+  const shipping = subtotal >= 300 ? 0 : 25;
+  const total = order.total || (subtotal + shipping);
+  
+  document.getElementById('summary-subtotal').textContent = `${subtotal.toFixed(2)} RON`;
+  document.getElementById('summary-shipping').textContent = shipping === 0 ? 'FREE' : `${shipping.toFixed(2)} RON`;
+  document.getElementById('summary-total').textContent = `${total.toFixed(2)} RON`;
+  
+  updateProgressBar(order.status);
+}
+
+function updateProgressBar(status) {
+  const steps = { 'pending': 1, 'processing': 2, 'shipped': 3, 'delivered': 4 };
+  const currentStep = steps[status] || 2;
+  const progressFill = document.getElementById('progress-fill');
+  if (progressFill) {
+    progressFill.style.width = `${(currentStep - 1) * 33}%`;
+  }
+  
+  // Update step icons
+  const step3Icon = document.getElementById('step3-icon');
+  const step4Icon = document.getElementById('step4-icon');
+  
+  if (currentStep >= 3 && step3Icon) {
+    step3Icon.className = 'w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container';
+    step3Icon.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings:\'FILL\'1">local_shipping</span>';
+  }
+  if (currentStep >= 4 && step4Icon) {
+    step4Icon.className = 'w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container';
+    step4Icon.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings:\'FILL\'1">inventory_2</span>';
+  }
+}
+
+document.getElementById('tracking-input').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') trackOrder();
+});
+</script>
 </body>
 </html>
