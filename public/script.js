@@ -277,48 +277,6 @@ window.goToCheckout = function() {
   window.location.href = '/checkout.html';
 };
 
-// Also make sure updateCartDisplay is global
-window.updateCartDisplay = function() {
-  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  const countEl = document.getElementById('cart-count');
-  if (countEl) countEl.textContent = count;
-  
-  const itemsDiv = document.getElementById('cart-items');
-  const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
-  
-  if (itemsDiv) {
-    if (cart.length === 0) {
-      itemsDiv.innerHTML = '<p class="text-tertiary-fixed-dim text-center py-8">Your selection is empty</p>';
-    } else {
-      itemsDiv.innerHTML = cart.map((item, i) => `
-        <div class="flex gap-4 items-center border-b border-white/5 pb-4">
-          <div class="w-16 h-20 bg-surface-container-high flex-shrink-0 overflow-hidden rounded">
-            <img src="${item.image || '/images/placeholder.jpg'}" class="w-full h-full object-cover">
-          </div>
-          <div class="flex-grow">
-            <p class="text-xs font-bold uppercase">${item.name}</p>
-            <p class="text-[10px] text-tertiary-fixed-dim">${item.size} / ${item.color} x${item.quantity}</p>
-          </div>
-          <div class="text-right">
-            <p class="text-primary-container">${(item.price * item.quantity).toFixed(2)} RON</p>
-            <button onclick="window.removeCartItem(${i})" class="text-[10px] text-error">Remove</button>
-          </div>
-        </div>
-      `).join('');
-    }
-  }
-  
-  const totalEl = document.getElementById('cart-total');
-  if (totalEl) totalEl.textContent = `${total.toFixed(2)} RON`;
-};
-
-window.removeCartItem = function(index) {
-  cart.splice(index, 1);
-  localStorage.setItem('silkisland_cart', JSON.stringify(cart));
-  window.updateCartDisplay();
-};
-
 // ========== INITIALIZATION ==========
 window.onload = function() {
   console.log('SilkIsland — The Private Atrium');
@@ -331,37 +289,31 @@ window.onload = function() {
   loadProducts();
   updateCartDisplay();
   applyTranslations();
+  
   if (langSelect) {
     langSelect.addEventListener('change', e => {
       currentLang = e.target.value;
       localStorage.setItem('language', currentLang);
       applyTranslations();
+      if (typeof updateDescriptionTranslation === 'function') {
+        updateDescriptionTranslation();
+      }
       if (typeof renderProducts === 'function') renderProducts();
       updateCartDisplay();
     });
   }
+  
   const searchInput = document.getElementById('search-input');
   if (searchInput) {
     searchInput.placeholder = translations[currentLang].search_placeholder;
     searchInput.addEventListener('input', e => performSearch(e.target.value.toLowerCase().trim()));
   }
+  
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && document.getElementById('search-modal')?.classList.contains('active')) toggleSearch();
-  langSelect.addEventListener('change', e => {
-  currentLang = e.target.value;
-  localStorage.setItem('language', currentLang);
-  applyTranslations();
-  
-  // Trigger translation on product page
-  if (typeof updateDescriptionTranslation === 'function') {
-    updateDescriptionTranslation();
-  }
-  
-  if (typeof renderProducts === 'function') renderProducts();
-  updateCartDisplay();
+    if (e.key === 'Escape' && document.getElementById('search-modal')?.classList.contains('active')) {
+      toggleSearch();
+    }
   });
-  });
-  
 };
 
 function applyTranslations() {
