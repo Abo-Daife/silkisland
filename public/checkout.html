@@ -2,7 +2,6 @@
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title data-i18n="checkout_title">Complete Purchase — SilkIsland</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
@@ -63,32 +62,51 @@
 <div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal"><div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container" data-i18n="your_selection">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items-modal" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm" data-i18n="proceed_checkout">Proceed to Checkout</button></div></div></div>
 
 <script src="https://js.stripe.com/v3/"></script>
+<script src="/script.js"></script>
 <script>
-// NO const API_URL here - it's already in script.js
 const stripe = Stripe('pk_live_51TKMgJEqFnDyg3gakXA9wC0rscEnXuuZYYv4BSEuTVb6u3HCRLVywIE2CFhOvd6deAKu6ZaX6TAIsLbQ5axW7Fao005nEa1Olj');
-
-let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
 let selectedPayment = 'cash';
-const SHIPPING_FEE = 25.00;
-const FREE_SHIPPING_THRESHOLD = 300.00;
 
 function loadCart() {
+  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
   const container = document.getElementById('order-items');
   let subtotal = 0;
+  
   if (cart.length === 0) { 
     container.innerHTML = '<p class="text-tertiary-fixed-dim text-center py-8">Your selection is empty</p>'; 
-    document.getElementById('submit-btn').disabled = true; 
+    document.getElementById('submit-btn').disabled = true;
+    document.getElementById('subtotal').textContent = '0.00 RON';
+    document.getElementById('total').textContent = '0.00 RON';
     return; 
   }
+  
   container.innerHTML = cart.map(item => { 
-    const itemTotal = item.price * item.quantity; 
+    const itemTotal = item.price * (item.quantity || 1); 
     subtotal += itemTotal; 
-    return `<div class="flex gap-4 items-center border-b border-white/5 pb-4">...</div>`; 
+    return `
+      <div class="flex gap-4 items-center border-b border-white/5 pb-4">
+        <div class="w-16 h-20 bg-surface-container-high flex-shrink-0 overflow-hidden rounded">
+          <img src="${item.image || '/images/placeholder.jpg'}" class="w-full h-full object-cover">
+        </div>
+        <div class="flex-grow">
+          <p class="text-xs font-bold uppercase">${item.name}</p>
+          <p class="text-[10px] text-tertiary-fixed-dim">${item.size || 'M'} / ${item.color || 'Default'} x${item.quantity || 1}</p>
+          <p class="text-primary-container font-headline mt-1 text-sm">${itemTotal.toFixed(2)} RON</p>
+        </div>
+      </div>
+    `;
   }).join('');
   
   document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} RON`;
   document.getElementById('total').textContent = `${subtotal.toFixed(2)} RON`;
-  document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+  document.getElementById('submit-btn').disabled = false;
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  document.getElementById('cart-count').textContent = count;
 }
 
 window.selectPayment = function(method) {
@@ -127,7 +145,6 @@ window.processCheckout = async function() {
   submitBtn.disabled = true; 
   submitBtn.textContent = 'Processing...';
   
-  // Use the global API_URL from script.js
   const apiUrl = window.API_URL || 'https://silkisland-api.amr-mokhtar301.workers.dev';
   
   if (selectedPayment === 'card') {
@@ -161,24 +178,9 @@ window.processCheckout = async function() {
       
       if (result.success) {
         localStorage.removeItem('silkisland_cart');
-        document.getElementById('checkout-content').classList.add('hidden');
-        const statusDiv = document.getElementById('status-message'); 
-        statusDiv.classList.remove('hidden');
-        statusDiv.className = 'block mb-8 p-8 rounded-lg text-center bg-green-900/30 border border-green-500/30';
-        statusDiv.innerHTML = `<span class="material-symbols-outlined text-5xl text-primary-container mb-4">check_circle</span><h2 class="font-headline text-3xl text-primary-container mb-4">Purchase Complete</h2><p class="text-tertiary-fixed-dim mb-2">Order #${result.orderId}</p><p class="text-on-surface-variant mb-6">Total: ${document.getElementById('total').textContent}</p><p class="text-sm text-on-surface-variant/60 mb-8">You will pay cash upon delivery.</p><a href="/" class="inline-block bg-primary-container text-on-primary-container px-8 py-3 rounded-lg text-xs font-bold tracking-widest uppercase">Return to Atrium</a>`;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else { 
-        alert('Order failed: ' + (result.error || 'Unknown error')); 
-        submitBtn.disabled = false; 
-        submitBtn.textContent = 'Complete Purchase'; 
-      }
-
-      if (result.success) {
-        localStorage.removeItem('silkisland_cart');
         
-       // Send confirmation email via Resend (through Worker)
+        // Send confirmation email
         const totalAmount = document.getElementById('total').textContent;
-
         fetch(apiUrl + '/api/send-order-email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -187,11 +189,11 @@ window.processCheckout = async function() {
             customer_email: customerInfo.email,
             order_id: result.orderId,
             order_items: cart.map(item => 
-              `${item.name} (${item.size}/${item.color}) x${item.quantity} - ${(item.price * item.quantity).toFixed(2)} RON`
+              `${item.name} (${item.size || 'M'}/${item.color || 'Default'}) x${item.quantity || 1} - ${(item.price * (item.quantity || 1)).toFixed(2)} RON`
             ).join('\n'),
             total: totalAmount,
             address: customerInfo.address,
-            payment_method: selectedPayment === 'cash' ? 'Cash on Delivery' : 'Card Payment'
+            payment_method: 'Cash on Delivery'
           })
         }).catch(err => console.error('Email error:', err));
         
@@ -199,10 +201,14 @@ window.processCheckout = async function() {
         const statusDiv = document.getElementById('status-message'); 
         statusDiv.classList.remove('hidden');
         statusDiv.className = 'block mb-8 p-8 rounded-lg text-center bg-green-900/30 border border-green-500/30';
-        statusDiv.innerHTML = `<span class="material-symbols-outlined text-5xl text-primary-container mb-4">check_circle</span><h2 class="font-headline text-3xl text-primary-container mb-4">Purchase Complete</h2><p class="text-tertiary-fixed-dim mb-2">Order #${result.orderId}</p><p class="text-on-surface-variant mb-6">Total: ${document.getElementById('total').textContent}</p><p class="text-sm text-on-surface-variant/60 mb-8">You will pay cash upon delivery.</p><a href="/" class="inline-block bg-primary-container text-on-primary-container px-8 py-3 rounded-lg text-xs font-bold tracking-widest uppercase">Return to Atrium</a>`;
+        statusDiv.innerHTML = `<span class="material-symbols-outlined text-5xl text-primary-container mb-4">check_circle</span><h2 class="font-headline text-3xl text-primary-container mb-4">Purchase Complete</h2><p class="text-tertiary-fixed-dim mb-2">Order #${result.orderId}</p><p class="text-on-surface-variant mb-6">Total: ${totalAmount}</p><p class="text-sm text-on-surface-variant/60 mb-8">You will pay cash upon delivery.</p><a href="/" class="inline-block bg-primary-container text-on-primary-container px-8 py-3 rounded-lg text-xs font-bold tracking-widest uppercase">Return to Atrium</a>`;
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        updateCartCount();
+      } else { 
+        alert('Order failed: ' + (result.error || 'Unknown error')); 
+        submitBtn.disabled = false; 
+        submitBtn.textContent = 'Complete Purchase'; 
       }
-
     } catch (err) { 
       alert('Network error: ' + err.message); 
       submitBtn.disabled = false; 
@@ -211,16 +217,9 @@ window.processCheckout = async function() {
   }
 };
 
+// Initialize
 loadCart();
 selectPayment('cash');
-
-// Update cart count on page load
-document.addEventListener('DOMContentLoaded', function() {
-  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  document.getElementById('cart-count').textContent = count;
-});
 </script>
-<script src="/script.js"></script>
 </body>
 </html>
