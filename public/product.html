@@ -125,8 +125,7 @@ function renderProduct() {
   const images = product.images || [product.image];
   const lang = localStorage.getItem('language') || 'en';
   const t = productTranslations[lang] || productTranslations.en;  
-  const specs = getProductSpecs();
-  
+   
   container.innerHTML = `
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <div class="space-y-4">
@@ -154,18 +153,6 @@ function renderProduct() {
           </div>
           <button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm">Add to Cart</button>
           <button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container"><span class="material-symbols-outlined">favorite</span></button>
-        </div>
-        
-        <!-- Technical Architecture Section -->
-        <div class="mt-6 p-5 bg-surface-container-low/40 backdrop-blur-sm rounded-lg border border-white/5">
-          <h4 class="font-headline text-lg text-primary-container mb-4">${t.technical_architecture}</h4>
-          <div class="grid grid-cols-2 gap-4 text-sm">
-            <div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.material}</p><p class="font-medium">${specs.material}</p></div>
-            <div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.origin}</p><p class="font-medium">${specs.origin}</p></div>
-            <div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.structure}</p><p class="font-medium">${specs.structure}</p></div>
-            <div><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.silhouette}</p><p class="font-medium">${specs.silhouette}</p></div>
-            <div class="col-span-2"><p class="text-[10px] uppercase tracking-widest text-on-surface-variant">${t.care}</p><p class="font-medium">${specs.care}</p></div>
-          </div>
         </div>
       </div>
     </div>
