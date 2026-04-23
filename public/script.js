@@ -454,3 +454,23 @@ window.testFilter = function(category) {
   renderProducts();
   document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
 };
+
+// ========== COOKIE CONSENT ==========
+function acceptCookies() {
+  localStorage.setItem('cookieConsent', 'accepted');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+function rejectCookies() {
+  localStorage.setItem('cookieConsent', 'rejected');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+// Check if consent already given
+window.addEventListener('DOMContentLoaded', () => {
+  const consent = localStorage.getItem('cookieConsent');
+  if (consent) {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'none';
+  }
+});

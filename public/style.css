@@ -1346,3 +1346,62 @@ img {
 .menu-overlay.active {
   display: block;
 }
+
+/* ========== COOKIE BANNER ========== */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  border-top: 1px solid #FFD700;
+  padding: 12px 20px;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  backdrop-filter: blur(10px);
+}
+
+.cookie-banner p {
+  color: #d0c6ab;
+  margin: 0;
+  max-width: 600px;
+  text-align: center;
+}
+
+.cookie-banner a {
+  color: #FFD700;
+  text-decoration: underline;
+}
+
+.cookie-banner button {
+  background: #FFD700;
+  color: #0a0a1a;
+  border: none;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.cookie-banner button:hover {
+  background: #E8A2B4;
+}
+
+.cookie-banner button.reject {
+  background: transparent;
+  border: 1px solid #FFD700;
+  color: #FFD700;
+}
+
+.cookie-banner button.reject:hover {
+  background: rgba(255, 215, 0, 0.1);
+}
