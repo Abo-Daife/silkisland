@@ -33,11 +33,42 @@
     <div class="relative group"><div class="absolute inset-y-0 left-4 flex items-center pointer-events-none"><span class="material-symbols-outlined text-outline text-sm">search</span></div><input class="w-full bg-surface-container-highest/60 backdrop-blur-lg border-none rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-zinc-500 focus:ring-1 focus:ring-primary-fixed transition-all" data-i18n-placeholder="find_sanctuary" placeholder="Find your sanctuary..." type="text" id="category-search" onkeyup="filterCategories()"></div>
   </section>
   <div class="space-y-4" id="category-list">
-    <a href="/?category=Lingerie" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="lingerie"><div class="flex items-center justify-between p-8"><div class="flex flex-col"><span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1" data-i18n="vault_no">Vault No. 01</span><h3 class="font-headline text-2xl text-primary-container tracking-wide" data-i18n="lingerie_vault">The Lingerie Vault</h3><p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs" data-i18n="lingerie_desc">Exquisite lace and architectural silhouettes designed for the private self.</p></div><span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span></div><div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity"><span class="material-symbols-outlined text-8xl" style="font-variation-settings:'FILL'1">diamond</span></div></a>
-    <a href="/?category=Bath Stuff" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="bath"><div class="flex items-center justify-between p-8"><div class="flex flex-col"><span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1" data-i18n="sanctuary">Sanctuary</span><h3 class="font-headline text-2xl text-primary-container tracking-wide" data-i18n="bathing_sanctuary">The Bathing Sanctuary</h3><p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs" data-i18n="bathing_desc">Ritualistic bath essentials infused with ancient botanicals.</p></div><span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span></div><div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity"><span class="material-symbols-outlined text-8xl" style="font-variation-settings:'FILL'1">waves</span></div></a>
-    <a href="/?category=Towels" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="loungewear"><div class="flex items-center justify-between p-8"><div class="flex flex-col"><span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1" data-i18n="threads">Threads</span><h3 class="font-headline text-2xl text-primary-container tracking-wide" data-i18n="silk_loungewear">Silk Loungewear</h3><p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs" data-i18n="loungewear_desc">Effortless elegance for the quiet moments between.</p></div><span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span></div><div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity"><span class="material-symbols-outlined text-8xl" style="font-variation-settings:'FILL'1">auto_awesome</span></div></a>
-    <a href="/?category=Accessories" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500 category-card" data-name="accessories"><div class="flex items-center justify-between p-8"><div class="flex flex-col"><span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1" data-i18n="ornaments">Ornaments</span><h3 class="font-headline text-2xl text-primary-container tracking-wide" data-i18n="sacred_accessories">Sacred Accessories</h3><p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs" data-i18n="accessories_desc">The final touch of ritual: silk scarves and bespoke ornaments.</p></div><span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span></div><div class="absolute bottom-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity"><span class="material-symbols-outlined text-8xl" style="font-variation-settings:'FILL'1">history_edu</span></div></a>
-  </div>
+  <!-- Lingerie -->
+  <a href="/?category=Lingerie" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500">
+    <div class="flex items-center justify-between p-8">
+      <div class="flex flex-col">
+        <span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1">Vault No. 01</span>
+        <h3 class="font-headline text-2xl text-primary-container tracking-wide">Lingerie</h3>
+        <p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs">Exquisite lace and architectural silhouettes.</p>
+      </div>
+      <span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span>
+    </div>
+  </a>
+
+  <!-- Underwear -->
+  <a href="/?category=Underwear" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500">
+    <div class="flex items-center justify-between p-8">
+      <div class="flex flex-col">
+        <span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1">Vault No. 02</span>
+        <h3 class="font-headline text-2xl text-primary-container tracking-wide">Underwear</h3>
+        <p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs">Seamless comfort. Invisible beneath.</p>
+      </div>
+      <span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span>
+    </div>
+  </a>
+
+  <!-- Bath Essentials -->
+  <a href="/?category=Bath Essentials" class="block group relative overflow-hidden rounded-lg bg-surface-container-low/40 backdrop-blur-md border-l-2 border-primary-container/20 hover:border-primary-container transition-all duration-500">
+    <div class="flex items-center justify-between p-8">
+      <div class="flex flex-col">
+        <span class="font-label text-[9px] tracking-[0.15em] text-zinc-500 uppercase mb-1">Sanctuary</span>
+        <h3 class="font-headline text-2xl text-primary-container tracking-wide">Bath Essentials</h3>
+        <p class="text-on-surface-variant/60 text-xs mt-2 max-w-xs">Ritualistic bath products infused with ancient botanicals.</p>
+      </div>
+      <span class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform duration-300">arrow_forward_ios</span>
+    </div>
+  </a>
+</div>
   <section class="mt-16 relative"><div class="bg-surface-container-highest/30 backdrop-blur-lg p-8 rounded-lg ml-8 relative z-10 border-t border-white/5"><h4 class="font-headline text-2xl text-primary-container mb-4" data-i18n="archive_collection">The Archive Collection</h4><p class="font-body text-sm text-on-surface-variant mb-6 leading-relaxed" data-i18n="archive_desc">Discover rare, hand-woven pieces from our historical vault. Limited editions only.</p><a href="/?category=Archive" class="inline-block bg-primary-container text-on-primary-container px-8 py-4 font-label text-xs tracking-widest uppercase hover:brightness-110 active:scale-95 transition-all" data-i18n="explore_archive">Explore Archive</a></div><div class="absolute -top-4 -left-4 w-24 h-24 bg-primary-container/10 blur-3xl rounded-full"></div></section>
 </main>
 

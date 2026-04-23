@@ -10,6 +10,10 @@
 <body class="bg-surface text-on-surface p-8">
   <div class="max-w-7xl mx-auto">
     <h1 class="text-3xl text-primary-container mb-8">Order Management</h1>
+    <td class="p-4">
+        <select onchange="updateStatus('${order.id}', this.value)">...</select>
+        <button onclick="generateInvoice('${order.id}')" class="ml-2 text-primary-container">📄 Factură</button>
+    </td>
     
     <table class="w-full">
       <thead>
@@ -66,7 +70,73 @@
     function viewOrder(orderId) {
       window.location.href = `/track-order.html?id=${orderId}`;
     }
-    
+
+    function generateInvoice(orderId) {
+  const order = orders.find(o => o.id === orderId);
+  if (!order) return;
+  
+  // Create invoice HTML
+  const invoiceHTML = `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="UTF-8"><title>Factura ${order.id}</title>
+    <style>body{font-family:Arial,sans-serif;padding:40px}.header{display:flex;justify-content:space-between}.company{color:#333}.client{margin:30px 0}.table{width:100%;border-collapse:collapse;margin:20px 0}.table th,.table td{border:1px solid #ddd;padding:10px;text-align:left}.table th{background:#f5f5f5}.total{text-align:right;font-size:18px;font-weight:bold}</style>
+    </head>
+    <body>
+      <div class="header">
+        <div class="company">
+          <h1>EGO SRL</h1>
+          <p>CUI: [Your CUI]</p>
+          <p>Reg. Com: [Your Reg Com]</p>
+          <p>Sediu: Ilfov, Romania</p>
+          <p>IBAN: RO36 RNCB 0093 1854 0276 0001</p>
+          <p>Banca: BCR</p>
+        </div>
+        <div>
+          <h2>FACTURĂ FISCALĂ</h2>
+          <p>Seria: SILK Nr: ${order.id.slice(-6)}</p>
+          <p>Data: ${new Date(order.created_at).toLocaleDateString('ro-RO')}</p>
+        </div>
+      </div>
+      
+      <div class="client">
+        <h3>Client:</h3>
+        <p><strong>${order.customer_name}</strong></p>
+        <p>Email: ${order.customer_email}</p>
+        <p>Telefon: ${order.customer_phone}</p>
+        <p>Adresă: ${order.customer_address}</p>
+      </div>
+      
+      <table class="table">
+        <thead><tr><th>Produs</th><th>Mărime/Culoare</th><th>Cant.</th><th>Preț (RON)</th><th>Total (RON)</th></tr></thead>
+        <tbody>
+          ${order.cart.map(item => `
+            <tr><td>${item.name}</td><td>${item.size} / ${item.color}</td><td>${item.quantity}</td><td>${item.price.toFixed(2)}</td><td>${(item.price * item.quantity).toFixed(2)}</td></tr>
+          `).join('')}
+        </tbody>
+      </table>
+      
+      <div class="total">
+        <p>Total: ${order.total.toFixed(2)} RON</p>
+        <p>${order.total >= 300 ? 'Transport GRATUIT' : 'Transport: 25.00 RON'}</p>
+        <p style="margin-top:10px">Metodă plată: ${order.payment_method === 'cash' ? 'Ramburs' : 'Card'}</p>
+      </div>
+      
+      <div style="margin-top:50px">
+        <p>Semnătură: ___________________________</p>
+        <p>Data: ${new Date().toLocaleDateString('ro-RO')}</p>
+      </div>
+    </body>
+    </html>
+  `;
+  
+  // Open in new window for printing/saving as PDF
+  const win = window.open('', '_blank');
+  win.document.write(invoiceHTML);
+  win.document.close();
+  win.print(); // Automatically opens print dialog (Save as PDF)
+    }
+
     loadOrders();
   </script>
 </body>
