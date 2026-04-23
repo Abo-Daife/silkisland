@@ -293,6 +293,15 @@ window.toggleMobileMenu = function() {
   }
 };
 
+// ========== CATEGORY FILTER ==========
+window.filterProducts = function(category) {
+  currentCategory = category;
+  const activeEl = document.getElementById('active-category');
+  if (activeEl) activeEl.textContent = category;
+  renderProducts();
+  document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+};
+
 // ========== INITIALIZATION ==========
 window.onload = function() {
   console.log('SilkIsland — The Private Atrium');
