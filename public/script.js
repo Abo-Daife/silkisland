@@ -13,7 +13,7 @@ let currentLightboxIndex = 0;
 // ========== TRANSLATIONS ==========
 const translations = {
   en: {
-    brand: 'SILKISLAND', home: 'Home', collections: 'Collections', legacy: 'Our Legacy',
+    brand: 'SILKISLAND', home: 'Home', Categories: 'Categories', legacy: 'Our Legacy',
     hero_tagline: 'Where Ancient Elegance Meets Modern Desire', enter_atrium: 'Enter the Atrium',
     private_collection: 'The Private Collection', all_products: 'All Products', sanctuary_whispers: 'Sanctuary Whispers',
     your_selection: 'Your Selection', total: 'Total', proceed_checkout: 'Proceed to Checkout', explore: 'Explore',
@@ -127,7 +127,7 @@ const translations = {
     browse_all: 'Răsfoiește Toate Colecțiile'
   },
   tr: {
-    brand: 'SILKISLAND', home: 'Ana Sayfa', collections: 'Koleksiyonlar', legacy: 'Mirasımız',
+    brand: 'SILKISLAND', home: 'Ana Sayfa', Categories: 'Kategoriler', legacy: 'Mirasımız',
     hero_tagline: 'Antik Zarafet Modern Arzuyla Buluşuyor', enter_atrium: 'Atriuma Gir',
     private_collection: 'Özel Koleksiyon', all_products: 'Tüm Ürünler', sanctuary_whispers: 'Tapınak Fısıltıları',
     your_selection: 'Seçiminiz', total: 'Toplam', proceed_checkout: 'Ödemeye Geç', explore: 'Keşfet',
@@ -400,3 +400,12 @@ async function autoTranslate(text, targetLang) {
     return text; // Fallback to original
   }
 }
+
+function toggleMobileMenu() {
+  document.getElementById('mobile-menu').classList.toggle('active');
+  document.getElementById('menu-overlay').classList.toggle('active');
+  document.body.style.overflow = document.getElementById('mobile-menu').classList.contains('active') ? 'hidden' : '';
+}
+
+// Make it globally available
+window.toggleMobileMenu = toggleMobileMenu;

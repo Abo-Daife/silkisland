@@ -63,14 +63,42 @@
 </head>
 <body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
 
+  <!-- Mobile Menu Overlay -->
+<div class="menu-overlay" id="menu-overlay" onclick="toggleMobileMenu()"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <h3>𓂀 Categories 𓂀</h3>
+  <a href="/?category=Lingerie" onclick="toggleMobileMenu()">Lingerie</a>
+  <a href="/?category=Underwear" onclick="toggleMobileMenu()">Underwear</a>
+  <a href="/?category=Bath Essentials" onclick="toggleMobileMenu()">Bath Essentials</a>
+  
+  <h3>𓂀 Explore 𓂀</h3>
+  <a href="/" onclick="toggleMobileMenu()">Home</a>
+  <a href="/categories.html" onclick="toggleMobileMenu()">Categories</a>
+  <a href="/our-legacy.html" onclick="toggleMobileMenu()">Our Legacy</a>
+  <a href="/size-guide.html" onclick="toggleMobileMenu()">Size Guide</a>
+  <a href="/track-order.html" onclick="toggleMobileMenu()">Track Order</a>
+  
+  <h3>𓂀 Account 𓂀</h3>
+  <a href="/account.html" onclick="toggleMobileMenu()">My Account</a>
+  <a href="/favorites.html" onclick="toggleMobileMenu()">Favorites</a>
+  <a href="/admin/dashboard.html" onclick="toggleMobileMenu()">Admin Panel</a>
+</div>
+
 <!-- Atmospheric Background -->
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: url('/images/body.jpg'); background-size: cover; background-position: center; background-attachment: fixed;"></div>
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), #131313 95%);"></div>
 
 <!-- ===== FUNCTIONAL HEADER ===== -->
 <header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
-  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase" data-i18n="brand">SILKISLAND</a>
   
+  <!-- Hamburger Menu Button (Mobile Only) -->
+  <button onclick="toggleMobileMenu()" class="hamburger-btn text-on-surface-variant hover:text-primary-container">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase" data-i18n="brand">SILKISLAND</a>
+  <!-- Desktop Navigation -->
   <nav class="hidden md:flex items-center gap-8">
     <a href="/" class="font-label text-sm uppercase tracking-wider text-on-surface hover:text-primary-container transition-colors" data-i18n="home">Home</a>
      <!-- Categories Dropdown for Filtering -->
