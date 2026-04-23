@@ -277,6 +277,22 @@ window.goToCheckout = function() {
   window.location.href = '/checkout.html';
 };
 
+// ========== MOBILE MENU ==========
+window.toggleMobileMenu = function() {
+  const menu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('menu-overlay');
+  
+  if (menu) {
+    menu.classList.toggle('active');
+  }
+  if (overlay) {
+    overlay.classList.toggle('active');
+  }
+  if (menu) {
+    document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+  }
+};
+
 // ========== INITIALIZATION ==========
 window.onload = function() {
   console.log('SilkIsland — The Private Atrium');
@@ -408,4 +424,13 @@ function toggleMobileMenu() {
 }
 
 // Make it globally available
-window.toggleMobileMenu = toggleMobileMenu;
+window.toggleMobileMenu = function() {
+  const menu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('menu-overlay');
+  
+  if (menu && overlay) {
+    menu.classList.toggle('active');
+    overlay.classList.toggle('active');
+    document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+  }
+};
