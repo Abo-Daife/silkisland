@@ -2,7 +2,6 @@
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="keywords" content="lingerie, lenjerie, silk, matase, bath, baie, loungewear, Romania, luxury, lux">
   <meta name="description" content="SilkIsland - Luxury lingerie, bath rituals, and silk loungewear. Where ancient elegance meets modern desire. Shop our private collection online in Romania.">
   <meta name="author" content="SilkIsland">
@@ -74,9 +73,18 @@
   
   <nav class="hidden md:flex items-center gap-8">
     <a href="/" class="font-label text-sm uppercase tracking-wider text-on-surface hover:text-primary-container transition-colors" data-i18n="home">Home</a>
-    <a href="/categories.html" class="font-label text-sm uppercase tracking-wider text-on-surface hover:text-primary-container transition-colors" data-i18n="collections">Collections</a>
+    <a href="/categories.html" class="font-label text-sm uppercase tracking-wider text-on-surface hover:text-primary-container transition-colors" data-i18n="Categories">Categories</a>
     <a href="/our-legacy.html" class="font-label text-sm uppercase tracking-wider text-on-surface hover:text-primary-container transition-colors" data-i18n="legacy">Our Legacy</a>
   </nav>
+  <!-- Categories Dropdown for Filtering -->
+  <div class="categories-dropdown" style="margin-left: 2rem;">
+    <button class="categories-btn">▼ Categories</button>
+    <div class="categories-list">
+      <a onclick="filterProducts('Lingerie')">Lingerie</a>
+      <a onclick="filterProducts('Underwear')">Underwear</a>
+      <a onclick="filterProducts('Bath Essentials')">Bath Essentials</a>
+    </div>
+  </div>
 
   <div class="flex items-center gap-4">
     <button onclick="toggleSearch()" class="text-on-surface-variant hover:text-primary-container">
@@ -192,7 +200,7 @@
     </div>
     <div>
       <h3 class="font-headline text-xl text-primary-container mb-4" data-i18n="explore">Explore</h3>
-      <a href="/categories.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2" data-i18n="collections">Collections</a>
+      <a href="/categories.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2" data-i18n="Categories">Categories</a>
       <a href="/our-legacy.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2" data-i18n="legacy">Our Legacy</a>
       <a href="/size-guide.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2" data-i18n="size_guide">Size Guide</a>
     </div>
