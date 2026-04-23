@@ -368,7 +368,13 @@ function updateCartDisplay() {
 
 function toggleSearch() { const modal = document.getElementById('search-modal'); const input = document.getElementById('search-input'); if (!modal) return; modal.classList.toggle('active'); if (modal.classList.contains('active') && input) { input.focus(); input.value = ''; document.getElementById('search-results').innerHTML = ''; } }
 function performSearch(query) { /* ... keep existing ... */ }
-function filterProducts(category) { currentCategory = category; if (document.getElementById('active-category')) document.getElementById('active-category').textContent = category; renderProducts(); }
+function filterProducts(category) {
+  currentCategory = category;
+  if (document.getElementById('active-category')) {
+    document.getElementById('active-category').textContent = category;
+  }
+  renderProducts();
+}
 function showAllProducts() { currentCategory = 'All'; if (document.getElementById('active-category')) document.getElementById('active-category').textContent = translations[currentLang].all_products; renderProducts(); }
 function scrollToProducts() { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }
 
