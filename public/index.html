@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
+  <!-- TEMPORARY TEST BUTTONS -->
+  <div style="position: fixed; bottom: 100px; left: 20px; z-index: 9999; background: black; padding: 10px; border-radius: 8px; border: 2px solid #FFD700;">
+  <p style="color:#FFD700; margin-bottom:5px;">TEST FILTER:</p>
+  <button onclick="testFilter('Lingerie')" style="background:#FFD700; color:black; padding:5px 10px; margin:2px; border:none; border-radius:4px;">Lingerie</button>
+  <button onclick="testFilter('Underwear')" style="background:#FFD700; color:black; padding:5px 10px; margin:2px; border:none; border-radius:4px;">Underwear</button>
+  <button onclick="testFilter('Bath Essentials')" style="background:#FFD700; color:black; padding:5px 10px; margin:2px; border:none; border-radius:4px;">Bath</button>
+  <button onclick="testFilter('All')" style="background:#FFD700; color:black; padding:5px 10px; margin:2px; border:none; border-radius:4px;">All</button>
+  </div>
   <meta charset="UTF-8">
   <meta name="keywords" content="lingerie, lenjerie, silk, matase, bath, baie, loungewear, Romania, luxury, lux">
   <meta name="description" content="SilkIsland - Luxury lingerie, bath rituals, and silk loungewear. Where ancient elegance meets modern desire. Shop our private collection online in Romania.">
@@ -69,9 +77,9 @@
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobile-menu">
   <h3>𓂀 Categories 𓂀</h3>
-  <a href="/?category=Lingerie" onclick="toggleMobileMenu()">Lingerie</a>
-  <a href="/?category=Underwear" onclick="toggleMobileMenu()">Underwear</a>
-  <a href="/?category=Bath Essentials" onclick="toggleMobileMenu()">Bath Essentials</a>
+  <a href="#" onclick="event.preventDefault(); filterProducts('Lingerie'); toggleMobileMenu();">Lingerie</a>
+  <a href="#" onclick="event.preventDefault(); filterProducts('Underwear'); toggleMobileMenu();">Underwear</a>
+  <a href="#" onclick="event.preventDefault(); filterProducts('Bath Essentials'); toggleMobileMenu();">Bath Essentials</a>
   
   <h3>𓂀 Explore 𓂀</h3>
   <a href="/" onclick="toggleMobileMenu()">Home</a>

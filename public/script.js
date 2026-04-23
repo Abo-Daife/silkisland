@@ -443,3 +443,20 @@ window.toggleMobileMenu = function() {
     document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
   }
 };
+
+// TEMPORARY TEST FUNCTION
+window.testFilter = function(category) {
+  console.log('Testing filter for:', category);
+  alert('Filtering: ' + category);
+  
+  if (category === 'All') {
+    currentCategory = 'All';
+    document.getElementById('active-category').textContent = 'All Products';
+  } else {
+    currentCategory = category;
+    document.getElementById('active-category').textContent = category;
+  }
+  
+  renderProducts();
+  document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+};
