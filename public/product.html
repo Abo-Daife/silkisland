@@ -25,6 +25,11 @@
     <a href="/favorites.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">favorite</span></a>
     <a href="/account.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">person</span></a>
     <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative"><span class="material-symbols-outlined">shopping_bag</span><span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span></button>
+    <select id="language-select" class="bg-transparent text-on-surface-variant border border-outline-variant rounded-sm px-2 py-1 text-sm uppercase tracking-wider">
+      <option value="en" class="bg-surface">EN</option>
+      <option value="ro" class="bg-surface">RO</option>
+      <option value="tr" class="bg-surface">TR</option>
+    </select>
   </div>
 </header>
 
@@ -37,12 +42,9 @@
 <!-- Size Guide Modal -->
 <div id="size-guide-modal" class="fixed inset-0 z-[3000] bg-black/80 backdrop-blur-md flex items-center justify-center" onclick="closeSizeGuide(event)">
   <div class="glass-panel p-6 rounded-lg max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto" onclick="event.stopPropagation()">
-    <div class="flex items-center justify-between mb-4">
-      <h3 class="font-headline text-xl text-primary-container">Size Guide</h3>
-      <button onclick="closeSizeGuide()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">close</span></button>
-    </div>
+    <div class="flex items-center justify-between mb-4"><h3 class="font-headline text-xl text-primary-container">Size Guide</h3><button onclick="closeSizeGuide()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">close</span></button></div>
     <h4 class="font-headline text-primary-container mt-4 mb-2">Bra Sizes</h4>
-    <table class="w-full text-sm"><thead><tr class="border-b border-white/10"><th class="py-2 text-left">Underbust</th><th class="py-2 text-left">Band</th><th class="py-2 text-left">Cup A</th><th class="py-2 text-left">Cup B</th><th class="py-2 text-left">Cup C</th><th class="py-2 text-left">Cup D</th></tr></thead>
+    <table class="w-full text-sm"><thead><tr class="border-b border-white/10"><th class="py-2 text-left">Underbust</th><th class="py-2 text-left">Band</th><th class="py-2 text-left">Cup A</th><th class="py-2 text-left">Cup B</th><th class="py-2 text01">Cup C</th><th class="py-2 text-left">Cup D</th></tr></thead>
     <tbody class="text-on-surface-variant"><tr><td>63-67</td><td>65</td><td>77-79</td><td>79-81</td><td>81-83</td><td>83-85</td></tr>
     <tr><td>68-72</td><td>70</td><td>82-84</td><td>84-86</td><td>86-88</td><td>88-90</td></tr>
     <tr><td>73-77</td><td>75</td><td>87-89</td><td>89-91</td><td>91-93</td><td>93-95</td></tr>
@@ -52,7 +54,7 @@
     <table class="w-full text-sm"><thead><tr class="border-b border-white/10"><th class="py-2 text-left">Size</th><th class="py-2 text-left">Hips (cm)</th></tr></thead>
     <tbody class="text-on-surface-variant"><tr><td>XS / 36</td><td>88-92</td></tr><tr><td>S / 38</td><td>93-97</td></tr><tr><td>M / 40</td><td>98-102</td></tr><tr><td>L / 42</td><td>103-107</td></tr><tr><td>XL / 44</td><td>108-113</td></tr><tr><td>XXL / 46</td><td>114-119</td></tr><tr><td>XXXL / 48</td><td>120-125</td></tr><tr><td>XXXXL / 50</td><td>126-131</td></tr></tbody></table>
     <h4 class="font-headline text-primary-container mt-6 mb-2">How to Measure</h4>
-    <div class="space-y-3 text-sm text-on-surface-variant"><p><strong>Bust:</strong> Measure around the fullest part of your bust while wearing a non-padded bra.</p><p><strong>Waist:</strong> Measure the narrowest part of your waistline.</p><p><strong>Hips:</strong> Stand with feet together and measure around the fullest part of your hips.</p></div>
+    <div class="space-y-3 text-sm text-on-surface-variant"><p><strong>Bust:</strong> Measure around the fullest part of your bust.</p><p><strong>Waist:</strong> Measure the narrowest part of your waistline.</p><p><strong>Hips:</strong> Stand with feet together and measure around the fullest part of your hips.</p></div>
   </div>
 </div>
 
@@ -79,31 +81,127 @@ const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('id');
 let product = null, selectedColor = null, selectedSize = null, productQuantity = 1, currentRating = 5;
 
-async function autoTranslate(text,targetLang){if(!text||targetLang==='en')return text;const cacheKey=`${text}_${targetLang}`;if(window.translationCache&&window.translationCache[cacheKey])return window.translationCache[cacheKey];try{const res=await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);const data=await res.json();const translated=data[0][0][0];if(!window.translationCache)window.translationCache={};window.translationCache[cacheKey]=translated;return translated}catch(e){return text}}
-async function updateDescriptionTranslation(){const lang=localStorage.getItem('language')||'en';const descEl=document.getElementById('product-description-text');if(!descEl)return;let description=product.description;if(!description){const defaults={en:'A timeless piece from the Private Collection.',ro:'O piesă atemporală din Colecția Privată.',tr:'Özel Koleksiyondan zamansız bir parça.'};description=defaults[lang]||defaults.en}else if(lang!=='en'){description=await autoTranslate(description,lang)}descEl.textContent=description}
+// Auto-translation function
+async function autoTranslate(text, targetLang) {
+  if (!text || targetLang === 'en') return text;
+  const cacheKey = `${text}_${targetLang}`;
+  if (window.translationCache && window.translationCache[cacheKey]) return window.translationCache[cacheKey];
+  try {
+    const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
+    const data = await res.json();
+    const translated = data[0][0][0];
+    if (!window.translationCache) window.translationCache = {};
+    window.translationCache[cacheKey] = translated;
+    return translated;
+  } catch (e) { return text; }
+}
 
-const productTranslations={en:{material:'Material'},ro:{material:'Material'},tr:{material:'Materyal'}};
+// Update description translation
+async function updateDescriptionTranslation() {
+  const lang = localStorage.getItem('language') || 'en';
+  const descEl = document.getElementById('product-description-text');
+  if (!descEl) return;
+  if (!product) return;
+  
+  let description = product.description;
+  if (!description) {
+    const defaults = { en: 'A timeless piece from the Private Collection.', ro: 'O piesă atemporală din Colecția Privată.', tr: 'Özel Koleksiyondan zamansız bir parça.' };
+    description = defaults[lang] || defaults.en;
+  } else if (lang !== 'en') {
+    description = await autoTranslate(description, lang);
+  }
+  descEl.textContent = description;
+}
 
-async function loadProduct(){if(!productId){window.location.href='/';return}try{const res=await fetch(API_URL+'/api/products/'+productId);product=await res.json();selectedColor=product.colors?.[0]||'Default';selectedSize=product.sizes?.[0]||'M';await renderProduct()}catch(e){console.error('Failed to load product:',e)}}
+// Update UI text translations
+function translateUI() {
+  const lang = localStorage.getItem('language') || 'en';
+  const translations = {
+    en: { colors: 'Colors & Quantities', size: 'Size', addToCart: 'Add to Cart', reviews: 'Customer Reviews', writeReview: 'Write a Review', related: 'You May Also Like', sizeGuide: 'Size Guide', productVideo: 'Product Video' },
+    ro: { colors: 'Culori și Cantități', size: 'Mărime', addToCart: 'Adaugă în Coș', reviews: 'Recenzii Clienți', writeReview: 'Scrie o Recenzie', related: 'Ți-ar putea plăcea și', sizeGuide: 'Ghid Mărimi', productVideo: 'Video Produs' },
+    tr: { colors: 'Renkler ve Miktarlar', size: 'Beden', addToCart: 'Sepete Ekle', reviews: 'Müşteri Yorumları', writeReview: 'Yorum Yaz', related: 'Bunlar da Hoşunuza Gidebilir', sizeGuide: 'Beden Rehberi', productVideo: 'Ürün Videosu' }
+  };
+  const t = translations[lang] || translations.en;
+  
+  // Update UI elements
+  const colorsLabel = document.querySelector('label[class*="Colors"]') || document.querySelector('label:has(+ #color-quantity-selector)');
+  if (colorsLabel) colorsLabel.innerHTML = t.colors;
+  
+  const sizeLabel = document.querySelector('label[class*="Size:"]');
+  if (sizeLabel) {
+    const span = sizeLabel.querySelector('span');
+    sizeLabel.innerHTML = `${t.size}: <span id="selected-size-display">${selectedSize}</span>`;
+  }
+  
+  const addToCartBtn = document.getElementById('add-to-cart-btn');
+  if (addToCartBtn) addToCartBtn.textContent = t.addToCart;
+  
+  const reviewsTitle = document.querySelector('h3:contains("Customer Reviews"), h3:contains("Recenzii"), h3:contains("Müşteri")');
+  if (reviewsTitle) reviewsTitle.textContent = t.reviews;
+  
+  const writeReviewBtn = document.querySelector('button[onclick="openReviewModal()"]');
+  if (writeReviewBtn) writeReviewBtn.innerHTML = `<span class="material-symbols-outlined text-lg">add</span>${t.writeReview}`;
+  
+  const relatedTitle = document.querySelector('h3:contains("You May Also Like"), h3:contains("Ți-ar putea"), h3:contains("Bunlar da")');
+  if (relatedTitle) relatedTitle.textContent = t.related;
+  
+  const sizeGuideBtn = document.querySelector('button[onclick="openSizeGuide()"]');
+  if (sizeGuideBtn) sizeGuideBtn.innerHTML = `<span class="material-symbols-outlined text-[14px]">straighten</span>${t.sizeGuide}`;
+  
+  const videoLabel = document.querySelector('p:contains("Product Video"), p:contains("Video"), p:contains("Ürün Videosu")');
+  if (videoLabel) videoLabel.textContent = t.productVideo;
+}
 
-function buildColorQuantitySelectors(){const container=document.getElementById('color-quantity-selector');if(!container)return;const colors=product.colors||['Black','White','Nude'];container.innerHTML=colors.map(color=>`<div class="flex items-center justify-between p-2 bg-surface-container-low/30 rounded-lg"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full border-2 border-white/20" style="background-color:${getColorHex(color)};"></div><span class="text-sm text-on-surface">${color}</span></div><div class="flex items-center gap-2"><button class="qty-decrease w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">−</button><span class="w-8 text-center font-bold" id="qty-${color.replace(/\s+/g,'-')}">0</span><button class="qty-increase w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">+</button></div></div>`).join('');window.colorQuantities={};colors.forEach(c=>window.colorQuantities[c]=0);document.querySelectorAll('.qty-increase').forEach(btn=>{btn.addEventListener('click',()=>{const color=btn.dataset.color;window.colorQuantities[color]=(window.colorQuantities[color]||0)+1;const qtyEl=document.getElementById(`qty-${color.replace(/\s+/g,'-')}`);if(qtyEl)qtyEl.textContent=window.colorQuantities[color]})});document.querySelectorAll('.qty-decrease').forEach(btn=>{btn.addEventListener('click',()=>{const color=btn.dataset.color;window.colorQuantities[color]=Math.max(0,(window.colorQuantities[color]||0)-1);const qtyEl=document.getElementById(`qty-${color.replace(/\s+/g,'-')}`);if(qtyEl)qtyEl.textContent=window.colorQuantities[color]})})}
+// Load product
+async function loadProduct() {
+  if (!productId) { window.location.href = '/'; return; }
+  try {
+    const res = await fetch(API_URL + '/api/products/' + productId);
+    product = await res.json();
+    selectedColor = product.colors?.[0] || 'Default';
+    selectedSize = product.sizes?.[0] || 'M';
+    await renderProduct();
+  } catch (e) { console.error('Failed to load product:', e); }
+}
 
-async function renderProduct(){const container=document.getElementById('product-container');const images=product.images||[product.image];container.innerHTML=`<div class="grid grid-cols-1 lg:grid-cols-2 gap-12"><div class="space-y-4"><div class="overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm"><img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-auto object-contain cursor-zoom-in" onclick="openLightbox(0)"></div>${product.video?`<div class="mt-4"><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Product Video</p><video autoplay loop muted playsinline class="w-full rounded-sm border border-white/10"><source src="${product.video}" type="video/mp4"></video></div>`:''}${images.length>1?`<div class="flex gap-2 overflow-x-auto hide-scrollbar">${images.map((img,i)=>`<img src="${img}" onclick="openLightbox(${i})" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i===0?'border-primary-container':'border-white/10'} hover:border-primary-container/50 transition-all">`).join('')}</div>`:''}</div><div class="space-y-6"><div><p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category||'Limited Edition'}</p><h1 class="font-headline text-4xl md:text-5xl text-primary-container">${product.name}</h1><p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p></div><p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic" id="product-description-text">${product.description||'A timeless piece from the Private Collection.'}</p><div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Colors & Quantities</label><div class="space-y-2" id="color-quantity-selector"></div></div><div><div class="flex items-center justify-between mb-3"><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant">Size: <span id="selected-size-display">${selectedSize}</span></label><button onclick="openSizeGuide()" class="text-[10px] text-primary-container/70 hover:text-primary-container uppercase tracking-widest flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">straighten</span>Size Guide</button></div><div class="flex flex-wrap gap-3" id="size-selector">${(product.sizes||['M']).map(s=>`<button data-size="${s}" class="size-btn px-6 py-2 rounded-full border ${selectedSize===s?'border-primary-container bg-primary-container text-on-primary-container':'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('')}</div></div><div class="flex items-center gap-4 pt-4"><button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm">Add to Cart</button><button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container"><span class="material-symbols-outlined">favorite</span></button></div></div></div><div class="mt-12 border-t border-white/10 pt-8"><div class="flex items-center justify-between mb-6"><h3 class="font-headline text-2xl text-primary-container">Customer Reviews</h3><button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-2 rounded-lg text-xs font-bold uppercase"><span class="material-symbols-outlined text-lg">add</span>Write a Review</button></div><div id="reviews-list" class="space-y-6"></div></div><div class="mt-12 border-t border-white/10 pt-8"><h3 class="font-headline text-2xl text-primary-container mb-6">You May Also Like</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="related-products"></div></div>`;buildColorQuantitySelectors();attachEventListeners();updateCartCount();updateDescriptionTranslation();loadReviews();loadRelatedProducts()}
+function buildColorQuantitySelectors() {
+  const container = document.getElementById('color-quantity-selector');
+  if (!container) return;
+  const colors = product.colors || ['Black', 'White', 'Nude'];
+  container.innerHTML = colors.map(color => `<div class="flex items-center justify-between p-2 bg-surface-container-low/30 rounded-lg"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full border-2 border-white/20" style="background-color:${getColorHex(color)};"></div><span class="text-sm text-on-surface">${color}</span></div><div class="flex items-center gap-2"><button class="qty-decrease w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">−</button><span class="w-8 text-center font-bold" id="qty-${color.replace(/\s+/g,'-')}">0</span><button class="qty-increase w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">+</button></div></div>`).join('');
+  window.colorQuantities = {};
+  colors.forEach(c => window.colorQuantities[c] = 0);
+  document.querySelectorAll('.qty-increase').forEach(btn => { btn.addEventListener('click', () => { const color = btn.dataset.color; window.colorQuantities[color] = (window.colorQuantities[color] || 0) + 1; const qtyEl = document.getElementById(`qty-${color.replace(/\s+/g,'-')}`); if (qtyEl) qtyEl.textContent = window.colorQuantities[color]; }); });
+  document.querySelectorAll('.qty-decrease').forEach(btn => { btn.addEventListener('click', () => { const color = btn.dataset.color; window.colorQuantities[color] = Math.max(0, (window.colorQuantities[color] || 0) - 1); const qtyEl = document.getElementById(`qty-${color.replace(/\s+/g,'-')}`); if (qtyEl) qtyEl.textContent = window.colorQuantities[color]; }); });
+}
+
+async function renderProduct() {
+  const container = document.getElementById('product-container');
+  const images = product.images || [product.image];
+  const lang = localStorage.getItem('language') || 'en';
+  const t = { en: { colors: 'Colors & Quantities', size: 'Size', addToCart: 'Add to Cart', reviews: 'Customer Reviews', writeReview: 'Write a Review', related: 'You May Also Like', sizeGuide: 'Size Guide', productVideo: 'Product Video' }, ro: { colors: 'Culori și Cantități', size: 'Mărime', addToCart: 'Adaugă în Coș', reviews: 'Recenzii Clienți', writeReview: 'Scrie o Recenzie', related: 'Ți-ar putea plăcea și', sizeGuide: 'Ghid Mărimi', productVideo: 'Video Produs' }, tr: { colors: 'Renkler ve Miktarlar', size: 'Beden', addToCart: 'Sepete Ekle', reviews: 'Müşteri Yorumları', writeReview: 'Yorum Yaz', related: 'Bunlar da Hoşunuza Gidebilir', sizeGuide: 'Beden Rehberi', productVideo: 'Ürün Videosu' } };
+  const ui = t[lang] || t.en;
+  
+  container.innerHTML = `<div class="grid grid-cols-1 lg:grid-cols-2 gap-12"><div class="space-y-4"><div class="overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm"><img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-auto object-contain cursor-zoom-in" onclick="openLightbox(0)"></div>${product.video?`<div class="mt-4"><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">${ui.productVideo}</p><video autoplay loop muted playsinline class="w-full rounded-sm border border-white/10"><source src="${product.video}" type="video/mp4"></video></div>`:''}${images.length>1?`<div class="flex gap-2 overflow-x-auto hide-scrollbar">${images.map((img,i)=>`<img src="${img}" onclick="openLightbox(${i})" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i===0?'border-primary-container':'border-white/10'} hover:border-primary-container/50 transition-all">`).join('')}</div>`:''}</div><div class="space-y-6"><div><p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category||'Limited Edition'}</p><h1 class="font-headline text-4xl md:text-5xl text-primary-container">${product.name}</h1><p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p></div><p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic" id="product-description-text">${product.description||'A timeless piece from the Private Collection.'}</p><div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">${ui.colors}</label><div class="space-y-2" id="color-quantity-selector"></div></div><div><div class="flex items-center justify-between mb-3"><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant">${ui.size}: <span id="selected-size-display">${selectedSize}</span></label><button onclick="openSizeGuide()" class="text-[10px] text-primary-container/70 hover:text-primary-container uppercase tracking-widest flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">straighten</span>${ui.sizeGuide}</button></div><div class="flex flex-wrap gap-3" id="size-selector">${(product.sizes||['M']).map(s=>`<button data-size="${s}" class="size-btn px-6 py-2 rounded-full border ${selectedSize===s?'border-primary-container bg-primary-container text-on-primary-container':'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('')}</div></div><div class="flex items-center gap-4 pt-4"><button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm">${ui.addToCart}</button><button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container"><span class="material-symbols-outlined">favorite</span></button></div></div></div><div class="mt-12 border-t border-white/10 pt-8"><div class="flex items-center justify-between mb-6"><h3 class="font-headline text-2xl text-primary-container">${ui.reviews}</h3><button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-2 rounded-lg text-xs font-bold uppercase"><span class="material-symbols-outlined text-lg">add</span>${ui.writeReview}</button></div><div id="reviews-list" class="space-y-6"></div></div><div class="mt-12 border-t border-white/10 pt-8"><h3 class="font-headline text-2xl text-primary-container mb-6">${ui.related}</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="related-products"></div></div>`;
+  
+  buildColorQuantitySelectors();
+  attachEventListeners();
+  updateCartCount();
+  updateDescriptionTranslation();
+  loadReviews();
+  loadRelatedProducts();
+}
+
 function getColorHex(c){const m={'Black':'#1a1a1a',White:'#ffffff',Nude:'#E3BC9A','Light Beige':'#F5E6D3',Beige:'#E6D5B8','Dark Beige':'#D4B896',Cappuccino:'#C1A58B',Mocha:'#8B5E3C',Rose:'#E8A2B4','Powder Pink':'#F4C2C2',Mauve:'#E0B0FF','Pink Peach':'#FFDAB9',Red:'#8B0000',Burgundy:'#800020',Navy:'#000080','Midnight Blue':'#3D3F93',Gold:'#FFD700','Rose Gold':'#B76E79',Silver:'#C0C0C0',Default:'#888888'};return m[c]||'#888888'}
 function updateCartCount(){const c=JSON.parse(localStorage.getItem('silkisland_cart')||'[]');const count=c.reduce((s,i)=>s+(i.quantity||1),0);const el=document.getElementById('cart-count');if(el)el.textContent=count}
 function attachEventListeners(){document.querySelectorAll('.size-btn').forEach(b=>{b.addEventListener('click',function(){selectedSize=this.dataset.size;document.getElementById('selected-size-display').textContent=selectedSize;document.querySelectorAll('.size-btn').forEach(x=>{x.classList.remove('border-primary-container','bg-primary-container','text-on-primary-container');x.classList.add('border-outline-variant','text-on-surface-variant')});this.classList.add('border-primary-container','bg-primary-container','text-on-primary-container');this.classList.remove('border-outline-variant','text-on-surface-variant')})});document.getElementById('add-to-cart-btn').addEventListener('click',()=>{let c=JSON.parse(localStorage.getItem('silkisland_cart')||'[]');let added=0;Object.entries(window.colorQuantities||{}).forEach(([color,qty])=>{if(qty>0){const ex=c.find(i=>i.id===product.id&&i.size===selectedSize&&i.color===color);if(ex)ex.quantity+=qty;else c.push({id:product.id,name:product.name,price:product.price,size:selectedSize,color,quantity:qty,image:product.images?.[0]||product.image});added+=qty}});if(added>0){localStorage.setItem('silkisland_cart',JSON.stringify(c));updateCartCount();if(typeof window.updateCartDisplay==='function')window.updateCartDisplay();alert(`${added} item(s) added to cart!`)}else alert('Please select at least one item.')});document.getElementById('favorite-btn').addEventListener('click',()=>{let f=JSON.parse(localStorage.getItem('silkisland_favorites')||'[]');if(!f.includes(product.id)){f.push(product.id);localStorage.setItem('silkisland_favorites',JSON.stringify(f));alert('Added to favorites!')}})}
 
-// Reviews
 function openReviewModal(){document.getElementById('review-modal').style.display='flex';setRating(5)}
 function closeReviewModal(e){if(!e||e.target===document.getElementById('review-modal'))document.getElementById('review-modal').style.display='none'}
 function setRating(r){currentRating=r;document.getElementById('review-rating').value=r;document.querySelectorAll('#star-rating span').forEach((s,i)=>{s.style.fontVariationSettings=i<r?"'FILL' 1":"'FILL' 0";s.style.color=i<r?'#FFD700':''})}
 function submitReview(e){e.preventDefault();const r={productId,name:document.getElementById('review-name').value,rating:currentRating,text:document.getElementById('review-text').value,date:new Date().toISOString()};let revs=JSON.parse(localStorage.getItem('silkisland_reviews')||'[]');revs.push(r);localStorage.setItem('silkisland_reviews',JSON.stringify(revs));closeReviewModal();loadReviews();alert('Thank you for your review!');document.getElementById('review-name').value='';document.getElementById('review-text').value=''}
 function loadReviews(){const c=document.getElementById('reviews-list');const revs=JSON.parse(localStorage.getItem('silkisland_reviews')||'[]').filter(r=>r.productId===productId);if(revs.length===0){c.innerHTML='<p class="text-tertiary-fixed-dim italic text-center py-4">No reviews yet. Be the first!</p>';return}c.innerHTML=revs.reverse().map(r=>`<div class="border-b border-white/5 pb-4"><div class="flex items-center gap-2 mb-1"><div class="flex text-primary-container">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div><span class="text-xs text-on-surface-variant">${r.name}</span><span class="text-xs text-on-surface-variant/50">${new Date(r.date).toLocaleDateString()}</span></div><p class="text-sm text-on-surface-variant">${r.text}</p></div>`).join('')}
-
-// Related Products
 async function loadRelatedProducts(){try{const res=await fetch(API_URL+'/api/products');const all=await res.json();const related=all.filter(p=>p.category===product.category&&p.id!==product.id).sort(()=>Math.random()-0.5).slice(0,4);const c=document.getElementById('related-products');if(!c||related.length===0)return;c.innerHTML=related.map(p=>`<a href="/product.html?id=${p.id}" class="block group"><div class="aspect-[3/4] overflow-hidden bg-surface-container-lowest rounded-sm"><img src="${p.images?.[0]||p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div><p class="text-sm font-medium mt-2 text-on-surface">${p.name}</p><p class="text-primary-container">${p.price} RON</p></a>`).join('')}catch(e){console.error('Related error:',e)}}
-
-// Size Guide
 function openSizeGuide(){document.getElementById('size-guide-modal').style.display='flex'}
 function closeSizeGuide(e){if(!e||e.target===document.getElementById('size-guide-modal'))document.getElementById('size-guide-modal').style.display='none'}
 
@@ -115,8 +213,22 @@ function lightboxPrev(){window.currentLightboxIndex=(window.currentLightboxIndex
 function updateLightboxImage(){document.getElementById('lightbox-img').src=window.currentLightboxImages[window.currentLightboxIndex];document.getElementById('lightbox-counter').textContent=`${window.currentLightboxIndex+1}/${window.currentLightboxImages.length}`}
 document.addEventListener('keydown',e=>{if(!document.getElementById('lightbox-modal')?.classList.contains('active'))return;if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft')lightboxPrev();if(e.key==='ArrowRight')lightboxNext()});
 
-window.addEventListener('languageChanged',async()=>{await updateDescriptionTranslation()});
-setInterval(()=>{const cl=localStorage.getItem('language')||'en';if(window.lastLang!==cl){window.lastLang=cl;if(product)updateDescriptionTranslation()}},500);
+// Language change handler
+document.getElementById('language-select').addEventListener('change', async (e) => {
+  localStorage.setItem('language', e.target.value);
+  await updateDescriptionTranslation();
+  await renderProduct();
+  window.dispatchEvent(new Event('languageChanged'));
+});
+
+// Check for language changes
+setInterval(() => {
+  const cl = localStorage.getItem('language') || 'en';
+  if (window.lastLang !== cl) {
+    window.lastLang = cl;
+    if (product) { updateDescriptionTranslation(); renderProduct(); }
+  }
+}, 500);
 
 loadProduct();
 </script>
