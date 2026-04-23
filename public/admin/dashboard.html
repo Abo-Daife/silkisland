@@ -138,6 +138,12 @@
           <label>Main Image Filename *</label>
           <input type="text" id="productImage" placeholder="e.g., product1.jpg" required>
         </div>
+
+        <div class="form-group">
+          <label>Video Filename (optional)</label>
+          <input type="text" id="productVideo" placeholder="e.g., product-video.mp4">
+          <small>Short video showing the product</small>
+        </div>
         
         <div class="form-group">
           <label>Additional Images (comma separated)</label>
@@ -261,6 +267,7 @@
         description: document.getElementById('productDescription').value || '',
         image: mainImage,
         images: images,
+        video: document.getElementById('productVideo').value ? '/images/' + document.getElementById('productVideo').value : null,
         sizes: document.getElementById('productSizes').value.split(',').map(s => s.trim()),
         colors: document.getElementById('productColors').value.split(',').map(c => c.trim())
       };
