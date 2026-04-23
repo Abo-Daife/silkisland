@@ -426,12 +426,6 @@ async function autoTranslate(text, targetLang) {
   }
 }
 
-function toggleMobileMenu() {
-  document.getElementById('mobile-menu').classList.toggle('active');
-  document.getElementById('menu-overlay').classList.toggle('active');
-  document.body.style.overflow = document.getElementById('mobile-menu').classList.contains('active') ? 'hidden' : '';
-}
-
 // Make it globally available
 window.toggleMobileMenu = function() {
   const menu = document.getElementById('mobile-menu');
