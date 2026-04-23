@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Blog — SilkIsland</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@300;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary-container":"#FFD700","surface":"#131313","on-surface":"#e5e2e1","on-surface-variant":"#d0c6ab"},fontFamily:{headline:["Noto Serif","serif"],body:["Manrope","sans-serif"]}}}}</script>
+  <style>body{background-color:#131313;min-height:100vh}</style>
+</head>
+<body class="bg-surface text-on-surface font-body">
+
+<header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15">
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
+  <div class="flex items-center gap-4">
+    <a href="/" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">home</span></a>
+    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">person</span></a>
+    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative"><span class="material-symbols-outlined">shopping_bag</span><span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span></button>
+  </div>
+</header>
+
+<main class="pt-28 pb-20 px-6 max-w-4xl mx-auto">
+  <h1 class="font-headline text-4xl md:text-5xl text-primary-container mb-4">The Atrium Journal</h1>
+  <p class="text-on-surface-variant mb-12 italic">Insights on lingerie, self-care rituals, and timeless elegance.</p>
+  
+  <div class="space-y-12">
+    
+    <!-- Article 1 -->
+    <article class="border-b border-white/10 pb-10">
+      <span class="text-xs text-primary-container uppercase tracking-widest">Lingerie Care</span>
+      <h2 class="font-headline text-2xl text-primary-container mt-2 mb-2">How to Care for Silk Lingerie: A Complete Guide</h2>
+      <p class="text-xs text-on-surface-variant mb-4">April 23, 2026 • 4 min read</p>
+      <p class="text-on-surface-variant mb-4 leading-relaxed">Silk is one of the most delicate and luxurious fabrics in the world. Proper care ensures your silk pieces remain beautiful for years. Learn the essential steps for washing, drying, and storing your silk lingerie to maintain its elegance and softness.</p>
+      <div class="space-y-3 text-on-surface-variant text-sm mt-4">
+        <h3 class="text-primary-container font-bold">Key Tips:</h3>
+        <p>🧼 Always hand wash silk in cold water with mild detergent.</p>
+        <p>🌬️ Never wring or twist silk—gently press out excess water with a towel.</p>
+        <p>☀️ Avoid direct sunlight when drying to prevent color fading.</p>
+        <p>📦 Store flat or rolled, never on hangers which can stretch the fabric.</p>
+      </div>
+    </article>
+    
+    <!-- Article 2 -->
+    <article class="border-b border-white/10 pb-10">
+      <span class="text-xs text-primary-container uppercase tracking-widest">Style Guide</span>
+      <h2 class="font-headline text-2xl text-primary-container mt-2 mb-2">Finding Your Perfect Bra Size at Home</h2>
+      <p class="text-xs text-on-surface-variant mb-4">April 20, 2026 • 5 min read</p>
+      <p class="text-on-surface-variant mb-4 leading-relaxed">Studies show that 80% of women wear the wrong bra size. An ill-fitting bra can cause discomfort, poor posture, and affect how your clothes look. Follow our simple guide to measure yourself correctly at home.</p>
+      <div class="space-y-3 text-on-surface-variant text-sm mt-4">
+        <h3 class="text-primary-container font-bold">How to Measure:</h3>
+        <p>📏 <strong>Band Size:</strong> Measure directly under your bust. Round to the nearest whole number.</p>
+        <p>📐 <strong>Bust Size:</strong> Measure around the fullest part of your bust.</p>
+        <p>🔢 <strong>Calculate:</strong> Subtract band from bust. Each inch difference = one cup size.</p>
+        <p>✅ <strong>Try before buying:</strong> Always check our size guide when shopping at SilkIsland.</p>
+      </div>
+    </article>
+    
+    <!-- Article 3 -->
+    <article class="border-b border-white/10 pb-10">
+      <span class="text-xs text-primary-container uppercase tracking-widest">Self-Care</span>
+      <h2 class="font-headline text-2xl text-primary-container mt-2 mb-2">The Ritual of Self-Care: Transform Your Daily Routine</h2>
+      <p class="text-xs text-on-surface-variant mb-4">April 15, 2026 • 6 min read</p>
+      <p class="text-on-surface-variant mb-4 leading-relaxed">Self-care isn't just a trend—it's a necessary practice for mental and physical wellbeing. Discover how to transform ordinary moments into sacred rituals with bath essentials, silk loungewear, and intentional pauses.</p>
+      <div class="space-y-3 text-on-surface-variant text-sm mt-4">
+        <h3 class="text-primary-container font-bold">Ritual Ideas:</h3>
+        <p>🛁 <strong>Morning Bath:</strong> Start your day with a warm soak using our bath salts.</p>
+        <p>🌙 <strong>Evening Routine:</strong> Slip into silk loungewear for ultimate relaxation.</p>
+        <p>📵 <strong>Digital Detox:</strong> 30 minutes without screens before bed.</p>
+        <p>🕯️ <strong>Ambiance:</strong> Light a candle, play soft music, and disconnect.</p>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="border-t border-white/5 py-8 px-6 text-center">
+  <p class="text-on-surface-variant text-sm">© 2026 SilkIsland · The Private Atrium</p>
+</footer>
+
+<script src="/script.js"></script>
+</body>
+</html>
