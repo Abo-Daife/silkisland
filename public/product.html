@@ -100,16 +100,27 @@ let product = null, selectedColor = null, selectedSize = null, productQuantity =
 // Auto-translation function
 async function autoTranslate(text, targetLang) {
   if (!text || targetLang === 'en') return text;
-  const cacheKey = `${text}_${targetLang}`;
-  if (window.translationCache && window.translationCache[cacheKey]) return window.translationCache[cacheKey];
+  
+  // Replace pipes with placeholder before translation
+  const placeholder = text.replace(/\|/g, '{{PIPE}}');
+  
+  const cacheKey = `${placeholder}_${targetLang}`;
+  if (window.translationCache && window.translationCache[cacheKey]) {
+    return window.translationCache[cacheKey].replace(/\{\{PIPE\}\}/g, '|');
+  }
+  
   try {
-    const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(placeholder)}`;
+    const res = await fetch(url);
     const data = await res.json();
-    const translated = data[0][0][0];
+    const translated = data[0][0][0].replace(/\{\{PIPE\}\}/g, '|');
+    
     if (!window.translationCache) window.translationCache = {};
     window.translationCache[cacheKey] = translated;
     return translated;
-  } catch (e) { return text; }
+  } catch (e) {
+    return text;
+  }
 }
 
 // Update description translation
