@@ -4,796 +4,275 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>SilkIsland — Product</title>
-  
-  <!-- Google Analytics -->
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DQM9C6V5SH"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
     gtag('config', 'G-DQM9C6V5SH');
-  </script>
-  
+  </script> 
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;400;700&family=Manrope:wght@200;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary-fixed":"#ffe16d","tertiary-fixed":"#ffd9e1","primary-fixed-dim":"#e9c400","surface":"#131313","primary-container":"#FFD700","on-surface":"#e5e2e1","on-surface-variant":"#d0c6ab","surface-container-low":"#1c1b1b","surface-container-highest":"#353534","outline-variant":"#4d4732","tertiary-fixed-dim":"#fbb3c5","background":"#131313","on-primary-container":"#705e00"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},fontFamily:{headline:["Noto Serif","serif"],body:["Manrope","sans-serif"],label:["Manrope","sans-serif"]}}}}</script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      background: #131313;
-      color: #e5e2e1;
-      font-family: 'Manrope', sans-serif;
-    }
-    
-    .font-headline { font-family: 'Noto Serif', serif; }
-    
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-    }
-    
-    .glass-panel {
-      background: rgba(19, 19, 19, 0.95);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 215, 0, 0.15);
-    }
-    
-    .modal { display: none; position: fixed; inset: 0; z-index: 3000; background: rgba(0,0,0,0.9); backdrop-filter: blur(12px); align-items: center; justify-content: center; }
-    .modal.active { display: flex; }
-    
-    .lightbox-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      z-index: 10000;
-      align-items: center;
-      justify-content: center;
-    }
-    .lightbox-modal.active { display: flex; }
-    
-    .color-swatch {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: 2px solid transparent;
-    }
-    .color-swatch.active {
-      border-color: #FFD700;
-      transform: scale(1.1);
-      box-shadow: 0 0 0 2px rgba(255,215,0,0.3);
-    }
-    
-    .size-btn {
-      padding: 8px 20px;
-      border-radius: 40px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: transparent;
-      color: #e5e2e1;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 12px;
-      font-weight: bold;
-    }
-    .size-btn.active {
-      background: #FFD700;
-      color: #1a1a1a;
-      border-color: #FFD700;
-    }
-    
-    .quantity-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: transparent;
-      color: #e5e2e1;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .quantity-btn:hover {
-      background: #FFD700;
-      color: #1a1a1a;
-    }
-    
-    .cart-modal {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 100%;
-      max-width: 480px;
-      height: 100%;
-      background: #1c1b1b;
-      z-index: 2000;
-      transition: right 0.3s ease;
-      overflow-y: auto;
-    }
-    .cart-modal.open { right: 0; }
-    
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .material-symbols-outlined{font-variation-settings:'FILL'0,'wght'300,'GRAD'0,'opsz'24}
+    body{min-height:max(884px,100dvh);background-color:#131313}
+    #review-modal,#size-guide-modal{display:none}
+    .glass-panel{background:rgba(19,19,19,0.85);backdrop-filter:blur(20px);border:1px solid rgba(255,215,0,0.15)}
   </style>
 </head>
-<body>
+<body class="bg-surface text-on-surface font-body">
 
-<!-- Header -->
-<header class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/20">
-  <a href="/" class="text-amber-400 font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
-  <div class="flex items-center gap-5">
-    <button onclick="history.back()" class="text-gray-300 hover:text-amber-400"><span class="material-symbols-outlined">arrow_back</span></button>
-    <a href="/favorites.html" class="text-gray-300 hover:text-amber-400"><span class="material-symbols-outlined">favorite</span></a>
-    <a href="/account.html" class="text-gray-300 hover:text-amber-400"><span class="material-symbols-outlined">person</span></a>
-    <button onclick="toggleCart()" class="text-gray-300 hover:text-amber-400 relative">
-      <span class="material-symbols-outlined">shopping_bag</span>
-      <span id="cart-count" class="absolute -top-2 -right-2 bg-amber-400 text-black text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-    </button>
-    <select id="language-select" class="bg-transparent text-gray-300 border border-gray-600 rounded px-2 py-1 text-sm">
-      <option value="en">EN</option>
-      <option value="ro">RO</option>
-      <option value="tr">TR</option>
+  <!-- Cookie Banner -->
+<div class="cookie-banner" id="cookie-banner">
+  <p>🍪 We use cookies to improve your experience. By continuing, you agree to our <a href="/privacy.html">Privacy Policy</a>.</p>
+  <button onclick="acceptCookies()">Accept</button>
+  <button class="reject" onclick="rejectCookies()">Decline</button>
+</div>
+
+<header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
+  <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
+  <div class="flex items-center gap-4">
+    <button onclick="history.back()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">arrow_back</span></button>
+    <a href="/favorites.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">favorite</span></a>
+    <a href="/account.html" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">person</span></a>
+    <button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container relative"><span class="material-symbols-outlined">shopping_bag</span><span id="cart-count" class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span></button>
+    <select id="language-select" class="bg-transparent text-on-surface-variant border border-outline-variant rounded-sm px-2 py-1 text-sm uppercase tracking-wider">
+      <option value="en" class="bg-surface">EN</option>
+      <option value="ro" class="bg-surface">RO</option>
+      <option value="tr" class="bg-surface">TR</option>
     </select>
   </div>
 </header>
 
-<main class="pt-24 pb-20">
+<main class="pt-20 pb-32">
   <div id="product-container" class="max-w-7xl mx-auto px-6">
-    <div class="text-center py-20 text-amber-400">Loading...</div>
+    <div class="text-center py-20"><p class="text-tertiary-fixed-dim">Loading...</p></div>
   </div>
 </main>
 
-<!-- Cart Modal -->
-<div id="cart-modal" class="cart-modal">
-  <div class="p-6">
-    <div class="flex justify-between items-center mb-8">
-      <h2 class="font-headline text-2xl text-amber-400" id="cart-title">Your Cart</h2>
-      <button onclick="toggleCart()" class="text-gray-400 hover:text-amber-400"><span class="material-symbols-outlined text-3xl">close</span></button>
-    </div>
-    <div id="cart-items" class="space-y-4"></div>
-    <div class="border-t border-gray-700 pt-6 mt-8">
-      <div class="flex justify-between items-center mb-6">
-        <span class="text-lg" id="cart-total-label">Total</span>
-        <span class="font-headline text-2xl text-amber-400" id="cart-total">0 RON</span>
-      </div>
-      <button onclick="goToCheckout()" class="w-full bg-amber-400 text-black py-4 font-bold uppercase tracking-wider rounded-lg">Proceed to Checkout</button>
-    </div>
-  </div>
-</div>
-
 <!-- Size Guide Modal -->
-<div id="size-guide-modal" class="modal" onclick="closeSizeGuide(event)">
+<div id="size-guide-modal" class="fixed inset-0 z-[3000] bg-black/80 backdrop-blur-md flex items-center justify-center" onclick="closeSizeGuide(event)">
   <div class="glass-panel p-6 rounded-lg max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto" onclick="event.stopPropagation()">
-    <div class="flex justify-between items-center mb-4">
-      <h3 class="font-headline text-xl text-amber-400" id="size-guide-title">Size Guide</h3>
-      <button onclick="closeSizeGuide()" class="text-gray-400 hover:text-amber-400"><span class="material-symbols-outlined">close</span></button>
-    </div>
-    <div id="size-guide-content"></div>
+    <div class="flex items-center justify-between mb-4"><h3 class="font-headline text-xl text-primary-container">Size Guide</h3><button onclick="closeSizeGuide()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">close</span></button></div>
+    <h4 class="font-headline text-primary-container mt-4 mb-2">Bra Sizes</h4>
+    <table class="w-full text-sm"><thead><tr class="border-b border-white/10"><th class="py-2 text-left">Underbust</th><th class="py-2 text-left">Band</th><th class="py-2 text-left">Cup A</th><th class="py-2 text-left">Cup B</th><th class="py-2 text01">Cup C</th><th class="py-2 text-left">Cup D</th></tr></thead>
+    <tbody class="text-on-surface-variant"><tr><td>63-67</td><td>65</td><td>77-79</td><td>79-81</td><td>81-83</td><td>83-85</td></tr>
+    <tr><td>68-72</td><td>70</td><td>82-84</td><td>84-86</td><td>86-88</td><td>88-90</td></tr>
+    <tr><td>73-77</td><td>75</td><td>87-89</td><td>89-91</td><td>91-93</td><td>93-95</td></tr>
+    <tr><td>78-82</td><td>80</td><td>92-94</td><td>94-96</td><td>96-98</td><td>98-100</td></tr>
+    <tr><td>83-87</td><td>85</td><td>97-99</td><td>99-101</td><td>101-103</td><td>103-105</td></tr></tbody></table>
+    <h4 class="font-headline text-primary-container mt-6 mb-2">Briefs & Knickers</h4>
+    <table class="w-full text-sm"><thead><tr class="border-b border-white/10"><th class="py-2 text-left">Size</th><th class="py-2 text-left">Hips (cm)</th></tr></thead>
+    <tbody class="text-on-surface-variant"><tr><td>XS / 36</td><td>88-92</td></tr><tr><td>S / 38</td><td>93-97</td></tr><tr><td>M / 40</td><td>98-102</td></tr><tr><td>L / 42</td><td>103-107</td></tr><tr><td>XL / 44</td><td>108-113</td></tr><tr><td>XXL / 46</td><td>114-119</td></tr><tr><td>XXXL / 48</td><td>120-125</td></tr><tr><td>XXXXL / 50</td><td>126-131</td></tr></tbody></table>
+    <h4 class="font-headline text-primary-container mt-6 mb-2">How to Measure</h4>
+    <div class="space-y-3 text-sm text-on-surface-variant"><p><strong>Bust:</strong> Measure around the fullest part of your bust.</p><p><strong>Waist:</strong> Measure the narrowest part of your waistline.</p><p><strong>Hips:</strong> Stand with feet together and measure around the fullest part of your hips.</p></div>
   </div>
 </div>
 
 <!-- Review Modal -->
-<div id="review-modal" class="modal" onclick="closeReviewModal(event)">
+<div id="review-modal" class="fixed inset-0 z-[3000] bg-black/80 backdrop-blur-md flex items-center justify-center" onclick="closeReviewModal(event)">
   <div class="glass-panel p-6 rounded-lg max-w-md w-full mx-4" onclick="event.stopPropagation()">
-    <h3 class="font-headline text-xl text-amber-400 mb-4" id="review-title">Write a Review</h3>
+    <h3 class="font-headline text-xl text-primary-container mb-4">Write a Review</h3>
     <form onsubmit="submitReview(event)">
-      <div class="mb-4">
-        <label class="block text-xs text-gray-400 mb-2" id="rating-label">Rating</label>
-        <div class="flex gap-2" id="star-rating">
-          ${[1,2,3,4,5].map(i => `<span class="material-symbols-outlined cursor-pointer text-2xl text-gray-500" onclick="setRating(${i})">star</span>`).join('')}
-        </div>
-        <input type="hidden" id="review-rating" value="5">
-      </div>
-      <div class="mb-4">
-        <label class="block text-xs text-gray-400 mb-2" id="name-label">Your Name</label>
-        <input type="text" id="review-name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm" required>
-      </div>
-      <div class="mb-4">
-        <label class="block text-xs text-gray-400 mb-2" id="review-text-label">Your Review</label>
-        <textarea id="review-text" rows="3" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm resize-none" required></textarea>
-      </div>
-      <div class="flex gap-3">
-        <button type="submit" class="flex-1 bg-amber-400 text-black py-2 rounded-lg text-xs font-bold uppercase" id="submit-review-btn">Submit</button>
-        <button type="button" onclick="closeReviewModal()" class="flex-1 border border-gray-600 text-gray-300 py-2 rounded-lg text-xs uppercase" id="cancel-review-btn">Cancel</button>
-      </div>
+      <div class="mb-4"><label class="block text-xs text-on-surface-variant mb-2">Rating</label><div class="flex gap-2" id="star-rating"><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(1)">star</span><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(2)">star</span><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(3)">star</span><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(4)">star</span><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(5)">star</span></div><input type="hidden" id="review-rating" value="5"></div>
+      <div class="mb-4"><label class="block text-xs text-on-surface-variant mb-2">Your Name</label><input type="text" id="review-name" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-3 py-2 text-sm" required></div>
+      <div class="mb-4"><label class="block text-xs text-on-surface-variant mb-2">Your Review</label><textarea id="review-text" rows="3" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-3 py-2 text-sm resize-none" required></textarea></div>
+      <div class="flex gap-3"><button type="submit" class="flex-1 bg-primary-container text-on-primary-container py-2 rounded-lg text-xs font-bold uppercase">Submit</button><button type="button" onclick="closeReviewModal()" class="flex-1 border border-outline-variant text-on-surface-variant py-2 rounded-lg text-xs uppercase">Cancel</button></div>
     </form>
   </div>
 </div>
 
+<div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
+  <div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><div class="flex justify-between items-center mb-6"><span class="font-label text-lg uppercase tracking-wider">Total</span><span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span></div><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm">Proceed to Checkout</button></div></div>
+</div>
+
+<script src="/script.js"></script>
 <script>
-// ==================== CONFIGURATION ====================
-const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:8787' : 'https://api.silkisland.ro';
-let product = null;
-let selectedColor = null;
-let selectedSize = null;
-let selectedQuantity = 1;
-let currentRating = 5;
-let currentLanguage = localStorage.getItem('language') || 'en';
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get('id');
+let product = null, selectedColor = null, selectedSize = null, productQuantity = 1, currentRating = 5;
 
-// ==================== LINGERIE COLOR PALETTE ====================
-const LINGERIE_COLORS = {
-  'Black': { hex: '#1a1a1a', translation: { en: 'Black', ro: 'Negru', tr: 'Siyah' } },
-  'White': { hex: '#ffffff', translation: { en: 'White', ro: 'Alb', tr: 'Beyaz' } },
-  'Nude': { hex: '#E3BC9A', translation: { en: 'Nude', ro: 'Nud', tr: 'Ten' } },
-  'Mauve': { hex: '#E0B0FF', translation: { en: 'Mauve', ro: 'Mov', tr: 'Leylak' } },
-  'Cherry': { hex: '#8B0000', translation: { en: 'Cherry', ro: 'Vișiniu', tr: 'Kiraz' } },
-  'Pink Peach': { hex: '#FFDAB9', translation: { en: 'Pink Peach', ro: 'Piersică Roz', tr: 'Pembe Şeftali' } },
-  'Rose': { hex: '#E8A2B4', translation: { en: 'Rose', ro: 'Roz', tr: 'Gül' } },
-  'Powder Pink': { hex: '#F4C2C2', translation: { en: 'Powder Pink', ro: 'Roz Pudrat', tr: 'Pudra Pembesi' } },
-  'Burgundy': { hex: '#800020', translation: { en: 'Burgundy', ro: 'Burgund', tr: 'Bordo' } },
-  'Navy': { hex: '#000080', translation: { en: 'Navy', ro: 'Bleumarin', tr: 'Lacivert' } },
-  'Midnight Blue': { hex: '#191970', translation: { en: 'Midnight Blue', ro: 'Albastru Miez de Noapte', tr: 'Gece Mavisi' } },
-  'Gold': { hex: '#FFD700', translation: { en: 'Gold', ro: 'Auriu', tr: 'ALTIN' } },
-  'Silver': { hex: '#C0C0C0', translation: { en: 'Silver', ro: 'Argintiu', tr: 'Gümüş' } },
-  'Cappuccino': { hex: '#C1A58B', translation: { en: 'Cappuccino', ro: 'Cappuccino', tr: 'Cappuccino' } },
-  'Light Beige': { hex: '#F5E6D3', translation: { en: 'Light Beige', ro: 'Bej Deschis', tr: 'AçIk Bej' } },
-  'Dark Beige': { hex: '#D4B896', translation: { en: 'Dark Beige', ro: 'Bej Închis', tr: 'Koyu Bej' } }
-};
-
-// ==================== TRANSLATIONS ====================
-const translations = {
-  en: {
-    colors: 'Colors',
-    size: 'Size',
-    addToCart: 'Add to Cart',
-    reviews: 'Customer Reviews',
-    writeReview: 'Write a Review',
-    related: 'You May Also Like',
-    sizeGuide: 'Size Guide',
-    productVideo: 'Product Video',
-    quantity: 'Quantity',
-    total: 'Total',
-    proceedCheckout: 'Proceed to Checkout',
-    yourCart: 'Your Cart',
-    noReviews: 'No reviews yet. Be the first!',
-    sizeGuideTitle: 'Size Guide',
-    limitedEdition: 'Limited Edition',
-    selectColor: 'Select a color',
-    selectSize: 'Select a size'
-  },
-  ro: {
-    colors: 'Culori',
-    size: 'Mărime',
-    addToCart: 'Adaugă în Coș',
-    reviews: 'Recenzii Clienți',
-    writeReview: 'Scrie o Recenzie',
-    related: 'Ți-ar putea plăcea și',
-    sizeGuide: 'Ghid Mărimi',
-    productVideo: 'Video Produs',
-    quantity: 'Cantitate',
-    total: 'Total',
-    proceedCheckout: 'Continuă Spre Plată',
-    yourCart: 'Coșul Tău',
-    noReviews: 'Nicio recenzie. Fii primul!',
-    sizeGuideTitle: 'Ghid Mărimi',
-    limitedEdition: 'Ediție Limitată',
-    selectColor: 'Alege o culoare',
-    selectSize: 'Alege o mărime'
-  },
-  tr: {
-    colors: 'Renkler',
-    size: 'Beden',
-    addToCart: 'Sepete Ekle',
-    reviews: 'Müşteri Yorumları',
-    writeReview: 'Yorum Yaz',
-    related: 'Bunlar da Hoşunuza Gidebilir',
-    sizeGuide: 'Beden Rehberi',
-    productVideo: 'Ürün Videosu',
-    quantity: 'Miktar',
-    total: 'Toplam',
-    proceedCheckout: 'Ödemeye Geç',
-    yourCart: 'Sepetiniz',
-    noReviews: 'Henüz yorum yok. İlk sen yaz!',
-    sizeGuideTitle: 'Beden Rehberi',
-    limitedEdition: 'Sınırlı Üretim',
-    selectColor: 'Renk seçin',
-    selectSize: 'Beden seçin'
-  }
-};
-
-function t(key) {
-  return translations[currentLanguage][key] || translations.en[key];
-}
-
-function translateColor(colorName) {
-  const colorData = LINGERIE_COLORS[colorName];
-  if (colorData && colorData.translation[currentLanguage]) {
-    return colorData.translation[currentLanguage];
-  }
-  return colorName;
-}
-
-// ==================== LOAD PRODUCT ====================
-async function loadProduct() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('id');
+// Auto-translation function
+async function autoTranslate(text, targetLang) {
+  if (!text || targetLang === 'en') return text;
   
-  if (!productId) {
-    window.location.href = '/';
-    return;
+  // Replace pipes with placeholder before translation
+  const placeholder = text.replace(/\|/g, '{{PIPE}}');
+  
+  const cacheKey = `${placeholder}_${targetLang}`;
+  if (window.translationCache && window.translationCache[cacheKey]) {
+    return window.translationCache[cacheKey].replace(/\{\{PIPE\}\}/g, '|');
   }
   
   try {
-    const response = await fetch(`${API_URL}/api/products/${productId}`);
-    if (!response.ok) throw new Error('Product not found');
-    product = await response.json();
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(placeholder)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const translated = data[0][0][0].replace(/\{\{PIPE\}\}/g, '|');
     
-    selectedColor = product.colors?.[0] || Object.keys(LINGERIE_COLORS)[0];
-    selectedSize = product.sizes?.[0] || 'M';
-    
-    await renderProduct();
-  } catch (error) {
-    console.error('Failed to load product:', error);
-    document.getElementById('product-container').innerHTML = `
-      <div class="text-center py-20">
-        <p class="text-red-500">Failed to load product. Please try again.</p>
-        <button onclick="location.reload()" class="mt-4 bg-amber-400 text-black px-6 py-2 rounded">Retry</button>
-      </div>
-    `;
+    if (!window.translationCache) window.translationCache = {};
+    window.translationCache[cacheKey] = translated;
+    return translated;
+  } catch (e) {
+    return text;
   }
 }
 
-// ==================== RENDER PRODUCT ====================
+// Update description translation
+async function updateDescriptionTranslation() {
+  const lang = localStorage.getItem('language') || 'en';
+  const descEl = document.getElementById('product-description-text');
+  if (!descEl) return;
+  if (!product) return;
+  
+  let description = product.description;
+  if (!description) {
+    const defaults = { en: 'A timeless piece from the Private Collection.', ro: 'O piesă atemporală din Colecția Privată.', tr: 'Özel Koleksiyondan zamansız bir parça.' };
+    description = defaults[lang] || defaults.en;
+  } else if (lang !== 'en') {
+    description = await autoTranslate(description, lang);
+  }
+  descEl.textContent = description;
+}
+
+// Update UI text translations
+function translateUI() {
+  const lang = localStorage.getItem('language') || 'en';
+  const translations = {
+    en: { colors: 'Colors & Quantities', size: 'Size', addToCart: 'Add to Cart', reviews: 'Customer Reviews', writeReview: 'Write a Review', related: 'You May Also Like', sizeGuide: 'Size Guide', productVideo: 'Product Video' },
+    ro: { colors: 'Culori și Cantități', size: 'Mărime', addToCart: 'Adaugă în Coș', reviews: 'Recenzii Clienți', writeReview: 'Scrie o Recenzie', related: 'Ți-ar putea plăcea și', sizeGuide: 'Ghid Mărimi', productVideo: 'Video Produs' },
+    tr: { colors: 'Renkler ve Miktarlar', size: 'Beden', addToCart: 'Sepete Ekle', reviews: 'Müşteri Yorumları', writeReview: 'Yorum Yaz', related: 'Bunlar da Hoşunuza Gidebilir', sizeGuide: 'Beden Rehberi', productVideo: 'Ürün Videosu' }
+  };
+  const t = translations[lang] || translations.en;
+  
+  // Update UI elements
+  const colorsLabel = document.querySelector('label[class*="Colors"]') || document.querySelector('label:has(+ #color-quantity-selector)');
+  if (colorsLabel) colorsLabel.innerHTML = t.colors;
+  
+  const sizeLabel = document.querySelector('label[class*="Size:"]');
+  if (sizeLabel) {
+    const span = sizeLabel.querySelector('span');
+    sizeLabel.innerHTML = `${t.size}: <span id="selected-size-display">${selectedSize}</span>`;
+  }
+  
+  const addToCartBtn = document.getElementById('add-to-cart-btn');
+  if (addToCartBtn) addToCartBtn.textContent = t.addToCart;
+  
+  const reviewsTitle = document.querySelector('h3:contains("Customer Reviews"), h3:contains("Recenzii"), h3:contains("Müşteri")');
+  if (reviewsTitle) reviewsTitle.textContent = t.reviews;
+  
+  const writeReviewBtn = document.querySelector('button[onclick="openReviewModal()"]');
+  if (writeReviewBtn) writeReviewBtn.innerHTML = `<span class="material-symbols-outlined text-lg">add</span>${t.writeReview}`;
+  
+  const relatedTitle = document.querySelector('h3:contains("You May Also Like"), h3:contains("Ți-ar putea"), h3:contains("Bunlar da")');
+  if (relatedTitle) relatedTitle.textContent = t.related;
+  
+  const sizeGuideBtn = document.querySelector('button[onclick="openSizeGuide()"]');
+  if (sizeGuideBtn) sizeGuideBtn.innerHTML = `<span class="material-symbols-outlined text-[14px]">straighten</span>${t.sizeGuide}`;
+  
+  const videoLabel = document.querySelector('p:contains("Product Video"), p:contains("Video"), p:contains("Ürün Videosu")');
+  if (videoLabel) videoLabel.textContent = t.productVideo;
+}
+
+// Load product
+async function loadProduct() {
+  if (!productId) { window.location.href = '/'; return; }
+  try {
+    const res = await fetch(API_URL + '/api/products/' + productId);
+    product = await res.json();
+    selectedColor = product.colors?.[0] || 'Default';
+    selectedSize = product.sizes?.[0] || 'M';
+    await renderProduct();
+  } catch (e) { console.error('Failed to load product:', e); }
+}
+
+const colorTranslations = {
+  en: { 'Black': 'Black', 'White': 'White', 'Red': 'Red', 'Nude': 'Nude', 'Mauve': 'Mauve', 'Cherry': 'Cherry', 'Pink Peach': 'Pink Peach', 'Light Beige': 'Light Beige', 'Dark Beige': 'Dark Beige', 'Cappuccino': 'Cappuccino', 'Rose': 'Rose', 'Powder Pink': 'Powder Pink', 'Burgundy': 'Burgundy', 'Navy': 'Navy', 'Midnight Blue': 'Midnight Blue', 'Gold': 'Gold', 'Silver': 'Silver', 'Default': 'Default' },
+  ro: { 'Black': 'Negru', 'White': 'Alb', 'Red': 'Roșu', 'Nude': 'Nud', 'Mauve': 'Mov', 'Cherry': 'Vișiniu', 'Pink Peach': 'Piersică Roz', 'Light Beige': 'Bej Deschis', 'Dark Beige': 'Bej Închis', 'Cappuccino': 'Cappuccino', 'Rose': 'Roz', 'Powder Pink': 'Roz Pudrat', 'Burgundy': 'Burgund', 'Navy': 'Bleumarin', 'Midnight Blue': 'Albastru Miez de Noapte', 'Gold': 'Auriu', 'Silver': 'Argintiu', 'Default': 'Implicit' },
+  tr: { 'Black': 'Siyah', 'White': 'Beyaz', 'Red': 'Kırmızı', 'Nude': 'Ten', 'Mauve': 'Leylak', 'Cherry': 'Kiraz', 'Pink Peach': 'Pembe Şeftali', 'Light Beige': 'Açık Bej', 'Dark Beige': 'Koyu Bej', 'Cappuccino': 'Cappuccino', 'Rose': 'Gül', 'Powder Pink': 'Pudra Pembesi', 'Burgundy': 'Bordo', 'Navy': 'Lacivert', 'Midnight Blue': 'Gece Mavisi', 'Gold': 'Altın', 'Silver': 'Gümüş', 'Default': 'Varsayılan' }
+};
+
+function translateColor(color) {
+  const lang = localStorage.getItem('language') || 'en';
+  return (colorTranslations[lang] && colorTranslations[lang][color]) || color;
+}
+
+function buildColorQuantitySelectors() {
+  const container = document.getElementById('color-quantity-selector');
+  if (!container) return;
+  const colors = product.colors || ['Black', 'White', 'Nude'];
+  container.innerHTML = colors.map(color => `<div class="flex items-center justify-between p-2 bg-surface-container-low/30 rounded-lg"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full border-2 border-white/20" style="background-color:${getColorHex(color)};"></div><span class="text-sm text-on-surface">${translateColor(color)}</span></div><div class="flex items-center gap-2"><button class="qty-decrease w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">−</button><span class="w-8 text-center font-bold" id="qty-${color.replace(/\s+/g,'-')}">0</span><button class="qty-increase w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">+</button></div></div>`).join('');
+  window.colorQuantities = {};
+  colors.forEach(c => window.colorQuantities[c] = 0);
+  document.querySelectorAll('.qty-increase').forEach(btn => { btn.addEventListener('click', () => { const color = btn.dataset.color; window.colorQuantities[color] = (window.colorQuantities[color] || 0) + 1; const qtyEl = document.getElementById(`qty-${color.replace(/\s+/g,'-')}`); if (qtyEl) qtyEl.textContent = window.colorQuantities[color]; }); });
+  document.querySelectorAll('.qty-decrease').forEach(btn => { btn.addEventListener('click', () => { const color = btn.dataset.color; window.colorQuantities[color] = Math.max(0, (window.colorQuantities[color] || 0) - 1); const qtyEl = document.getElementById(`qty-${color.replace(/\s+/g,'-')}`); if (qtyEl) qtyEl.textContent = window.colorQuantities[color]; }); });
+}
+
 async function renderProduct() {
   const container = document.getElementById('product-container');
-  const images = product.images || [product.image_url || '/images/placeholder.jpg'];
-  const mainImage = images[0];
+  const images = product.images || [product.image];
+  const lang = localStorage.getItem('language') || 'en';
+  const t = { en: { colors: 'Colors & Quantities', size: 'Size', addToCart: 'Add to Cart', reviews: 'Customer Reviews', writeReview: 'Write a Review', related: 'You May Also Like', sizeGuide: 'Size Guide', productVideo: 'Product Video' }, ro: { colors: 'Culori și Cantități', size: 'Mărime', addToCart: 'Adaugă în Coș', reviews: 'Recenzii Clienți', writeReview: 'Scrie o Recenzie', related: 'Ți-ar putea plăcea și', sizeGuide: 'Ghid Mărimi', productVideo: 'Video Produs' }, tr: { colors: 'Renkler ve Miktarlar', size: 'Beden', addToCart: 'Sepete Ekle', reviews: 'Müşteri Yorumları', writeReview: 'Yorum Yaz', related: 'Bunlar da Hoşunuza Gidebilir', sizeGuide: 'Beden Rehberi', productVideo: 'Ürün Videosu' } };
+  const ui = t[lang] || t.en;
   
-  container.innerHTML = `
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <!-- Images Section -->
-      <div class="space-y-4">
-        <div class="overflow-hidden bg-gray-900 rounded-lg border border-gray-800">
-          <img src="${mainImage}" alt="${product.name}" id="main-image" class="w-full h-auto object-contain cursor-zoom-in" onclick="openLightbox(0)">
-        </div>
-        ${images.length > 1 ? `
-          <div class="flex gap-2 overflow-x-auto hide-scrollbar">
-            ${images.map((img, i) => `
-              <img src="${img}" onclick="changeMainImage(${i})" class="w-20 h-20 object-cover rounded-lg cursor-pointer border-2 ${i === 0 ? 'border-amber-400' : 'border-gray-700'} hover:border-amber-400/50 transition-all">
-            `).join('')}
-          </div>
-        ` : ''}
-        ${product.video_url ? `
-          <div class="mt-4">
-            <p class="text-xs uppercase tracking-wider text-gray-400 mb-2">${t('productVideo')}</p>
-            <video autoplay loop muted playsinline class="w-full rounded-lg border border-gray-800">
-              <source src="${product.video_url}" type="video/mp4">
-            </video>
-          </div>
-        ` : ''}
-      </div>
-      
-      <!-- Product Info Section -->
-      <div class="space-y-6">
-        <div>
-          <p class="text-amber-500 uppercase tracking-[0.2em] text-xs mb-2">${product.category || t('limitedEdition')}</p>
-          <h1 class="font-headline text-4xl md:text-5xl text-amber-400">${product.name}</h1>
-          <p class="font-headline text-3xl text-amber-400 mt-4">${product.price} RON</p>
-        </div>
-        
-        <p class="text-gray-300 font-light leading-relaxed" id="product-description">${product.description || 'A timeless piece from the Private Collection.'}</p>
-        
-        <!-- Color Selector -->
-        <div>
-          <label class="block text-xs uppercase tracking-wider text-gray-400 mb-3">${t('colors')}</label>
-          <div class="flex flex-wrap gap-3" id="color-selector">
-            ${(product.colors || ['Black', 'White', 'Nude']).map(color => `
-              <div class="flex flex-col items-center gap-1">
-                <div class="color-swatch ${selectedColor === color ? 'active' : ''}" 
-                     style="background-color: ${LINGERIE_COLORS[color]?.hex || '#888'};"
-                     data-color="${color}"
-                     onclick="selectColor('${color}')">
-                </div>
-                <span class="text-xs text-gray-400">${translateColor(color)}</span>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-        
-        <!-- Size Selector -->
-        <div>
-          <div class="flex justify-between items-center mb-3">
-            <label class="block text-xs uppercase tracking-wider text-gray-400">${t('size')}: <span id="selected-size-display">${selectedSize}</span></label>
-            <button onclick="openSizeGuide()" class="text-xs text-amber-400/70 hover:text-amber-400 uppercase tracking-wider flex items-center gap-1">
-              <span class="material-symbols-outlined text-sm">straighten</span>${t('sizeGuide')}
-            </button>
-          </div>
-          <div class="flex flex-wrap gap-3" id="size-selector">
-            ${(product.sizes || ['XS', 'S', 'M', 'L', 'XL']).map(size => `
-              <button class="size-btn ${selectedSize === size ? 'active' : ''}" data-size="${size}" onclick="selectSize('${size}')">${size}</button>
-            `).join('')}
-          </div>
-        </div>
-        
-        <!-- Quantity Selector -->
-        <div>
-          <label class="block text-xs uppercase tracking-wider text-gray-400 mb-3">${t('quantity')}</label>
-          <div class="flex items-center gap-4">
-            <button onclick="updateQuantity(-1)" class="quantity-btn">−</button>
-            <span id="quantity-display" class="text-xl font-bold w-12 text-center">${selectedQuantity}</span>
-            <button onclick="updateQuantity(1)" class="quantity-btn">+</button>
-          </div>
-        </div>
-        
-        <!-- Action Buttons -->
-        <div class="flex gap-4 pt-4">
-          <button onclick="addToCart()" class="flex-1 bg-amber-400 text-black py-4 font-bold uppercase tracking-wider text-sm rounded-lg hover:bg-amber-500 transition">
-            ${t('addToCart')}
-          </button>
-          <button onclick="toggleFavorite()" class="p-4 border border-gray-700 rounded-lg hover:border-amber-400 transition">
-            <span class="material-symbols-outlined text-amber-400">favorite</span>
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Reviews Section -->
-    <div class="mt-16 border-t border-gray-800 pt-8">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="font-headline text-2xl text-amber-400">${t('reviews')}</h3>
-        <button onclick="openReviewModal()" class="flex items-center gap-2 bg-amber-400 text-black px-6 py-2 rounded-lg text-xs font-bold uppercase">
-          <span class="material-symbols-outlined text-lg">add</span>${t('writeReview')}
-        </button>
-      </div>
-      <div id="reviews-list" class="space-y-6"></div>
-    </div>
-    
-    <!-- Related Products -->
-    <div class="mt-16 border-t border-gray-800 pt-8">
-      <h3 class="font-headline text-2xl text-amber-400 mb-6">${t('related')}</h3>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="related-products"></div>
-    </div>
-  `;
+  container.innerHTML = `<div class="grid grid-cols-1 lg:grid-cols-2 gap-12"><div class="space-y-4"><div class="overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm"><img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-auto object-contain cursor-zoom-in" onclick="openLightbox(0)"></div>${product.video?`<div class="mt-4"><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">${ui.productVideo}</p><video autoplay loop muted playsinline class="w-full rounded-sm border border-white/10"><source src="${product.video}" type="video/mp4"></video></div>`:''}${images.length>1?`<div class="flex gap-2 overflow-x-auto hide-scrollbar">${images.map((img,i)=>`<img src="${img}" onclick="openLightbox(${i})" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i===0?'border-primary-container':'border-white/10'} hover:border-primary-container/50 transition-all">`).join('')}</div>`:''}</div><div class="space-y-6"><div><p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category||ui.limitedEdition}</p><h1 class="font-headline text-4xl md:text-5xl text-primary-container">${product.name}</h1><p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p></div><p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic" id="product-description-text">${product.description||'A timeless piece from the Private Collection.'}</p>
+  <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">${ui.colors}</label><div class="space-y-2" id="color-quantity-selector"></div></div><div><div class="flex items-center justify-between mb-3">
+    <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant">${ui.size}: <span id="selected-size-display">${selectedSize}</span></label><button onclick="openSizeGuide()" class="text-[10px] text-primary-container/70 hover:text-primary-container uppercase tracking-widest flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">straighten</span>${ui.sizeGuide}</button></div>
+    <div class="flex flex-wrap gap-3" id="size-selector">${(product.sizes||['M']).map(s=>`<button data-size="${s}" class="size-btn px-6 py-2 rounded-full border ${selectedSize===s?'border-primary-container bg-primary-container text-on-primary-container':'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('')}</div></div><div class="flex items-center gap-4 pt-4"><button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm">${ui.addToCart}</button><button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container"><span class="material-symbols-outlined">favorite</span></button></div></div></div><div class="mt-12 border-t border-white/10 pt-8"><div class="flex items-center justify-between mb-6"><h3 class="font-headline text-2xl text-primary-container">${ui.reviews}</h3><button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-2 rounded-lg text-xs font-bold uppercase"><span class="material-symbols-outlined text-lg">add</span>${ui.writeReview}</button></div><div id="reviews-list" class="space-y-6"></div></div><div class="mt-12 border-t border-white/10 pt-8"><h3 class="font-headline text-2xl text-primary-container mb-6">${ui.related}</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="related-products"></div></div>`;
   
-  await loadReviews();
-  await loadRelatedProducts();
+  buildColorQuantitySelectors();
+  attachEventListeners();
   updateCartCount();
-}
-
-// ==================== INTERACTIONS ====================
-function selectColor(color) {
-  selectedColor = color;
-  document.querySelectorAll('.color-swatch').forEach(swatch => {
-    swatch.classList.remove('active');
-    if (swatch.dataset.color === color) swatch.classList.add('active');
-  });
-}
-
-function selectSize(size) {
-  selectedSize = size;
-  document.getElementById('selected-size-display').textContent = size;
-  document.querySelectorAll('.size-btn').forEach(btn => {
-    btn.classList.remove('active');
-    if (btn.dataset.size === size) btn.classList.add('active');
-  });
-}
-
-function updateQuantity(delta) {
-  selectedQuantity = Math.max(1, Math.min(99, selectedQuantity + delta));
-  document.getElementById('quantity-display').textContent = selectedQuantity;
-}
-
-function addToCart() {
-  let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  const existingItem = cart.find(item => 
-    item.id === product.id && item.size === selectedSize && item.color === selectedColor
-  );
-  
-  if (existingItem) {
-    existingItem.quantity += selectedQuantity;
-  } else {
-    cart.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      size: selectedSize,
-      color: selectedColor,
-      colorHex: LINGERIE_COLORS[selectedColor]?.hex,
-      quantity: selectedQuantity,
-      image: product.images?.[0] || product.image_url
-    });
-  }
-  
-  localStorage.setItem('silkisland_cart', JSON.stringify(cart));
-  updateCartCount();
-  updateCartDisplay();
-  alert(`${selectedQuantity} × ${product.name} (${translateColor(selectedColor)}, ${selectedSize}) added to cart!`);
-}
-
-function toggleFavorite() {
-  let favorites = JSON.parse(localStorage.getItem('silkisland_favorites') || '[]');
-  if (favorites.includes(product.id)) {
-    favorites = favorites.filter(id => id !== product.id);
-    alert('Removed from favorites');
-  } else {
-    favorites.push(product.id);
-    alert('Added to favorites!');
-  }
-  localStorage.setItem('silkisland_favorites', JSON.stringify(favorites));
-}
-
-function changeMainImage(index) {
-  const images = product.images || [product.image_url];
-  document.getElementById('main-image').src = images[index];
-  document.querySelectorAll('.flex.gap-2 img').forEach((img, i) => {
-    if (i === index) img.classList.add('border-amber-400', 'border-2');
-    else img.classList.remove('border-amber-400', 'border-2');
-  });
-}
-
-// ==================== CART FUNCTIONS ====================
-function toggleCart() {
-  const modal = document.getElementById('cart-modal');
-  modal.classList.toggle('open');
-  if (modal.classList.contains('open')) updateCartDisplay();
-}
-
-function updateCartDisplay() {
-  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  const container = document.getElementById('cart-items');
-  const totalEl = document.getElementById('cart-total');
-  
-  if (cart.length === 0) {
-    container.innerHTML = '<p class="text-center text-gray-400 py-8">Your cart is empty</p>';
-    totalEl.textContent = '0 RON';
-    return;
-  }
-  
-  let total = 0;
-  container.innerHTML = cart.map(item => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-    return `
-      <div class="flex gap-4 border-b border-gray-800 pb-4">
-        <img src="${item.image}" class="w-20 h-20 object-cover rounded">
-        <div class="flex-1">
-          <h4 class="font-medium">${item.name}</h4>
-          <p class="text-sm text-gray-400">${translateColor(item.color)} / ${item.size}</p>
-          <p class="text-amber-400">${item.price} RON × ${item.quantity}</p>
-          <button onclick="removeFromCart('${item.id}', '${item.size}', '${item.color}')" class="text-xs text-red-400 mt-1">Remove</button>
-        </div>
-        <div class="text-right">
-          <p class="font-bold">${itemTotal} RON</p>
-        </div>
-      </div>
-    `;
-  }).join('');
-  
-  totalEl.textContent = `${total} RON`;
-}
-
-function removeFromCart(id, size, color) {
-  let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  cart = cart.filter(item => !(item.id === id && item.size === size && item.color === color));
-  localStorage.setItem('silkisland_cart', JSON.stringify(cart));
-  updateCartDisplay();
-  updateCartCount();
-}
-
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-  document.getElementById('cart-count').textContent = count;
-}
-
-function goToCheckout() {
-  window.location.href = '/checkout.html';
-}
-
-// ==================== REVIEWS ====================
-function openReviewModal() {
-  document.getElementById('review-modal').style.display = 'flex';
-  setRating(5);
-}
-
-function closeReviewModal(event) {
-  if (!event || event.target === document.getElementById('review-modal')) {
-    document.getElementById('review-modal').style.display = 'none';
-  }
-}
-
-function setRating(rating) {
-  currentRating = rating;
-  document.getElementById('review-rating').value = rating;
-  const stars = document.querySelectorAll('#star-rating span');
-  stars.forEach((star, i) => {
-    if (i < rating) {
-      star.style.fontVariationSettings = "'FILL' 1";
-      star.style.color = '#FFD700';
-    } else {
-      star.style.fontVariationSettings = "'FILL' 0";
-      star.style.color = '#6B7280';
-    }
-  });
-}
-
-function submitReview(event) {
-  event.preventDefault();
-  const review = {
-    productId: new URLSearchParams(window.location.search).get('id'),
-    name: document.getElementById('review-name').value,
-    rating: currentRating,
-    text: document.getElementById('review-text').value,
-    date: new Date().toISOString()
-  };
-  
-  let reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]');
-  reviews.push(review);
-  localStorage.setItem('silkisland_reviews', JSON.stringify(reviews));
-  
-  closeReviewModal();
+  updateDescriptionTranslation();
   loadReviews();
-  alert('Thank you for your review!');
-  document.getElementById('review-name').value = '';
-  document.getElementById('review-text').value = '';
+  loadRelatedProducts();
 }
 
-function loadReviews() {
-  const productId = new URLSearchParams(window.location.search).get('id');
-  const reviews = JSON.parse(localStorage.getItem('silkisland_reviews') || '[]')
-    .filter(r => r.productId === productId);
-  
-  const container = document.getElementById('reviews-list');
-  if (reviews.length === 0) {
-    container.innerHTML = `<p class="text-gray-400 italic text-center py-4">${t('noReviews')}</p>`;
-    return;
-  }
-  
-  container.innerHTML = reviews.reverse().map(r => `
-    <div class="border-b border-gray-800 pb-4">
-      <div class="flex items-center gap-2 mb-2">
-        <div class="flex text-amber-400">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-        <span class="text-sm text-gray-400">${r.name}</span>
-        <span class="text-xs text-gray-500">${new Date(r.date).toLocaleDateString()}</span>
-      </div>
-      <p class="text-sm text-gray-300">${r.text}</p>
-    </div>
-  `).join('');
-}
+function getColorHex(c){const m={'Black':'#1a1a1a',White:'#ffffff',Nude:'#E3BC9A','Light Beige':'#F5E6D3',Beige:'#E6D5B8','Dark Beige':'#D4B896',Cappuccino:'#C1A58B',Mocha:'#8B5E3C',Rose:'#E8A2B4','Powder Pink':'#F4C2C2',Mauve:'#E0B0FF','Pink Peach':'#FFDAB9',Red:'#8B0000',Burgundy:'#800020',Navy:'#000080','Midnight Blue':'#3D3F93',Gold:'#FFD700','Rose Gold':'#B76E79',Silver:'#C0C0C0',Default:'#888888'};return m[c]||'#888888'}
+function updateCartCount(){const c=JSON.parse(localStorage.getItem('silkisland_cart')||'[]');const count=c.reduce((s,i)=>s+(i.quantity||1),0);const el=document.getElementById('cart-count');if(el)el.textContent=count}
+function attachEventListeners(){document.querySelectorAll('.size-btn').forEach(b=>{b.addEventListener('click',function(){selectedSize=this.dataset.size;document.getElementById('selected-size-display').textContent=selectedSize;document.querySelectorAll('.size-btn').forEach(x=>{x.classList.remove('border-primary-container','bg-primary-container','text-on-primary-container');x.classList.add('border-outline-variant','text-on-surface-variant')});this.classList.add('border-primary-container','bg-primary-container','text-on-primary-container');this.classList.remove('border-outline-variant','text-on-surface-variant')})});document.getElementById('add-to-cart-btn').addEventListener('click',()=>{let c=JSON.parse(localStorage.getItem('silkisland_cart')||'[]');let added=0;Object.entries(window.colorQuantities||{}).forEach(([color,qty])=>{if(qty>0){const ex=c.find(i=>i.id===product.id&&i.size===selectedSize&&i.color===color);if(ex)ex.quantity+=qty;else c.push({id:product.id,name:product.name,price:product.price,size:selectedSize,color,quantity:qty,image:product.images?.[0]||product.image});added+=qty}});if(added>0){localStorage.setItem('silkisland_cart',JSON.stringify(c));updateCartCount();if(typeof window.updateCartDisplay==='function')window.updateCartDisplay();alert(`${added} item(s) added to cart!`)}else alert('Please select at least one item.')});document.getElementById('favorite-btn').addEventListener('click',()=>{let f=JSON.parse(localStorage.getItem('silkisland_favorites')||'[]');if(!f.includes(product.id)){f.push(product.id);localStorage.setItem('silkisland_favorites',JSON.stringify(f));alert('Added to favorites!')}})}
 
-// ==================== RELATED PRODUCTS ====================
-async function loadRelatedProducts() {
-  try {
-    const response = await fetch(`${API_URL}/api/products`);
-    const allProducts = await response.json();
-    const related = allProducts
-      .filter(p => p.category === product.category && p.id !== product.id)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 4);
-    
-    const container = document.getElementById('related-products');
-    if (related.length === 0) {
-      container.innerHTML = '<p class="text-gray-400">No related products found.</p>';
-      return;
-    }
-    
-    container.innerHTML = related.map(p => `
-      <a href="/product.html?id=${p.id}" class="group block">
-        <div class="aspect-[3/4] overflow-hidden bg-gray-900 rounded-lg">
-          <img src="${p.images?.[0] || p.image_url}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
-        </div>
-        <p class="text-sm font-medium mt-2">${p.name}</p>
-        <p class="text-amber-400">${p.price} RON</p>
-      </a>
-    `).join('');
-  } catch (error) {
-    console.error('Failed to load related products:', error);
-  }
-}
+function openReviewModal(){document.getElementById('review-modal').style.display='flex';setRating(5)}
+function closeReviewModal(e){if(!e||e.target===document.getElementById('review-modal'))document.getElementById('review-modal').style.display='none'}
+function setRating(r){currentRating=r;document.getElementById('review-rating').value=r;document.querySelectorAll('#star-rating span').forEach((s,i)=>{s.style.fontVariationSettings=i<r?"'FILL' 1":"'FILL' 0";s.style.color=i<r?'#FFD700':''})}
+function submitReview(e){e.preventDefault();const r={productId,name:document.getElementById('review-name').value,rating:currentRating,text:document.getElementById('review-text').value,date:new Date().toISOString()};let revs=JSON.parse(localStorage.getItem('silkisland_reviews')||'[]');revs.push(r);localStorage.setItem('silkisland_reviews',JSON.stringify(revs));closeReviewModal();loadReviews();alert('Thank you for your review!');document.getElementById('review-name').value='';document.getElementById('review-text').value=''}
+function loadReviews(){const c=document.getElementById('reviews-list');const revs=JSON.parse(localStorage.getItem('silkisland_reviews')||'[]').filter(r=>r.productId===productId);if(revs.length===0){const lang = localStorage.getItem('language') || 'en';
+const noReviewsText = { en: 'No reviews yet. Be the first!', ro: 'Nicio recenzie. Fii primul!', tr: 'Henüz yorum yok. İlk sen yaz!' };
+c.innerHTML=`<p class="text-tertiary-fixed-dim italic text-center py-4">${noReviewsText[lang]||noReviewsText.en}</p>`;return}c.innerHTML=revs.reverse().map(r=>`<div class="border-b border-white/5 pb-4"><div class="flex items-center gap-2 mb-1"><div class="flex text-primary-container">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div><span class="text-xs text-on-surface-variant">${r.name}</span><span class="text-xs text-on-surface-variant/50">${new Date(r.date).toLocaleDateString()}</span></div><p class="text-sm text-on-surface-variant">${r.text}</p></div>`).join('')}
+async function loadRelatedProducts(){try{const res=await fetch(API_URL+'/api/products');const all=await res.json();const related=all.filter(p=>p.category===product.category&&p.id!==product.id).sort(()=>Math.random()-0.5).slice(0,4);const c=document.getElementById('related-products');if(!c||related.length===0)return;c.innerHTML=related.map(p=>`<a href="/product.html?id=${p.id}" class="block group"><div class="aspect-[3/4] overflow-hidden bg-surface-container-lowest rounded-sm"><img src="${p.images?.[0]||p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div><p class="text-sm font-medium mt-2 text-on-surface">${p.name}</p><p class="text-primary-container">${p.price} RON</p></a>`).join('')}catch(e){console.error('Related error:',e)}}
+function openSizeGuide(){document.getElementById('size-guide-modal').style.display='flex'}
+function closeSizeGuide(e){if(!e||e.target===document.getElementById('size-guide-modal'))document.getElementById('size-guide-modal').style.display='none'}
 
-// ==================== SIZE GUIDE ====================
-function openSizeGuide() {
-  const modal = document.getElementById('size-guide-modal');
-  const content = document.getElementById('size-guide-content');
-  
-  content.innerHTML = `
-    <h4 class="font-headline text-amber-400 mt-2 mb-3">Bra Sizes</h4>
-    <table class="w-full text-sm mb-6">
-      <thead><tr class="border-b border-gray-700"><th class="py-2 text-left">Underbust</th><th class="py-2 text-left">Band</th><th class="py-2 text-left">A</th><th class="py-2 text-left">B</th><th class="py-2 text-left">C</th><th class="py-2 text-left">D</th></tr></thead>
-      <tbody class="text-gray-400">
-        <tr><td>63-67</td><td>65</td><td>77-79</td><td>79-81</td><td>81-83</td><td>83-85</td></tr>
-        <tr><td>68-72</td><td>70</td><td>82-84</td><td>84-86</td><td>86-88</td><td>88-90</td></tr>
-        <tr><td>73-77</td><td>75</td><td>87-89</td><td>89-91</td><td>91-93</td><td>93-95</td></tr>
-        <tr><td>78-82</td><td>80</td><td>92-94</td><td>94-96</td><td>96-98</td><td>98-100</td></tr>
-        <tr><td>83-87</td><td>85</td><td>97-99</td><td>99-101</td><td>101-103</td><td>103-105</td></tr>
-      </tbody>
-    </table>
-    <h4 class="font-headline text-amber-400 mt-4 mb-3">Briefs & Knickers</h4>
-    <table class="w-full text-sm mb-6">
-      <thead><tr class="border-b border-gray-700"><th class="py-2 text-left">Size</th><th class="py-2 text-left">Hips (cm)</th></tr></thead>
-      <tbody class="text-gray-400">
-        <tr><td>XS / 36</td><td>88-92</td></tr>
-        <tr><td>S / 38</td><td>93-97</td></tr>
-        <tr><td>M / 40</td><td>98-102</td></tr>
-        <tr><td>L / 42</td><td>103-107</td></tr>
-        <tr><td>XL / 44</td><td>108-113</td></tr>
-        <tr><td>XXL / 46</td><td>114-119</td></tr>
-      </tbody>
-    </table>
-    <h4 class="font-headline text-amber-400 mt-4 mb-3">How to Measure</h4>
-    <div class="space-y-2 text-sm text-gray-400">
-      <p><strong>Bust:</strong> Measure around the fullest part of your bust.</p>
-      <p><strong>Waist:</strong> Measure the narrowest part of your waistline.</p>
-      <p><strong>Hips:</strong> Stand with feet together and measure around the fullest part of your hips.</p>
-    </div>
-  `;
-  
-  modal.style.display = 'flex';
-}
+// Lightbox
+function openLightbox(i){const imgs=product.images||[product.image];window.currentLightboxImages=imgs;window.currentLightboxIndex=i;let lb=document.getElementById('lightbox-modal');if(!lb){lb=document.createElement('div');lb.id='lightbox-modal';lb.className='lightbox-modal';lb.innerHTML=`<span class="lightbox-close" onclick="closeLightbox()">&times;</span><span class="lightbox-prev" onclick="lightboxPrev()">❮</span><span class="lightbox-next" onclick="lightboxNext()">❯</span><img id="lightbox-img" src=""><div class="lightbox-counter" id="lightbox-counter">1/1</div>`;document.body.appendChild(lb)}updateLightboxImage();lb.classList.add('active');document.body.style.overflow='hidden'}
+function closeLightbox(){document.getElementById('lightbox-modal')?.classList.remove('active');document.body.style.overflow=''}
+function lightboxNext(){window.currentLightboxIndex=(window.currentLightboxIndex+1)%window.currentLightboxImages.length;updateLightboxImage()}
+function lightboxPrev(){window.currentLightboxIndex=(window.currentLightboxIndex-1+window.currentLightboxImages.length)%window.currentLightboxImages.length;updateLightboxImage()}
+function updateLightboxImage(){document.getElementById('lightbox-img').src=window.currentLightboxImages[window.currentLightboxIndex];document.getElementById('lightbox-counter').textContent=`${window.currentLightboxIndex+1}/${window.currentLightboxImages.length}`}
+document.addEventListener('keydown',e=>{if(!document.getElementById('lightbox-modal')?.classList.contains('active'))return;if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft')lightboxPrev();if(e.key==='ArrowRight')lightboxNext()});
 
-function closeSizeGuide(event) {
-  if (!event || event.target === document.getElementById('size-guide-modal')) {
-    document.getElementById('size-guide-modal').style.display = 'none';
-  }
-}
-
-// ==================== LIGHTBOX ====================
-function openLightbox(index) {
-  const images = product.images || [product.image_url];
-  let lightbox = document.getElementById('lightbox-modal');
-  
-  if (!lightbox) {
-    lightbox = document.createElement('div');
-    lightbox.id = 'lightbox-modal';
-    lightbox.className = 'lightbox-modal';
-    lightbox.innerHTML = `
-      <span class="lightbox-close" style="position:absolute;top:20px;right:40px;font-size:40px;color:white;cursor:pointer;" onclick="closeLightbox()">&times;</span>
-      <span class="lightbox-prev" style="position:absolute;left:20px;font-size:40px;color:white;cursor:pointer;" onclick="lightboxPrev()">❮</span>
-      <span class="lightbox-next" style="position:absolute;right:20px;font-size:40px;color:white;cursor:pointer;" onclick="lightboxNext()">❯</span>
-      <img id="lightbox-img" style="max-width:90%;max-height:90%;">
-      <div id="lightbox-counter" style="position:absolute;bottom:20px;color:white;"></div>
-    `;
-    document.body.appendChild(lightbox);
-  }
-  
-  window.currentLightboxImages = images;
-  window.currentLightboxIndex = index;
-  updateLightboxImage();
-  lightbox.classList.add('active');
-}
-
-function closeLightbox() {
-  document.getElementById('lightbox-modal')?.classList.remove('active');
-}
-
-function lightboxNext() {
-  window.currentLightboxIndex = (window.currentLightboxIndex + 1) % window.currentLightboxImages.length;
-  updateLightboxImage();
-}
-
-function lightboxPrev() {
-  window.currentLightboxIndex = (window.currentLightboxIndex - 1 + window.currentLightboxImages.length) % window.currentLightboxImages.length;
-  updateLightboxImage();
-}
-
-function updateLightboxImage() {
-  document.getElementById('lightbox-img').src = window.currentLightboxImages[window.currentLightboxIndex];
-  document.getElementById('lightbox-counter').textContent = `${window.currentLightboxIndex + 1}/${window.currentLightboxImages.length}`;
-}
-
-// ==================== LANGUAGE HANDLING ====================
-function updateLanguage() {
-  currentLanguage = localStorage.getItem('language') || 'en';
-  document.getElementById('language-select').value = currentLanguage;
-  if (product) renderProduct();
-}
-
-document.getElementById('language-select').addEventListener('change', (e) => {
+// Language change handler
+document.getElementById('language-select').addEventListener('change', async (e) => {
   localStorage.setItem('language', e.target.value);
-  updateLanguage();
+  await updateDescriptionTranslation();
+  await renderProduct();
+  window.dispatchEvent(new Event('languageChanged'));
 });
 
-// Keyboard shortcuts for lightbox
-document.addEventListener('keydown', (e) => {
-  const lightbox = document.getElementById('lightbox-modal');
-  if (!lightbox?.classList.contains('active')) return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowLeft') lightboxPrev();
-  if (e.key === 'ArrowRight') lightboxNext();
-});
+// Check for language changes
+setInterval(() => {
+  const cl = localStorage.getItem('language') || 'en';
+  if (window.lastLang !== cl) {
+    window.lastLang = cl;
+    if (product) { updateDescriptionTranslation(); renderProduct(); }
+  }
+}, 500);
 
-// Initialize
 loadProduct();
 </script>
 </body>
