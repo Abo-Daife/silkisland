@@ -188,6 +188,13 @@ async function loadProduct() {
     selectedColor = product.colors?.[0] || 'Default';
     selectedSize = product.sizes?.[0] || 'M';
     await renderProduct();
+    // Inside your product page script, right after the product loads successfully
+    ttq.track('ViewContent', {
+        content_id: product.id,
+        content_name: product.name,
+        price: product.price,
+        currency: 'RON'
+    });
   } catch (e) { console.error('Failed to load product:', e); }
 }
 
