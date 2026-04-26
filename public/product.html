@@ -235,13 +235,62 @@ async function renderProduct() {
 
 function getColorHex(c){const m={'Black':'#1a1a1a',White:'#ffffff',Nude:'#E3BC9A','Light Beige':'#F5E6D3',Beige:'#E6D5B8','Dark Beige':'#D4B896',Cappuccino:'#C1A58B',Mocha:'#8B5E3C',Rose:'#E8A2B4','Powder Pink':'#F4C2C2',Mauve:'#E0B0FF','Pink Peach':'#FFDAB9',Red:'#8B0000',Burgundy:'#800020',Navy:'#000080','Midnight Blue':'#3D3F93',Gold:'#FFD700','Rose Gold':'#B76E79',Silver:'#C0C0C0',Default:'#888888'};return m[c]||'#888888'}
 function updateCartCount(){const c=JSON.parse(localStorage.getItem('silkisland_cart')||'[]');const count=c.reduce((s,i)=>s+(i.quantity||1),0);const el=document.getElementById('cart-count');if(el)el.textContent=count}
-function attachEventListeners(){document.querySelectorAll('.size-btn').forEach(b=>{b.addEventListener('click',function(){selectedSize=this.dataset.size;document.getElementById('selected-size-display').textContent=selectedSize;document.querySelectorAll('.size-btn').forEach(x=>{x.classList.remove('border-primary-container','bg-primary-container','text-on-primary-container');x.classList.add('border-outline-variant','text-on-surface-variant')});this.classList.add('border-primary-container','bg-primary-container','text-on-primary-container');this.classList.remove('border-outline-variant','text-on-surface-variant')})});document.getElementById('add-to-cart-btn').addEventListener('click',()=>{let c=JSON.parse(localStorage.getItem('silkisland_cart')||'[]');let added=0;Object.entries(window.colorQuantities||{}).forEach(([color,qty])=>{if(qty>0){const ex=c.find(i=>i.id===product.id&&i.size===selectedSize&&i.color===color);if(ex)ex.quantity+=qty;else c.push({id:product.id,name:product.name,price:product.price,size:selectedSize,color,quantity:qty,image:product.images?.[0]||product.image});added+=qty}});if(added>0){localStorage.setItem('silkisland_cart',JSON.stringify(c));updateCartCount();if(typeof window.updateCartDisplay==='function')window.updateCartDisplay();alert(`${added} item(s) added to cart!`)}else alert('Please select at least one item.')});document.getElementById('favorite-btn').addEventListener('click',()=>{let f=JSON.parse(localStorage.getItem('silkisland_favorites')||'[]');
-ttq.track('AddToCart', {
-  content_id: product.id,
-  content_name: product.name,
-  price: product.price,
-  currency: 'RON'
-  });if(!f.includes(product.id)){f.push(product.id);localStorage.setItem('silkisland_favorites',JSON.stringify(f));alert('Added to favorites!')}})}
+function attachEventListeners(){
+  // Size buttons
+  document.querySelectorAll('.size-btn').forEach(b=>{
+    b.addEventListener('click',function(){
+      selectedSize=this.dataset.size;
+      document.getElementById('selected-size-display').textContent=selectedSize;
+      document.querySelectorAll('.size-btn').forEach(x=>{
+        x.classList.remove('border-primary-container','bg-primary-container','text-on-primary-container');
+        x.classList.add('border-outline-variant','text-on-surface-variant')
+      });
+      this.classList.add('border-primary-container','bg-primary-container','text-on-primary-container');
+      this.classList.remove('border-outline-variant','text-on-surface-variant')
+    })
+  });
+
+  // Add to Cart button (Tracking goes HERE)
+  document.getElementById('add-to-cart-btn').addEventListener('click',()=>{
+    let c=JSON.parse(localStorage.getItem('silkisland_cart')||'[]');
+    let added=0;
+    Object.entries(window.colorQuantities||{}).forEach(([color,qty])=>{
+      if(qty>0){
+        const ex=c.find(i=>i.id===product.id&&i.size===selectedSize&&i.color===color);
+        if(ex)ex.quantity+=qty;
+        else c.push({id:product.id,name:product.name,price:product.price,size:selectedSize,color,quantity:qty,image:product.images?.[0]||product.image});
+        added+=qty
+      }
+    });
+    if(added>0){
+      localStorage.setItem('silkisland_cart',JSON.stringify(c));
+      updateCartCount();
+      if(typeof window.updateCartDisplay==='function')window.updateCartDisplay();
+
+      // ===== CORRECT PLACEMENT: TikTok Pixel Tracking =====
+      ttq.track('AddToCart', {
+        content_id: product.id,
+        content_name: product.name,
+        price: product.price,
+        currency: 'RON'
+      });
+      
+      alert(`${added} item(s) added to cart!`);
+    } else {
+      alert('Please select at least one item.');
+    }
+  });
+
+  // Favorite button (No tracking needed here)
+  document.getElementById('favorite-btn').addEventListener('click',()=>{
+    let f=JSON.parse(localStorage.getItem('silkisland_favorites')||'[]');
+    if(!f.includes(product.id)){
+      f.push(product.id);
+      localStorage.setItem('silkisland_favorites',JSON.stringify(f));
+      alert('Added to favorites!');
+    }
+  });
+}
 
 function openReviewModal(){document.getElementById('review-modal').style.display='flex';setRating(5)}
 function closeReviewModal(e){if(!e||e.target===document.getElementById('review-modal'))document.getElementById('review-modal').style.display='none'}
