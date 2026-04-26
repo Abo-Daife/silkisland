@@ -274,6 +274,17 @@ window.goToCheckout = function() {
     alert('Your cart is empty');
     return;
   }
+  
+  // TikTok Initiate Checkout event
+  if (typeof ttq !== 'undefined' && ttq.track) {
+    const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+    ttq.track('InitiateCheckout', {
+        value: total,
+        currency: 'RON',
+        content_type: 'product'
+    });
+  }
+  
   window.location.href = '/checkout.html';
 };
 
