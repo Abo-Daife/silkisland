@@ -14,12 +14,12 @@
     gtag('config', 'G-DQM9C6V5SH');
   </script> 
   <!-- TikTok Pixel Base Code -->
-    <script>
+  <script>
     !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.pixelBaseUrl?n.pixelBaseUrl:r;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=o,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=o+"?sdkid="+e+"&lib="+t;var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(a,c)};
     ttq.load('D7MKCEJC77U6PFPAHH5G');
     ttq.page();
     }(window,document,'ttq');
-    </script>
+  </script>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;400;700&family=Manrope:wght@200;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
@@ -66,8 +66,9 @@
       <div class="space-y-6 mb-8 max-h-80 overflow-y-auto" id="order-items"></div>
       <div class="space-y-4 text-sm font-label tracking-wide text-on-surface-variant/80">
         <div class="flex justify-between"><span data-i18n="subtotal">Subtotal</span><span id="subtotal">0.00 RON</span></div>
+        <div class="flex justify-between"><span data-i18n="delivery_fee">Delivery Fee</span><span>18.00 RON</span></div>
         <div class="flex justify-between text-primary font-bold pt-4 border-t border-primary-container/10"><span class="uppercase tracking-[0.2em]" data-i18n="total">Total</span><span class="text-xl font-headline" id="total">0.00 RON</span></div>
-        <p class="text-right text-[10px] text-tertiary-fixed-dim/50 uppercase tracking-widest italic" data-i18n="delivery_fee_notice">* delivery fee is not included</p>
+        <p class="text-right text-[10px] text-tertiary-fixed-dim/50 uppercase tracking-widest italic">* 18 RON delivery fee included in total</p>
       </div>
       <button class="w-full mt-8 bg-primary-container text-on-primary py-5 rounded-lg text-xs font-bold tracking-[0.3em] uppercase transition-all hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] active:scale-95" id="submit-btn" onclick="processCheckout()" data-i18n="complete_purchase">Complete Purchase</button>
       <p class="mt-6 text-center text-[10px] text-tertiary-fixed-dim/40 tracking-widest uppercase" data-i18n="encrypted_protocol">Encrypted through the Aurelian Security Protocol</p>
@@ -82,6 +83,7 @@
 <script>
 const stripe = Stripe('pk_live_51TKMgJEqFnDyg3gakXA9wC0rscEnXuuZYYv4BSEuTVb6u3HCRLVywIE2CFhOvd6deAKu6ZaX6TAIsLbQ5axW7Fao005nEa1Olj');
 let selectedPayment = 'cash';
+const DELIVERY_FEE = 18;
 
 function loadCart() {
   const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
@@ -113,8 +115,10 @@ function loadCart() {
     `;
   }).join('');
   
+  const totalWithDelivery = subtotal + DELIVERY_FEE;
+  
   document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} RON`;
-  document.getElementById('total').textContent = `${subtotal.toFixed(2)} RON`;
+  document.getElementById('total').textContent = `${totalWithDelivery.toFixed(2)} RON`;
   document.getElementById('submit-btn').disabled = false;
   updateCartCount();
 }
@@ -157,6 +161,10 @@ window.processCheckout = async function() {
     return; 
   }
   
+  // Calculate subtotal and total with delivery
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  const totalWithDelivery = subtotal + DELIVERY_FEE;
+  
   const submitBtn = document.getElementById('submit-btn'); 
   submitBtn.disabled = true; 
   submitBtn.textContent = 'Processing...';
@@ -165,10 +173,21 @@ window.processCheckout = async function() {
   
   if (selectedPayment === 'card') {
     try {
+      // Add delivery fee to cart for Stripe
+      const cartWithDelivery = [...cart, {
+        id: 'delivery_fee',
+        name: 'Delivery Fee',
+        price: DELIVERY_FEE,
+        quantity: 1,
+        size: 'Standard',
+        color: 'N/A',
+        image: null
+      }];
+      
       const response = await fetch(apiUrl + '/api/create-checkout-session', { 
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify({ cart, customerInfo }) 
+        body: JSON.stringify({ cart: cartWithDelivery, customerInfo }) 
       });
       const session = await response.json();
       if (session.url) { 
@@ -188,7 +207,7 @@ window.processCheckout = async function() {
       const response = await fetch(apiUrl + '/api/checkout', { 
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify({ cart, customerInfo, paymentMethod: 'cash' }) 
+        body: JSON.stringify({ cart, customerInfo, paymentMethod: 'cash', deliveryFee: DELIVERY_FEE }) 
       });
       const result = await response.json();
       
@@ -196,7 +215,6 @@ window.processCheckout = async function() {
         localStorage.removeItem('silkisland_cart');
         
         // Send confirmation email
-        const totalAmount = document.getElementById('total').textContent;
         fetch(apiUrl + '/api/send-order-email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -206,8 +224,8 @@ window.processCheckout = async function() {
             order_id: result.orderId,
             order_items: cart.map(item => 
               `${item.name} (${item.size || 'M'}/${item.color || 'Default'}) x${item.quantity || 1} - ${(item.price * (item.quantity || 1)).toFixed(2)} RON`
-            ).join('\n'),
-            total: totalAmount,
+            ).join('\n') + `\nDelivery Fee: ${DELIVERY_FEE} RON`,
+            total: totalWithDelivery.toFixed(2),
             address: customerInfo.address,
             payment_method: 'Cash on Delivery'
           })
@@ -220,18 +238,19 @@ window.processCheckout = async function() {
         statusDiv.innerHTML = `<span class="material-symbols-outlined text-5xl text-primary-container mb-4">check_circle</span>
             <h2 class="font-headline text-3xl text-primary-container mb-4">Purchase Complete</h2>
             <p class="text-tertiary-fixed-dim mb-2">Order #${result.orderId}</p>
-            <p class="text-on-surface-variant mb-6">Total: ${totalAmount} RON</p>
-            <p class="text-sm text-on-surface-variant/60 mb-8">You will pay cash upon delivery.</p>
+            <p class="text-on-surface-variant mb-6">Total: ${totalWithDelivery.toFixed(2)} RON</p>
+            <p class="text-sm text-on-surface-variant/60 mb-8">You will pay ${totalWithDelivery.toFixed(2)} RON cash upon delivery (includes ${DELIVERY_FEE} RON delivery fee).</p>
             <a href="/" class="inline-block bg-primary-container text-on-primary-container px-8 py-3 rounded-lg text-xs font-bold tracking-widest uppercase">Return to Atrium</a>`;
 
             if (typeof ttq !== 'undefined' && ttq.track) {
                 ttq.track('Purchase', {
                     content_id: result.orderId,
                     content_type: 'product',
-                    value: parseFloat(totalAmount),
+                    value: totalWithDelivery,
                     currency: 'RON'
                 });
-            }  window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           updateCartCount();
       } else { 
         alert('Order failed: ' + (result.error || 'Unknown error')); 
