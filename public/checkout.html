@@ -10,16 +10,15 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-DQM9C6V5SH');
   </script> 
   <!-- TikTok Pixel Base Code -->
-<script>
-!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.pixelBaseUrl?n.pixelBaseUrl:r;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=o,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=o+"?sdkid="+e+"&lib="+t;var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(a,c)};
-ttq.load('D7MLUORC77UASIGOCT8G');
-ttq.page();
-}(window,document,'ttq');
-</script>
+  <script>
+  !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.pixelBaseUrl?n.pixelBaseUrl:r;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=o,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=o+"?sdkid="+e+"&lib="+t;var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(a,c)};
+  ttq.load('D7MLUORC77UASIGOCT8G');
+  ttq.page();
+  }(window,document,'ttq');
+  </script>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;400;700&family=Manrope:wght@200;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
@@ -85,6 +84,19 @@ const stripe = Stripe('pk_live_51TKMgJEqFnDyg3gakXA9wC0rscEnXuuZYYv4BSEuTVb6u3HC
 let selectedPayment = 'cash';
 const DELIVERY_FEE = 18;
 
+// FIXED: Added this missing function
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const cartCountEl = document.getElementById('cart-count');
+  if (cartCountEl) cartCountEl.textContent = count;
+}
+
+// FIXED: Added this missing function for cart modal button
+window.goToCheckout = function() {
+  window.location.href = '/checkout.html';
+};
+
 function loadCart() {
   const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
   const container = document.getElementById('order-items');
@@ -121,12 +133,6 @@ function loadCart() {
   document.getElementById('total').textContent = `${totalWithDelivery.toFixed(2)} RON`;
   document.getElementById('submit-btn').disabled = false;
   updateCartCount();
-}
-
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  document.getElementById('cart-count').textContent = count;
 }
 
 window.selectPayment = function(method) {
@@ -242,13 +248,17 @@ window.processCheckout = async function() {
             <p class="text-sm text-on-surface-variant/60 mb-8">You will pay ${totalWithDelivery.toFixed(2)} RON cash upon delivery (includes ${DELIVERY_FEE} RON delivery fee).</p>
             <a href="/" class="inline-block bg-primary-container text-on-primary-container px-8 py-3 rounded-lg text-xs font-bold tracking-widest uppercase">Return to Atrium</a>`;
 
+            // FIXED: TikTok Purchase event with proper error handling
             if (typeof ttq !== 'undefined' && ttq.track) {
+                console.log('TikTok Purchase firing - Order:', result.orderId, 'Total:', totalWithDelivery);
                 ttq.track('Purchase', {
                     content_id: result.orderId,
                     content_type: 'product',
                     value: totalWithDelivery,
                     currency: 'RON'
                 });
+            } else {
+                console.warn('TikTok pixel not loaded - Purchase event not fired');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
           updateCartCount();
