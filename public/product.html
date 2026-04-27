@@ -288,40 +288,56 @@ function attachEventListeners(){
     })
   });
 
-  // Add to Cart button (Tracking goes HERE)
-  document.getElementById('add-to-cart-btn').addEventListener('click',()=>{
-    let c=JSON.parse(localStorage.getItem('silkisland_cart')||'[]');
-    let added=0;
-    Object.entries(window.colorQuantities||{}).forEach(([color,qty])=>{
-      if(qty>0){
-        const ex=c.find(i=>i.id===product.id&&i.size===selectedSize&&i.color===color);
-        if(ex)ex.quantity+=qty;
-        else c.push({id:product.id,name:product.name,price:product.price,size:selectedSize,color,quantity:qty,image:product.images?.[0]||product.image});
-        added+=qty
-      }
-    });
-    if(added>0){
-      localStorage.setItem('silkisland_cart',JSON.stringify(c));
-      updateCartCount();
-      if(typeof window.updateCartDisplay==='function')window.updateCartDisplay();
-
-      // ===== CORRECT PLACEMENT: TikTok Pixel Tracking =====
-      ttq.track('AddToCart', {
-          content_id: product.id,
-          content_name: product.name,
-          content_type: 'product',
+  // Add to Cart button - FIXED VERSION
+document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+  let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  let added = 0;
+  
+  Object.entries(window.colorQuantities || {}).forEach(([color, qty]) => {
+    if (qty > 0) {
+      const existing = cart.find(i => i.id === product.id && i.size === selectedSize && i.color === color);
+      if (existing) {
+        existing.quantity += qty;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
           price: product.price,
-          quantity: 1,
-          currency: 'RON'
-      });
-      
-      alert(`${added} item(s) added to cart!`);
-    } else {
-      alert('Please select at least one item.');
+          size: selectedSize,
+          color: color,
+          quantity: qty,
+          image: product.images?.[0] || product.image
+        });
+      }
+      added += qty;
     }
   });
+  
+  if (added > 0) {
+    localStorage.setItem('silkisland_cart', JSON.stringify(cart));
+    updateCartCount();
+    if (typeof window.updateCartDisplay === 'function') window.updateCartDisplay();
+    
+    // TIKTOK ADD TO CART - FIXED (outside the alert)
+    if (typeof ttq !== 'undefined' && ttq.track) {
+      ttq.track('AddToCart', {
+        content_id: String(product.id),
+        content_name: product.name,
+        content_type: 'product',
+        price: parseFloat(product.price),
+        quantity: added,
+        currency: 'RON'
+      });
+      console.log('TikTok AddToCart fired'); // For testing
+    }
+    
+    alert(`${added} item(s) added to cart!`);
+  } else {
+    alert('Please select at least one item.');
+  }
+});
 
-  // Favorite button (No tracking needed here)
+// Favorite button (No tracking needed here)
   document.getElementById('favorite-btn').addEventListener('click',()=>{
     let f=JSON.parse(localStorage.getItem('silkisland_favorites')||'[]');
     if(!f.includes(product.id)){
@@ -330,6 +346,28 @@ function attachEventListeners(){
       alert('Added to favorites!');
     }
   });
+}
+
+// Favorite button with visual feedback
+document.getElementById('favorite-btn').addEventListener('click', () => {
+  let favorites = JSON.parse(localStorage.getItem('silkisland_favorites') || '[]');
+  if (!favorites.includes(product.id)) {
+    favorites.push(product.id);
+    localStorage.setItem('silkisland_favorites', JSON.stringify(favorites));
+    alert('Added to favorites!');
+    // Change heart to filled style
+    document.getElementById('favorite-btn').querySelector('span').style.fontVariationSettings = "'FILL' 1";
+  } else {
+    alert('Already in favorites!');
+  }
+});
+
+// On page load, check if product is already favorited
+function checkIfFavorited() {
+  let favorites = JSON.parse(localStorage.getItem('silkisland_favorites') || '[]');
+  if (favorites.includes(product.id)) {
+    document.getElementById('favorite-btn').querySelector('span').style.fontVariationSettings = "'FILL' 1";
+  }
 }
 
 function openReviewModal(){document.getElementById('review-modal').style.display='flex';setRating(5)}
