@@ -28,71 +28,66 @@
     gtag('config', 'G-DQM9C6V5SH');
   </script>
 
-  <!-- TikTok Pixel Code Start -->
+ <!-- TikTok Pixel Base Code -->
   <script>
-  !function (w, d, t) {
-    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-  var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-  ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-
-
-    ttq.load('D7MKCEJC77U6PFPAHH5G');
-    ttq.page();
-  }(window, document, 'ttq');
+  !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.pixelBaseUrl?n.pixelBaseUrl:r;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=o,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=o+"?sdkid="+e+"&lib="+t;var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(a,c)};
+  ttq.load('D7MLUORC77UASIGOCT8G');
+  ttq.page();
+  }(window,document,'ttq');
   </script>
-  
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@300;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  
-  <!-- Your Existing CSS -->
-  <link rel="stylesheet" href="/style.css">
-  
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary-fixed": "#ffe16d",
-            "tertiary-fixed": "#ffd9e1",
-            "primary-fixed-dim": "#e9c400",
-            "surface": "#131313",
-            "primary-container": "#FFD700",
-            "on-surface": "#e5e2e1",
-            "on-surface-variant": "#d0c6ab",
-            "surface-container-low": "#1c1b1b",
-            "surface-container-highest": "#353534",
-            "outline-variant": "#4d4732",
-            "tertiary-fixed-dim": "#fbb3c5",
-            "background": "#131313",
-            "on-primary-container": "#705e00"
-          },
-          borderRadius: {
-            DEFAULT: "0.125rem",
-            lg: "0.25rem",
-            xl: "0.5rem",
-            full: "0.75rem"
-          },
-          fontFamily: {
-            headline: ["Noto Serif", "serif"],
-            body: ["Manrope", "sans-serif"],
-            label: ["Manrope", "sans-serif"]
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@300;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <!-- Your Existing CSS -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#ffe16d",
+              "tertiary-fixed": "#ffd9e1",
+              "primary-fixed-dim": "#e9c400",
+              "surface": "#131313",
+              "primary-container": "#FFD700",
+              "on-surface": "#e5e2e1",
+              "on-surface-variant": "#d0c6ab",
+              "surface-container-low": "#1c1b1b",
+              "surface-container-highest": "#353534",
+              "outline-variant": "#4d4732",
+              "tertiary-fixed-dim": "#fbb3c5",
+              "background": "#131313",
+              "on-primary-container": "#705e00"
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem"
+            },
+            fontFamily: {
+              headline: ["Noto Serif", "serif"],
+              body: ["Manrope", "sans-serif"],
+              label: ["Manrope", "sans-serif"]
+            }
           }
         }
       }
-    }
-  </script>
-  <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-    .text-rose-custom { color: #E8A2B4; }
-    body { background-color: #131313; }
-  </style>
-</head>
-<body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .text-rose-custom { color: #E8A2B4; }
+      body { background-color: #131313; }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
 
 <!-- Cookie Banner -->
 <div class="cookie-banner" id="cookie-banner">
@@ -276,6 +271,8 @@
       <a href="/anpc-sol.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2">ANPC / SOL</a>
       <a href="/privacy.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2">Privacy Policy</a>
       <a href="/terms.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2">Terms & Conditions</a>
+      <a href="/shipping.html" class="block text-on-surface-variant text-sm hover:text-primary-container">Shipping Policy</a>
+      <a href="/returns.html" class="block text-on-surface-variant text-sm hover:text-primary-container">Returns Policy</a>
       <a href="/track-order.html" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2" data-i18n="track_order">Track Order</a>
       <a href="mailto:contact@Silkisland.ro" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors mb-2">contact@Silkisland.ro</a>
       <a href="tel:+40775304973" class="block text-on-surface-variant text-sm hover:text-primary-container transition-colors">0775 304 973</a>
