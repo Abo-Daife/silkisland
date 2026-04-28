@@ -10,9 +10,8 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-DQM9C6V5SH');
-  </script> 
+  </script>
   <!-- TikTok Pixel Base Code -->
   <script>
   !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.pixelBaseUrl?n.pixelBaseUrl:r;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=o,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=o+"?sdkid="+e+"&lib="+t;var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(a,c)};
@@ -24,43 +23,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;400;700&family=Manrope:wght@200;400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary-fixed":"#ffe16d","tertiary-fixed":"#ffd9e1","primary-fixed-dim":"#e9c400","surface":"#131313","primary-container":"#FFD700","on-surface":"#e5e2e1","on-surface-variant":"#d0c6ab","surface-container-low":"#1c1b1b","surface-container-highest":"#353534","outline-variant":"#4d4732","tertiary-fixed-dim":"#fbb3c5","background":"#131313","on-primary-container":"#705e00"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},fontFamily:{headline:["Noto Serif","serif"],body:["Manrope","sans-serif"],label:["Manrope","sans-serif"]}}}}</script>
+  <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface":"#131313","primary-container":"#ffd700","background":"#131313","surface-container-highest":"#353534","primary-fixed":"#ffe16d","tertiary-fixed":"#ffd9e1","tertiary-fixed-dim":"#fbb3c5","surface-container-low":"#1c1b1b","on-surface":"#e5e2e1","on-surface-variant":"#d0c6ab","surface-container":"#201f1f","outline-variant":"#4d4732","on-primary-container":"#705e00"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},fontFamily:{headline:["Noto Serif","serif"],body:["Manrope","sans-serif"],label:["Manrope","sans-serif"]}}}}</script>
   <style>
     .material-symbols-outlined{font-variation-settings:'FILL'0,'wght'300,'GRAD'0,'opsz'24}
     body{min-height:max(884px,100dvh);background-color:#131313}
-    #review-modal,#size-guide-modal{display:none}
     .glass-panel{background:rgba(19,19,19,0.85);backdrop-filter:blur(20px);border:1px solid rgba(255,215,0,0.15)}
   </style>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org/",
-      "@type": "Product",
-      "name": "YOUR_PRODUCT_NAME",
-      "offers": {
-        "@type": "Offer",
-        "price": "YOUR_PRICE",
-        "priceCurrency": "RON",
-        "availability": "https://schema.org/InStock",
-        "shippingDetails": {
-          "@type": "OfferShippingDetails",
-          "shippingRate": {
-            "@type": "MonetaryAmount",
-            "value": "18",
-            "currency": "RON"
-          }
-        }
-      }
-    }
-  </script>
 </head>
 <body class="bg-surface text-on-surface font-body">
-
-  <!-- Cookie Banner -->
-<div class="cookie-banner" id="cookie-banner">
-  <p>🍪 We use cookies to improve your experience. By continuing, you agree to our <a href="/privacy.html">Privacy Policy</a>.</p>
-  <button onclick="acceptCookies()">Accept</button>
-  <button class="reject" onclick="rejectCookies()">Decline</button>
-</div>
 
 <header class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md flex items-center justify-between px-6 py-4 border-b border-amber-400/15 shadow-2xl">
   <a href="/" class="text-primary-container font-headline tracking-widest text-xl uppercase">SILKISLAND</a>
@@ -83,133 +53,26 @@
   </div>
 </main>
 
-<!-- Size Guide Modal -->
-<div id="size-guide-modal" class="fixed inset-0 z-[3000] bg-black/80 backdrop-blur-md flex items-center justify-center" onclick="closeSizeGuide(event)">
-  <div class="glass-panel p-6 rounded-lg max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto" onclick="event.stopPropagation()">
-    <div class="flex items-center justify-between mb-4"><h3 class="font-headline text-xl text-primary-container">Size Guide</h3><button onclick="closeSizeGuide()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined">close</span></button></div>
-    <h4 class="font-headline text-primary-container mt-4 mb-2">Bra Sizes</h4>
-    <table class="w-full text-sm"><thead><tr class="border-b border-white/10"><th class="py-2 text-left">Underbust</th><th class="py-2 text-left">Band</th><th class="py-2 text-left">Cup A</th><th class="py-2 text-left">Cup B</th><th class="py-2 text01">Cup C</th><th class="py-2 text-left">Cup D</th></tr></thead>
-    <tbody class="text-on-surface-variant"><tr><td>63-67</td><td>65</td><td>77-79</td><td>79-81</td><td>81-83</td><td>83-85</td></tr>
-    <tr><td>68-72</td><td>70</td><td>82-84</td><td>84-86</td><td>86-88</td><td>88-90</td></tr>
-    <tr><td>73-77</td><td>75</td><td>87-89</td><td>89-91</td><td>91-93</td><td>93-95</td></tr>
-    <tr><td>78-82</td><td>80</td><td>92-94</td><td>94-96</td><td>96-98</td><td>98-100</td></tr>
-    <tr><td>83-87</td><td>85</td><td>97-99</td><td>99-101</td><td>101-103</td><td>103-105</td></tr></tbody></table>
-    <h4 class="font-headline text-primary-container mt-6 mb-2">Briefs & Knickers</h4>
-    <table class="w-full text-sm"><thead><tr class="border-b border-white/10"><th class="py-2 text-left">Size</th><th class="py-2 text-left">Hips (cm)</th></tr></thead>
-    <tbody class="text-on-surface-variant"><tr><td>XS / 36</td><td>88-92</td></tr><tr><td>S / 38</td><td>93-97</td></tr><tr><td>M / 40</td><td>98-102</td></tr><tr><td>L / 42</td><td>103-107</td></tr><tr><td>XL / 44</td><td>108-113</td></tr><tr><td>XXL / 46</td><td>114-119</td></tr><tr><td>XXXL / 48</td><td>120-125</td></tr><tr><td>XXXXL / 50</td><td>126-131</td></tr></tbody></table>
-    <h4 class="font-headline text-primary-container mt-6 mb-2">How to Measure</h4>
-    <div class="space-y-3 text-sm text-on-surface-variant"><p><strong>Bust:</strong> Measure around the fullest part of your bust.</p><p><strong>Waist:</strong> Measure the narrowest part of your waistline.</p><p><strong>Hips:</strong> Stand with feet together and measure around the fullest part of your hips.</p></div>
-  </div>
-</div>
-
-<!-- Review Modal -->
-<div id="review-modal" class="fixed inset-0 z-[3000] bg-black/80 backdrop-blur-md flex items-center justify-center" onclick="closeReviewModal(event)">
-  <div class="glass-panel p-6 rounded-lg max-w-md w-full mx-4" onclick="event.stopPropagation()">
-    <h3 class="font-headline text-xl text-primary-container mb-4">Write a Review</h3>
-    <form onsubmit="submitReview(event)">
-      <div class="mb-4"><label class="block text-xs text-on-surface-variant mb-2">Rating</label><div class="flex gap-2" id="star-rating"><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(1)">star</span><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(2)">star</span><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(3)">star</span><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(4)">star</span><span class="material-symbols-outlined cursor-pointer text-2xl text-on-surface-variant/30" onclick="setRating(5)">star</span></div><input type="hidden" id="review-rating" value="5"></div>
-      <div class="mb-4"><label class="block text-xs text-on-surface-variant mb-2">Your Name</label><input type="text" id="review-name" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-3 py-2 text-sm" required></div>
-      <div class="mb-4"><label class="block text-xs text-on-surface-variant mb-2">Your Review</label><textarea id="review-text" rows="3" class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-3 py-2 text-sm resize-none" required></textarea></div>
-      <div class="flex gap-3"><button type="submit" class="flex-1 bg-primary-container text-on-primary-container py-2 rounded-lg text-xs font-bold uppercase">Submit</button><button type="button" onclick="closeReviewModal()" class="flex-1 border border-outline-variant text-on-surface-variant py-2 rounded-lg text-xs uppercase">Cancel</button></div>
-    </form>
-  </div>
-</div>
-
 <div class="cart-modal fixed top-0 right-0 w-full max-w-md h-full z-[1000] bg-surface-container border-l border-white/5 shadow-2xl hidden overflow-y-auto" id="cart-modal">
   <div class="p-6"><div class="flex items-center justify-between mb-8"><h2 class="font-headline text-2xl text-primary-container">Your Selection</h2><button onclick="toggleCart()" class="text-on-surface-variant hover:text-primary-container"><span class="material-symbols-outlined text-3xl">close</span></button></div><div id="cart-items" class="space-y-6"></div><div class="border-t border-outline-variant/30 pt-6 mt-8"><div class="flex justify-between items-center mb-6"><span class="font-label text-lg uppercase tracking-wider">Total</span><span class="font-headline text-2xl text-primary-container" id="cart-total">0.00 RON</span></div><button onclick="goToCheckout()" class="w-full bg-primary-container text-on-primary-container py-4 font-label font-extrabold uppercase tracking-widest text-sm">Proceed to Checkout</button></div></div>
 </div>
 
 <script src="/script.js"></script>
 <script>
+const API_URL = window.API_URL || 'https://silkisland-api.amr-mokhtar301.workers.dev';
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('id');
-let product = null, selectedColor = null, selectedSize = null, productQuantity = 1, currentRating = 5;
-
-// Auto-translation function
-async function autoTranslate(text, targetLang) {
-  if (!text || targetLang === 'en') return text;
-  
-  // Replace pipes with placeholder before translation
-  const placeholder = text.replace(/\|/g, '{{PIPE}}');
-  
-  const cacheKey = `${placeholder}_${targetLang}`;
-  if (window.translationCache && window.translationCache[cacheKey]) {
-    return window.translationCache[cacheKey].replace(/\{\{PIPE\}\}/g, '|');
-  }
-  
-  try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(placeholder)}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    const translated = data[0][0][0].replace(/\{\{PIPE\}\}/g, '|');
-    
-    if (!window.translationCache) window.translationCache = {};
-    window.translationCache[cacheKey] = translated;
-    return translated;
-  } catch (e) {
-    return text;
-  }
-}
-
-// Update description translation
-async function updateDescriptionTranslation() {
-  const lang = localStorage.getItem('language') || 'en';
-  const descEl = document.getElementById('product-description-text');
-  if (!descEl) return;
-  if (!product) return;
-  
-  let description = product.description;
-  if (!description) {
-    const defaults = { en: 'A timeless piece from the Private Collection.', ro: 'O piesă atemporală din Colecția Privată.', tr: 'Özel Koleksiyondan zamansız bir parça.' };
-    description = defaults[lang] || defaults.en;
-  } else if (lang !== 'en') {
-    description = await autoTranslate(description, lang);
-  }
-  descEl.textContent = description;
-}
-
-// Update UI text translations
-function translateUI() {
-  const lang = localStorage.getItem('language') || 'en';
-  const translations = {
-    en: { colors: 'Colors & Quantities', size: 'Size', addToCart: 'Add to Cart', reviews: 'Customer Reviews', writeReview: 'Write a Review', related: 'You May Also Like', sizeGuide: 'Size Guide', productVideo: 'Product Video' },
-    ro: { colors: 'Culori și Cantități', size: 'Mărime', addToCart: 'Adaugă în Coș', reviews: 'Recenzii Clienți', writeReview: 'Scrie o Recenzie', related: 'Ți-ar putea plăcea și', sizeGuide: 'Ghid Mărimi', productVideo: 'Video Produs' },
-    tr: { colors: 'Renkler ve Miktarlar', size: 'Beden', addToCart: 'Sepete Ekle', reviews: 'Müşteri Yorumları', writeReview: 'Yorum Yaz', related: 'Bunlar da Hoşunuza Gidebilir', sizeGuide: 'Beden Rehberi', productVideo: 'Ürün Videosu' }
-  };
-  const t = translations[lang] || translations.en;
-  
-  // Update UI elements
-  const colorsLabel = document.querySelector('label[class*="Colors"]') || document.querySelector('label:has(+ #color-quantity-selector)');
-  if (colorsLabel) colorsLabel.innerHTML = t.colors;
-  
-  const sizeLabel = document.querySelector('label[class*="Size:"]');
-  if (sizeLabel) {
-    const span = sizeLabel.querySelector('span');
-    sizeLabel.innerHTML = `${t.size}: <span id="selected-size-display">${selectedSize}</span>`;
-  }
-  
-  const addToCartBtn = document.getElementById('add-to-cart-btn');
-  if (addToCartBtn) addToCartBtn.textContent = t.addToCart;
-  
-  const reviewsTitle = document.querySelector('h3:contains("Customer Reviews"), h3:contains("Recenzii"), h3:contains("Müşteri")');
-  if (reviewsTitle) reviewsTitle.textContent = t.reviews;
-  
-  const writeReviewBtn = document.querySelector('button[onclick="openReviewModal()"]');
-  if (writeReviewBtn) writeReviewBtn.innerHTML = `<span class="material-symbols-outlined text-lg">add</span>${t.writeReview}`;
-  
-  const relatedTitle = document.querySelector('h3:contains("You May Also Like"), h3:contains("Ți-ar putea"), h3:contains("Bunlar da")');
-  if (relatedTitle) relatedTitle.textContent = t.related;
-  
-  const sizeGuideBtn = document.querySelector('button[onclick="openSizeGuide()"]');
-  if (sizeGuideBtn) sizeGuideBtn.innerHTML = `<span class="material-symbols-outlined text-[14px]">straighten</span>${t.sizeGuide}`;
-  
-  const videoLabel = document.querySelector('p:contains("Product Video"), p:contains("Video"), p:contains("Ürün Videosu")');
-  if (videoLabel) videoLabel.textContent = t.productVideo;
-}
+let product = null;
+let selectedColor = null;
+let selectedSize = null;
+let colorQuantities = {};
 
 // Load product
 async function loadProduct() {
-  if (!productId) { window.location.href = '/'; return; }
+  if (!productId) { 
+    window.location.href = '/'; 
+    return; 
+  }
   try {
     const res = await fetch(API_URL + '/api/products/' + productId);
     product = await res.json();
@@ -217,7 +80,7 @@ async function loadProduct() {
     selectedSize = product.sizes?.[0] || 'M';
     await renderProduct();
     
-    // TikTok ViewContent event - with safety check
+    // TikTok ViewContent event
     if (typeof ttq !== 'undefined' && ttq.track) {
         ttq.track('ViewContent', {
             content_id: product.id,
@@ -226,185 +89,194 @@ async function loadProduct() {
             currency: 'RON'
         });
     }
-  } catch (e) { console.error('Failed to load product:', e); }
+  } catch (e) { 
+    console.error('Failed to load product:', e);
+    document.getElementById('product-container').innerHTML = '<div class="text-center py-20"><p class="text-tertiary-fixed-dim">Product not found</p><a href="/" class="text-primary-container mt-4 inline-block">Return to Shop</a></div>';
+  }
 }
 
-const colorTranslations = {
-  en: { 'Black': 'Black', 'White': 'White', 'Red': 'Red', 'Nude': 'Nude', 'Mauve': 'Mauve', 'Cherry': 'Cherry', 'Pink Peach': 'Pink Peach', 'Light Beige': 'Light Beige', 'Dark Beige': 'Dark Beige', 'Cappuccino': 'Cappuccino', 'Rose': 'Rose', 'Powder Pink': 'Powder Pink', 'Burgundy': 'Burgundy', 'Navy': 'Navy', 'Midnight Blue': 'Midnight Blue', 'Gold': 'Gold', 'Silver': 'Silver', 'Default': 'Default' },
-  ro: { 'Black': 'Negru', 'White': 'Alb', 'Red': 'Roșu', 'Nude': 'Nud', 'Mauve': 'Mov', 'Cherry': 'Vișiniu', 'Pink Peach': 'Piersică Roz', 'Light Beige': 'Bej Deschis', 'Dark Beige': 'Bej Închis', 'Cappuccino': 'Cappuccino', 'Rose': 'Roz', 'Powder Pink': 'Roz Pudrat', 'Burgundy': 'Burgund', 'Navy': 'Bleumarin', 'Midnight Blue': 'Albastru Miez de Noapte', 'Gold': 'Auriu', 'Silver': 'Argintiu', 'Default': 'Implicit' },
-  tr: { 'Black': 'Siyah', 'White': 'Beyaz', 'Red': 'Kırmızı', 'Nude': 'Ten', 'Mauve': 'Leylak', 'Cherry': 'Kiraz', 'Pink Peach': 'Pembe Şeftali', 'Light Beige': 'Açık Bej', 'Dark Beige': 'Koyu Bej', 'Cappuccino': 'Cappuccino', 'Rose': 'Gül', 'Powder Pink': 'Pudra Pembesi', 'Burgundy': 'Bordo', 'Navy': 'Lacivert', 'Midnight Blue': 'Gece Mavisi', 'Gold': 'Altın', 'Silver': 'Gümüş', 'Default': 'Varsayılan' }
-};
-
-function translateColor(color) {
-  const lang = localStorage.getItem('language') || 'en';
-  return (colorTranslations[lang] && colorTranslations[lang][color]) || color;
+function getColorHex(color) {
+  const map = {
+    'Black': '#1a1a1a', 'White': '#ffffff', 'Nude': '#E3BC9A',
+    'Light Beige': '#F5E6D3', 'Dark Beige': '#D4B896', 'Cappuccino': '#C1A58B',
+    'Rose': '#E8A2B4', 'Powder Pink': '#F4C2C2', 'Mauve': '#E0B0FF',
+    'Pink Peach': '#FFDAB9', 'Red': '#8B0000', 'Burgundy': '#800020',
+    'Navy': '#000080', 'Midnight Blue': '#3D3F93', 'Gold': '#FFD700',
+    'Silver': '#C0C0C0', 'Default': '#888888'
+  };
+  return map[color] || '#888888';
 }
 
 function buildColorQuantitySelectors() {
   const container = document.getElementById('color-quantity-selector');
   if (!container) return;
-  const colors = product.colors || ['Black', 'White', 'Nude'];
-  container.innerHTML = colors.map(color => `<div class="flex items-center justify-between p-2 bg-surface-container-low/30 rounded-lg"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full border-2 border-white/20" style="background-color:${getColorHex(color)};"></div><span class="text-sm text-on-surface">${translateColor(color)}</span></div><div class="flex items-center gap-2"><button class="qty-decrease w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">−</button><span class="w-8 text-center font-bold" id="qty-${color.replace(/\s+/g,'-')}">0</span><button class="qty-increase w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">+</button></div></div>`).join('');
-  window.colorQuantities = {};
-  colors.forEach(c => window.colorQuantities[c] = 0);
-  document.querySelectorAll('.qty-increase').forEach(btn => { btn.addEventListener('click', () => { const color = btn.dataset.color; window.colorQuantities[color] = (window.colorQuantities[color] || 0) + 1; const qtyEl = document.getElementById(`qty-${color.replace(/\s+/g,'-')}`); if (qtyEl) qtyEl.textContent = window.colorQuantities[color]; }); });
-  document.querySelectorAll('.qty-decrease').forEach(btn => { btn.addEventListener('click', () => { const color = btn.dataset.color; window.colorQuantities[color] = Math.max(0, (window.colorQuantities[color] || 0) - 1); const qtyEl = document.getElementById(`qty-${color.replace(/\s+/g,'-')}`); if (qtyEl) qtyEl.textContent = window.colorQuantities[color]; }); });
+  const colors = product.colors || ['Black'];
+  colorQuantities = {};
+  
+  container.innerHTML = colors.map(color => `
+    <div class="flex items-center justify-between p-2 bg-surface-container-low/30 rounded-lg">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full border-2 border-white/20" style="background-color:${getColorHex(color)};"></div>
+        <span class="text-sm text-on-surface">${color}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="qty-decrease w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">−</button>
+        <span class="w-8 text-center font-bold" id="qty-${color.replace(/\s+/g, '-')}">0</span>
+        <button class="qty-increase w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" data-color="${color}">+</button>
+      </div>
+    </div>
+  `).join('');
+  
+  colors.forEach(c => colorQuantities[c] = 0);
+  
+  document.querySelectorAll('.qty-increase').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const color = btn.dataset.color;
+      colorQuantities[color] = (colorQuantities[color] || 0) + 1;
+      const qtyEl = document.getElementById(`qty-${color.replace(/\s+/g, '-')}`);
+      if (qtyEl) qtyEl.textContent = colorQuantities[color];
+    });
+  });
+  
+  document.querySelectorAll('.qty-decrease').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const color = btn.dataset.color;
+      colorQuantities[color] = Math.max(0, (colorQuantities[color] || 0) - 1);
+      const qtyEl = document.getElementById(`qty-${color.replace(/\s+/g, '-')}`);
+      if (qtyEl) qtyEl.textContent = colorQuantities[color];
+    });
+  });
 }
 
 async function renderProduct() {
   const container = document.getElementById('product-container');
   const images = product.images || [product.image];
-  const lang = localStorage.getItem('language') || 'en';
-  const t = { en: { colors: 'Colors & Quantities', size: 'Size', addToCart: 'Add to Cart', reviews: 'Customer Reviews', writeReview: 'Write a Review', related: 'You May Also Like', sizeGuide: 'Size Guide', productVideo: 'Product Video' }, ro: { colors: 'Culori și Cantități', size: 'Mărime', addToCart: 'Adaugă în Coș', reviews: 'Recenzii Clienți', writeReview: 'Scrie o Recenzie', related: 'Ți-ar putea plăcea și', sizeGuide: 'Ghid Mărimi', productVideo: 'Video Produs' }, tr: { colors: 'Renkler ve Miktarlar', size: 'Beden', addToCart: 'Sepete Ekle', reviews: 'Müşteri Yorumları', writeReview: 'Yorum Yaz', related: 'Bunlar da Hoşunuza Gidebilir', sizeGuide: 'Beden Rehberi', productVideo: 'Ürün Videosu' } };
-  const ui = t[lang] || t.en;
   
-  container.innerHTML = `<div class="grid grid-cols-1 lg:grid-cols-2 gap-12"><div class="space-y-4"><div class="overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm"><img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-auto object-contain cursor-zoom-in" onclick="openLightbox(0)"></div>${product.video?`<div class="mt-4"><p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">${ui.productVideo}</p><video autoplay loop muted playsinline class="w-full rounded-sm border border-white/10"><source src="${product.video}" type="video/mp4"></video></div>`:''}${images.length>1?`<div class="flex gap-2 overflow-x-auto hide-scrollbar">${images.map((img,i)=>`<img src="${img}" onclick="openLightbox(${i})" class="w-20 h-20 object-cover rounded-sm cursor-pointer border ${i===0?'border-primary-container':'border-white/10'} hover:border-primary-container/50 transition-all">`).join('')}</div>`:''}</div><div class="space-y-6"><div><p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category||ui.limitedEdition}</p><h1 class="font-headline text-4xl md:text-5xl text-primary-container">${product.name}</h1><p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p></div><p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic" id="product-description-text">${product.description||'A timeless piece from the Private Collection.'}</p>
-  <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">${ui.colors}</label><div class="space-y-2" id="color-quantity-selector"></div></div><div><div class="flex items-center justify-between mb-3">
-    <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant">${ui.size}: <span id="selected-size-display">${selectedSize}</span></label><button onclick="openSizeGuide()" class="text-[10px] text-primary-container/70 hover:text-primary-container uppercase tracking-widest flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">straighten</span>${ui.sizeGuide}</button></div>
-    <div class="flex flex-wrap gap-3" id="size-selector">${(product.sizes||['M']).map(s=>`<button data-size="${s}" class="size-btn px-6 py-2 rounded-full border ${selectedSize===s?'border-primary-container bg-primary-container text-on-primary-container':'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('')}</div></div><div class="flex items-center gap-4 pt-4"><button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm">${ui.addToCart}</button><button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container"><span class="material-symbols-outlined">favorite</span></button></div></div></div><div class="mt-12 border-t border-white/10 pt-8"><div class="flex items-center justify-between mb-6"><h3 class="font-headline text-2xl text-primary-container">${ui.reviews}</h3><button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-2 rounded-lg text-xs font-bold uppercase"><span class="material-symbols-outlined text-lg">add</span>${ui.writeReview}</button></div><div id="reviews-list" class="space-y-6"></div></div><div class="mt-12 border-t border-white/10 pt-8"><h3 class="font-headline text-2xl text-primary-container mb-6">${ui.related}</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="related-products"></div></div>`;
+  container.innerHTML = `
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div class="space-y-4">
+        <div class="overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm">
+          <img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-auto object-contain cursor-zoom-in">
+        </div>
+        ${images.length > 1 ? `
+          <div class="flex gap-2 overflow-x-auto">
+            ${images.map((img, i) => `<img src="${img}" onclick="document.getElementById('main-image').src='${img}'" class="w-20 h-20 object-cover rounded-sm cursor-pointer border border-white/10 hover:border-primary-container/50 transition-all">`).join('')}
+          </div>
+        ` : ''}
+      </div>
+      <div class="space-y-6">
+        <div>
+          <p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category || 'Limited Edition'}</p>
+          <h1 class="font-headline text-4xl md:text-5xl text-primary-container">${product.name}</h1>
+          <p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p>
+        </div>
+        <p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic">${product.description || 'A timeless piece from the Private Collection.'}</p>
+        
+        <div>
+          <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Colors & Quantities</label>
+          <div class="space-y-2" id="color-quantity-selector"></div>
+        </div>
+        
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <label class="block text-[10px] uppercase tracking-widest text-on-surface-variant">Size: <span id="selected-size-display">${selectedSize}</span></label>
+          </div>
+          <div class="flex flex-wrap gap-3" id="size-selector">
+            ${(product.sizes || ['M']).map(s => `<button data-size="${s}" class="size-btn px-6 py-2 rounded-full border ${selectedSize === s ? 'border-primary-container bg-primary-container text-on-primary-container' : 'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('')}
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-4 pt-4">
+          <button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm">Add to Cart</button>
+          <button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container"><span class="material-symbols-outlined">favorite</span></button>
+        </div>
+      </div>
+    </div>
+  `;
   
   buildColorQuantitySelectors();
-  attachEventListeners();
-  updateCartCount();
-  updateDescriptionTranslation();
-  loadReviews();
-  loadRelatedProducts();
-}
-
-function getColorHex(c){const m={'Black':'#1a1a1a',White:'#ffffff',Nude:'#E3BC9A','Light Beige':'#F5E6D3',Beige:'#E6D5B8','Dark Beige':'#D4B896',Cappuccino:'#C1A58B',Mocha:'#8B5E3C',Rose:'#E8A2B4','Powder Pink':'#F4C2C2',Mauve:'#E0B0FF','Pink Peach':'#FFDAB9',Red:'#8B0000',Burgundy:'#800020',Navy:'#000080','Midnight Blue':'#3D3F93',Gold:'#FFD700','Rose Gold':'#B76E79',Silver:'#C0C0C0',Default:'#888888'};return m[c]||'#888888'}
-function updateCartCount(){const c=JSON.parse(localStorage.getItem('silkisland_cart')||'[]');const count=c.reduce((s,i)=>s+(i.quantity||1),0);const el=document.getElementById('cart-count');if(el)el.textContent=count}
-function attachEventListeners(){
-  // Size buttons
-  document.querySelectorAll('.size-btn').forEach(b=>{
-    b.addEventListener('click',function(){
-      selectedSize=this.dataset.size;
-      document.getElementById('selected-size-display').textContent=selectedSize;
-      document.querySelectorAll('.size-btn').forEach(x=>{
-        x.classList.remove('border-primary-container','bg-primary-container','text-on-primary-container');
-        x.classList.add('border-outline-variant','text-on-surface-variant')
-      });
-      this.classList.add('border-primary-container','bg-primary-container','text-on-primary-container');
-      this.classList.remove('border-outline-variant','text-on-surface-variant')
-    })
-  });
-
-  // Add to Cart button - FIXED VERSION
-document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-  let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
-  let added = 0;
   
-  Object.entries(window.colorQuantities || {}).forEach(([color, qty]) => {
-    if (qty > 0) {
-      const existing = cart.find(i => i.id === product.id && i.size === selectedSize && i.color === color);
-      if (existing) {
-        existing.quantity += qty;
-      } else {
-        cart.push({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          size: selectedSize,
-          color: color,
-          quantity: qty,
-          image: product.images?.[0] || product.image
+  // Size buttons
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      selectedSize = this.dataset.size;
+      document.getElementById('selected-size-display').textContent = selectedSize;
+      document.querySelectorAll('.size-btn').forEach(x => {
+        x.classList.remove('border-primary-container', 'bg-primary-container', 'text-on-primary-container');
+        x.classList.add('border-outline-variant', 'text-on-surface-variant');
+      });
+      this.classList.add('border-primary-container', 'bg-primary-container', 'text-on-primary-container');
+    });
+  });
+  
+  // Add to Cart button
+  document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+    let cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+    let added = 0;
+    
+    Object.entries(colorQuantities).forEach(([color, qty]) => {
+      if (qty > 0) {
+        const existing = cart.find(i => i.id === product.id && i.size === selectedSize && i.color === color);
+        if (existing) {
+          existing.quantity += qty;
+        } else {
+          cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            size: selectedSize,
+            color: color,
+            quantity: qty,
+            image: product.images?.[0] || product.image
+          });
+        }
+        added += qty;
+      }
+    });
+    
+    if (added > 0) {
+      localStorage.setItem('silkisland_cart', JSON.stringify(cart));
+      updateCartCount();
+      
+      // TikTok AddToCart event
+      if (typeof ttq !== 'undefined' && ttq.track) {
+        ttq.track('AddToCart', {
+          content_id: String(product.id),
+          content_name: product.name,
+          content_type: 'product',
+          price: parseFloat(product.price),
+          quantity: added,
+          currency: 'RON'
         });
       }
-      added += qty;
+      
+      alert(`${added} item(s) added to cart!`);
+    } else {
+      alert('Please select at least one item.');
     }
   });
   
-  if (added > 0) {
-    localStorage.setItem('silkisland_cart', JSON.stringify(cart));
-    updateCartCount();
-    if (typeof window.updateCartDisplay === 'function') window.updateCartDisplay();
-    
-    // TIKTOK ADD TO CART - FIXED (outside the alert)
-    if (typeof ttq !== 'undefined' && ttq.track) {
-      ttq.track('AddToCart', {
-        content_id: String(product.id),
-        content_name: product.name,
-        content_type: 'product',
-        price: parseFloat(product.price),
-        quantity: added,
-        currency: 'RON'
-      });
-      console.log('TikTok AddToCart fired'); // For testing
-    }
-    
-    alert(`${added} item(s) added to cart!`);
-  } else {
-    alert('Please select at least one item.');
-  }
-});
-
-// Favorite button (No tracking needed here)
-  document.getElementById('favorite-btn').addEventListener('click',()=>{
-    let f=JSON.parse(localStorage.getItem('silkisland_favorites')||'[]');
-    if(!f.includes(product.id)){
-      f.push(product.id);
-      localStorage.setItem('silkisland_favorites',JSON.stringify(f));
+  // Favorite button
+  document.getElementById('favorite-btn').addEventListener('click', () => {
+    let favorites = JSON.parse(localStorage.getItem('silkisland_favorites') || '[]');
+    if (!favorites.includes(product.id)) {
+      favorites.push(product.id);
+      localStorage.setItem('silkisland_favorites', JSON.stringify(favorites));
       alert('Added to favorites!');
+    } else {
+      alert('Already in favorites!');
     }
   });
+  
+  updateCartCount();
 }
 
-// Favorite button with visual feedback
-document.getElementById('favorite-btn').addEventListener('click', () => {
-  let favorites = JSON.parse(localStorage.getItem('silkisland_favorites') || '[]');
-  if (!favorites.includes(product.id)) {
-    favorites.push(product.id);
-    localStorage.setItem('silkisland_favorites', JSON.stringify(favorites));
-    alert('Added to favorites!');
-    // Change heart to filled style
-    document.getElementById('favorite-btn').querySelector('span').style.fontVariationSettings = "'FILL' 1";
-  } else {
-    alert('Already in favorites!');
-  }
-});
-
-// On page load, check if product is already favorited
-function checkIfFavorited() {
-  let favorites = JSON.parse(localStorage.getItem('silkisland_favorites') || '[]');
-  if (favorites.includes(product.id)) {
-    document.getElementById('favorite-btn').querySelector('span').style.fontVariationSettings = "'FILL' 1";
-  }
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const el = document.getElementById('cart-count');
+  if (el) el.textContent = count;
 }
-
-function openReviewModal(){document.getElementById('review-modal').style.display='flex';setRating(5)}
-function closeReviewModal(e){if(!e||e.target===document.getElementById('review-modal'))document.getElementById('review-modal').style.display='none'}
-function setRating(r){currentRating=r;document.getElementById('review-rating').value=r;document.querySelectorAll('#star-rating span').forEach((s,i)=>{s.style.fontVariationSettings=i<r?"'FILL' 1":"'FILL' 0";s.style.color=i<r?'#FFD700':''})}
-function submitReview(e){e.preventDefault();const r={productId,name:document.getElementById('review-name').value,rating:currentRating,text:document.getElementById('review-text').value,date:new Date().toISOString()};let revs=JSON.parse(localStorage.getItem('silkisland_reviews')||'[]');revs.push(r);localStorage.setItem('silkisland_reviews',JSON.stringify(revs));closeReviewModal();loadReviews();alert('Thank you for your review!');document.getElementById('review-name').value='';document.getElementById('review-text').value=''}
-function loadReviews(){const c=document.getElementById('reviews-list');const revs=JSON.parse(localStorage.getItem('silkisland_reviews')||'[]').filter(r=>r.productId===productId);if(revs.length===0){const lang = localStorage.getItem('language') || 'en';
-const noReviewsText = { en: 'No reviews yet. Be the first!', ro: 'Nicio recenzie. Fii primul!', tr: 'Henüz yorum yok. İlk sen yaz!' };
-c.innerHTML=`<p class="text-tertiary-fixed-dim italic text-center py-4">${noReviewsText[lang]||noReviewsText.en}</p>`;return}c.innerHTML=revs.reverse().map(r=>`<div class="border-b border-white/5 pb-4"><div class="flex items-center gap-2 mb-1"><div class="flex text-primary-container">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div><span class="text-xs text-on-surface-variant">${r.name}</span><span class="text-xs text-on-surface-variant/50">${new Date(r.date).toLocaleDateString()}</span></div><p class="text-sm text-on-surface-variant">${r.text}</p></div>`).join('')}
-async function loadRelatedProducts(){try{const res=await fetch(API_URL+'/api/products');const all=await res.json();const related=all.filter(p=>p.category===product.category&&p.id!==product.id).sort(()=>Math.random()-0.5).slice(0,4);const c=document.getElementById('related-products');if(!c||related.length===0)return;c.innerHTML=related.map(p=>`<a href="/product.html?id=${p.id}" class="block group"><div class="aspect-[3/4] overflow-hidden bg-surface-container-lowest rounded-sm"><img src="${p.images?.[0]||p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div><p class="text-sm font-medium mt-2 text-on-surface">${p.name}</p><p class="text-primary-container">${p.price} RON</p></a>`).join('')}catch(e){console.error('Related error:',e)}}
-function openSizeGuide(){document.getElementById('size-guide-modal').style.display='flex'}
-function closeSizeGuide(e){if(!e||e.target===document.getElementById('size-guide-modal'))document.getElementById('size-guide-modal').style.display='none'}
-
-// Lightbox
-function openLightbox(i){const imgs=product.images||[product.image];window.currentLightboxImages=imgs;window.currentLightboxIndex=i;let lb=document.getElementById('lightbox-modal');if(!lb){lb=document.createElement('div');lb.id='lightbox-modal';lb.className='lightbox-modal';lb.innerHTML=`<span class="lightbox-close" onclick="closeLightbox()">&times;</span><span class="lightbox-prev" onclick="lightboxPrev()">❮</span><span class="lightbox-next" onclick="lightboxNext()">❯</span><img id="lightbox-img" src=""><div class="lightbox-counter" id="lightbox-counter">1/1</div>`;document.body.appendChild(lb)}updateLightboxImage();lb.classList.add('active');document.body.style.overflow='hidden'}
-function closeLightbox(){document.getElementById('lightbox-modal')?.classList.remove('active');document.body.style.overflow=''}
-function lightboxNext(){window.currentLightboxIndex=(window.currentLightboxIndex+1)%window.currentLightboxImages.length;updateLightboxImage()}
-function lightboxPrev(){window.currentLightboxIndex=(window.currentLightboxIndex-1+window.currentLightboxImages.length)%window.currentLightboxImages.length;updateLightboxImage()}
-function updateLightboxImage(){document.getElementById('lightbox-img').src=window.currentLightboxImages[window.currentLightboxIndex];document.getElementById('lightbox-counter').textContent=`${window.currentLightboxIndex+1}/${window.currentLightboxImages.length}`}
-document.addEventListener('keydown',e=>{if(!document.getElementById('lightbox-modal')?.classList.contains('active'))return;if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft')lightboxPrev();if(e.key==='ArrowRight')lightboxNext()});
-
-// Language change handler
-document.getElementById('language-select').addEventListener('change', async (e) => {
-  localStorage.setItem('language', e.target.value);
-  await updateDescriptionTranslation();
-  await renderProduct();
-  window.dispatchEvent(new Event('languageChanged'));
-});
-
-// Check for language changes
-setInterval(() => {
-  const cl = localStorage.getItem('language') || 'en';
-  if (window.lastLang !== cl) {
-    window.lastLang = cl;
-    if (product) { updateDescriptionTranslation(); renderProduct(); }
-  }
-}, 500);
 
 loadProduct();
 </script>
