@@ -63,6 +63,14 @@
     <aside class="lg:col-span-5 glass-panel p-8 rounded-lg shadow-2xl border border-outline-variant/10 sticky top-32">
       <h3 class="text-xl font-headline tracking-widest text-primary mb-8 border-b border-primary-container/10 pb-4" data-i18n="order_archive">Order Archive</h3>
       <div class="space-y-6 mb-8 max-h-80 overflow-y-auto" id="order-items"></div>
+      <div class="bg-white/5 border border-primary-container/30 rounded-lg p-4 my-4">
+        <label class="block text-[10px] uppercase tracking-widest text-tertiary-fixed-dim mb-2">Promo Code</label>
+        <div class="flex gap-3">
+        <input type="text" id="promo-code" placeholder="Enter code" class="flex-1 bg-surface-container-highest border-none rounded-lg px-4 py-3 text-on-surface">
+         <button onclick="applyPromoCode()" class="bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-bold text-sm uppercase tracking-wider">Apply</button>
+         </div>
+          <p id="promo-message" class="text-xs mt-2 text-tertiary-fixed-dim hidden"></p>
+      </div>
       <div class="space-y-4 text-sm font-label tracking-wide text-on-surface-variant/80">
         <div class="flex justify-between"><span data-i18n="subtotal">Subtotal</span><span id="subtotal">0.00 RON</span></div>
         <div class="flex justify-between"><span data-i18n="delivery_fee">Delivery Fee</span><span>18.00 RON</span></div>
@@ -277,6 +285,77 @@ window.processCheckout = async function() {
 
 // Initialize
 loadCart();
+// Promo Code Logic
+let appliedDiscount = 0;
+let appliedCode = null;
+
+window.applyPromoCode = function() {
+  const code = document.getElementById('promo-code').value.trim().toUpperCase();
+  const messageEl = document.getElementById('promo-message');
+  
+  const promos = {
+    'TIKTOK10': { type: 'percent', value: 10, message: '✅ 10% discount applied!' },
+    'WELCOME15': { type: 'percent', value: 15, message: '✅ 15% discount applied!' },
+    'FREESHIP': { type: 'fixed', value: 18, message: '✅ Free shipping applied!' },
+    'SILKSUMMER': { type: 'percent', value: 15, message: '✅ Summer sale! 15% off!' }
+  };
+  
+  if (promos[code]) {
+    appliedCode = code;
+    const promo = promos[code];
+    
+    if (promo.type === 'percent') {
+      appliedDiscount = promo.value / 100;
+    } else if (promo.type === 'fixed') {
+      appliedDiscount = promo.value;
+    }
+    
+    messageEl.innerHTML = promo.message;
+    messageEl.classList.remove('hidden');
+    messageEl.classList.add('text-green-400');
+    
+    // Recalculate total
+    updateTotalWithPromo();
+  } else {
+    messageEl.innerHTML = '❌ Invalid promo code';
+    messageEl.classList.remove('hidden');
+    messageEl.classList.add('text-red-400');
+    appliedDiscount = 0;
+    appliedCode = null;
+    updateTotalWithPromo();
+  }
+};
+
+function updateTotalWithPromo() {
+  const cart = JSON.parse(localStorage.getItem('silkisland_cart') || '[]');
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  const deliveryFee = 18;
+  
+  let finalTotal = subtotal + deliveryFee;
+  
+  if (appliedDiscount > 0) {
+    if (appliedDiscount < 1) {
+      // Percent discount
+      finalTotal = finalTotal * (1 - appliedDiscount);
+    } else {
+      // Fixed discount (like free shipping)
+      finalTotal = subtotal; // removes delivery fee
+    }
+  }
+  
+  document.getElementById('total').textContent = `${finalTotal.toFixed(2)} RON`;
+  
+  // Store discount info for checkout
+  window.promoDiscount = appliedDiscount;
+  window.promoCodeUsed = appliedCode;
+}
+
+// Override the original loadCart to include promo
+const originalLoadCart = loadCart;
+window.loadCart = function() {
+  originalLoadCart();
+  updateTotalWithPromo();
+};
 selectPayment('cash');
 </script>
 </body>
