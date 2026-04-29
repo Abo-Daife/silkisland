@@ -174,6 +174,44 @@ window.processCheckout = async function() {
     alert('Please fill in all shipping details'); 
     return; 
   }
+
+  if (selectedPayment === 'card') {
+  const cartWithDelivery = [...cart, {
+    id: 'delivery_fee',
+    name: 'Delivery Fee',
+    price: DELIVERY_FEE,
+    quantity: 1,
+    size: 'Standard',
+    color: 'N/A',
+    image: null
+  }];
+  
+  const response = await fetch(apiUrl + '/api/create-checkout-session', { 
+    method: 'POST', 
+    headers: { 'Content-Type': 'application/json' }, 
+    body: JSON.stringify({ 
+      cart: cartWithDelivery, 
+      customerInfo,
+      promoCode: window.promoCodeUsed,
+      discountApplied: window.promoDiscount
+    }) 
+  });
+  
+  } else {
+    // Cash payment
+    const response = await fetch(apiUrl + '/api/checkout', { 
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify({ 
+        cart, 
+        customerInfo, 
+        paymentMethod: 'cash', 
+        deliveryFee: DELIVERY_FEE,
+        promoCode: window.promoCodeUsed,
+        discountApplied: window.promoDiscount
+      }) 
+    });
+  }
   
   // Calculate subtotal and total with delivery
   const subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
