@@ -141,20 +141,33 @@ function buildColorQuantitySelectors() {
 async function renderProduct() {
   const container = document.getElementById('product-container');
   const images = product.images || [product.image];
+  const shippingFee = 18; // Fixed delivery fee
+  const freeShippingThreshold = 300;
+  
   container.innerHTML = `
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <div class="space-y-4"><div class="overflow-hidden bg-surface-container-lowest border border-white/5 rounded-sm"><img src="${images[0]}" alt="${product.name}" id="main-image" class="w-full h-auto object-contain cursor-zoom-in"></div>${images.length > 1 ? `<div class="flex gap-2 overflow-x-auto">${images.map((img,i) => `<img src="${img}" onclick="document.getElementById('main-image').src='${img}'" class="w-20 h-20 object-cover rounded-sm cursor-pointer border border-white/10 hover:border-primary-container/50 transition-all">`).join('')}</div>` : ''}</div>
-      <div class="space-y-6"><div><p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category || 'Limited Edition'}</p><h1 class="font-headline text-4xl md:text-5xl text-primary-container">${product.name}</h1><p class="font-headline text-3xl text-primary-container mt-4">${product.price} RON</p></div><p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic">${product.description || 'A timeless piece from the Private Collection.'}</p>
+      <div class="space-y-6">
+        <div><p class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] mb-2">${product.category || 'Limited Edition'}</p><h1 class="font-headline text-4xl md:text-5xl text-primary-container">${product.name}</h1>
+          <div class="mt-4 flex items-baseline gap-3"><p class="font-headline text-3xl text-primary-container">${product.price} RON</p><p class="text-sm text-on-surface-variant line-through">${(product.price + shippingFee).toFixed(0)} RON</p></div>
+          <div class="mt-1 text-xs text-tertiary-fixed-dim"><span class="text-primary-container">+ ${shippingFee} RON shipping</span> • Free shipping over ${freeShippingThreshold} RON</div>
+        </div>
+        <p class="text-tertiary-fixed-dim font-light leading-relaxed text-lg italic">${product.description || 'A timeless piece from the Private Collection.'}</p>
+        
         <div><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">Colors & Quantities</label><div class="space-y-2" id="color-quantity-selector"></div></div>
+        
         <div><div class="flex items-center justify-between mb-3"><label class="block text-[10px] uppercase tracking-widest text-on-surface-variant">Size: <span id="selected-size-display">${selectedSize}</span></label><button onclick="openSizeGuide()" class="text-[10px] text-primary-container/70 hover:text-primary-container uppercase tracking-widest flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">straighten</span>Size Guide</button></div><div class="flex flex-wrap gap-3" id="size-selector">${(product.sizes || ['M']).map(s => `<button data-size="${s}" class="size-btn px-6 py-2 rounded-full border ${selectedSize === s ? 'border-primary-container bg-primary-container text-on-primary-container' : 'border-outline-variant text-on-surface-variant'} text-xs font-bold tracking-widest">${s}</button>`).join('')}</div></div>
-        <div class="bg-primary-container/20 p-3 rounded-lg text-center mb-4"><p class="text-sm">✅ Free shipping over 300 RON | 14 day returns</p></div>
-        <div class="flex items-center gap-4 pt-4"><button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm">Add to Cart</button><button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container"><span class="material-symbols-outlined">favorite</span></button></div>
+        
+        <div class="bg-primary-container/20 p-3 rounded-lg text-center text-sm"><p>✅ Free shipping over 300 RON | 14 day returns</p></div>
+        
+        <div class="border border-red-500/30 bg-red-500/10 p-2 rounded-lg text-center text-xs text-red-400 flex items-center justify-center gap-2"><span class="material-symbols-outlined text-sm">local_fire_department</span> Low stock - order soon</div>
+        
+        <div class="flex items-center gap-4 pt-2"><button id="add-to-cart-btn" class="flex-1 bg-primary-container text-on-primary-container py-4 font-bold uppercase tracking-widest text-sm hover:brightness-110 transition-all">Add to Cart</button><button id="favorite-btn" class="p-4 border border-outline-variant rounded-lg text-primary-container hover:bg-primary-container/10 transition-all"><span class="material-symbols-outlined">favorite</span></button></div>
+        
+        <div class="grid grid-cols-3 gap-2 text-center text-[11px] text-on-surface-variant/80 pt-2 border-t border-white/10 mt-2"><div><span class="material-symbols-outlined text-primary-container block mx-auto text-xl">verified</span>14 Day Returns</div><div><span class="material-symbols-outlined text-primary-container block mx-auto text-xl">lock</span>Secure Checkout</div><div><span class="material-symbols-outlined text-primary-container block mx-auto text-xl">local_shipping</span>Fast Shipping</div></div>
       </div>
     </div>
-    <div class="mt-16 border-t border-white/10 pt-12">
-      <div class="flex items-center justify-between mb-6"><h3 class="font-headline text-2xl text-primary-container">Customer Reviews</h3><button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-2 rounded-lg text-xs font-bold uppercase"><span class="material-symbols-outlined text-lg">add</span>Write a Review</button></div>
-      <div id="reviews-list" class="space-y-6"></div>
-    </div>
+    <div class="mt-16 border-t border-white/10 pt-12"><div class="flex items-center justify-between mb-6"><h3 class="font-headline text-2xl text-primary-container">Customer Reviews</h3><button onclick="openReviewModal()" class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-2 rounded-lg text-xs font-bold uppercase"><span class="material-symbols-outlined text-lg">add</span>Write a Review</button></div><div id="reviews-list" class="space-y-6"></div></div>
     <div class="mt-12 border-t border-white/10 pt-8"><h3 class="font-headline text-2xl text-primary-container mb-6">You May Also Like</h3><div id="related-products" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div></div>
   `;
   buildColorQuantitySelectors();
