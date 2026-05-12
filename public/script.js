@@ -13,7 +13,7 @@ let currentLightboxIndex = 0;
 // ========== TRANSLATIONS ==========
 const translations = {
   en: {
-    brand: 'Where Ancient Elegance Meets Modern Desire', home: 'Home', Categories: 'Categories', legacy: 'Our Legacy',
+    brand: 'SilkIsland', home: 'Home', Categories: 'Categories', legacy: 'Our Legacy',
     hero_tagline: 'Lingerie, Underwear, Sleepwear & More', enter_atrium: 'Enter the Atrium',
     private_collection: 'The Private Collection', all_products: 'All Products', sanctuary_whispers: 'Sanctuary Whispers',
     your_selection: 'Your Selection', total: 'Total', proceed_checkout: 'Proceed to Checkout', explore: 'Explore',
@@ -71,7 +71,7 @@ const translations = {
   },
   ro: {
     brand: 'SILKISLAND', home: 'Acasă', collections: 'Colecții', legacy: 'Moștenirea',
-    hero_tagline: 'Unde Eleganța Antică Întâlnește Dorința Modernă', enter_atrium: 'Intră în Atrium',
+    hero_tagline: 'Lenjerie intimă, lenjerie intimă, pijamale și multe altele', enter_atrium: 'Intră în Atrium',
     private_collection: 'Colecția Privată', all_products: 'Toate Produsele', sanctuary_whispers: 'Șoaptele Sanctuarului',
     your_selection: 'Selecția Ta', total: 'Total', proceed_checkout: 'Finalizează Comanda', explore: 'Explorează',
     support: 'Suport', follow: 'Urmărește', track_order: 'Urmărește Comanda', size_guide: 'Ghid Mărimi', favorites: 'Favorite',
@@ -128,7 +128,7 @@ const translations = {
   },
   tr: {
     brand: 'SILKISLAND', home: 'Ana Sayfa', Categories: 'Kategoriler', legacy: 'Mirasımız',
-    hero_tagline: 'Antik Zarafet Modern Arzuyla Buluşuyor', enter_atrium: 'Atriuma Gir',
+    hero_tagline: 'İç Giyim, Pijama, Gece Giyim ve Daha Fazlası', enter_atrium: 'Atriuma Gir',
     private_collection: 'Özel Koleksiyon', all_products: 'Tüm Ürünler', sanctuary_whispers: 'Tapınak Fısıltıları',
     your_selection: 'Seçiminiz', total: 'Toplam', proceed_checkout: 'Ödemeye Geç', explore: 'Keşfet',
     support: 'Destek', follow: 'Takip Et', track_order: 'Sipariş Takibi', size_guide: 'Beden Rehberi', favorites: 'Favoriler',
