@@ -14,7 +14,7 @@ let currentLightboxIndex = 0;
 const translations = {
   en: {
     brand: 'Where Ancient Elegance Meets Modern Desire', home: 'Home', Categories: 'Categories', legacy: 'Our Legacy',
-    hero_tagline: 'Lingerie, Undewear, Sleepwear & More', enter_atrium: 'Enter the Atrium',
+    hero_tagline: 'Lingerie, Underwear, Sleepwear & More', enter_atrium: 'Enter the Atrium',
     private_collection: 'The Private Collection', all_products: 'All Products', sanctuary_whispers: 'Sanctuary Whispers',
     your_selection: 'Your Selection', total: 'Total', proceed_checkout: 'Proceed to Checkout', explore: 'Explore',
     support: 'Support', follow: 'Follow', track_order: 'Track Order', size_guide: 'Size Guide', favorites: 'Favorites',
